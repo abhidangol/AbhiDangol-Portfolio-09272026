@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abhishek Dangol | UI/UX Product Designer</title>
+  <meta name="description"
+    content="Portfolio of Abhishek Dangol, a UI/UX product designer with a master's degree in computer science, crafting thoughtful digital products from research to launch.">
+  <meta name="theme-color" content="#ffffff">
+  <meta property="og:title" content="Abhishek Dangol | UI/UX Product Designer">
+  <meta property="og:description"
+    content="Digital products designed with research, care and craft, from first sketch to launch.">
+  <meta property="og:type" content="website">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23FF4A1C'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Playfair+Display:ital,wght@1,500;1,600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="portfolio.css">
+  <script>document.documentElement.classList.add('js')</script>
+
+  <!--
+  ─────────────────────────────────────────────────────────────
+  HOW TO MAKE THIS YOURS
+  1. Find & replace  "Abhishek Dangol"  with your name, if needed.
+  2. Replace the links marked YOUR-BOOKING-LINK, YOUR-LINKEDIN, YOUR-CASE-STUDIES-LINK
+     and YOUR-PROJECT-LINK.
+  3. Edit copy directly in the HTML. It is plain text.
+  4. Every image placeholder below is a static generated graphic, not an
+     animation, so you can see exactly where a real image will sit. To swap
+     one in, add  data-img="your-image.jpg"  to that block's <canvas> and it
+     is replaced with your <img> automatically:
+       - Hero photo:      <canvas id="heroCv"> inside <div class="hero-viz">
+       - Project covers:  the <canvas> inside each <a class="pcard">
+       - Process visuals: the <canvas> inside each <div class="pframe">
+         (one per step — 01 Free strategy, 02 Concept, 03 Design, 04 Delivery)
+  5. The single accent colour is --accent in :root. Change it in one place.
+  ─────────────────────────────────────────────────────────────
+-->
+
+
+</head>
+
+<body>
+  <a class="skip" href="#projects">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="ticker marquee" data-speed="55" aria-label="Currently open for new projects">
+      <div class="track">
+        <div class="set">
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="#top" aria-label="Abhishek Dangol, back to top"><i></i>Abhishek Dangol</a>
+      <ul class="links">
+        <li><a href="#projects"><span class="roll">Projects</span></a></li>
+        <li><a href="#process"><span class="roll">Process</span></a></li>
+        <li><a href="#contact"><span class="roll">Contact</span></a></li>
+      </ul>
+      <a class="btn" href="YOUR-BOOKING-LINK" target="_blank" rel="noopener"><span class="roll">Get free
+          strategy</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p>Open for new projects. Free, no-obligation strategy call.</p>
+  </div>
+
+  <main>
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-viz" id="heroViz">
+        <canvas id="heroCv" aria-hidden="true"></canvas>
+        <span class="hint">Photo placeholder</span>
+      </div>
+      <div class="hero-copy">
+        <div class="hc-main">
+          <h1 class="display" id="hero-title">
+            <span class="line"><span class="inner" style="--d:0">I design bold</span></span>
+            <span class="line"><span class="inner" style="--d:1">digital</span></span>
+            <span class="line"><span class="inner" style="--d:2">products</span></span>
+          </h1>
+          <p>From research to launch, I design intuitive products and interfaces that solve real problems, feel
+            effortless to use, and help teams ship with confidence.</p>
+          <div class="hf-cta">
+            <a class="btn" href="YOUR-BOOKING-LINK" target="_blank" rel="noopener"><span class="roll">Get free
+                strategy</span></a>
+            <a class="btn btn-ghost" href="#projects"><span class="roll">See my work</span></a>
+          </div>
+        </div>
+        <div class="hc-bar">
+          <div class="who">Abhishek Dangol<span>UI/UX Product Designer &middot; MSc Computer Science</span></div>
+          <a class="cue" href="#clients"><span class="roll">Scroll down</span>
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M8 2v11M3 9l5 5 5-5" />
+            </svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CLIENTS BAND ============ -->
+    <section class="clients" id="clients" aria-label="Selected clients">
+      <div class="clients-label">Worked with</div>
+      <div class="marquee" data-speed="60" data-velocity>
+        <div class="track">
+          <div class="set">
+            <span class="wm"
+              style="font-weight:900;font-variation-settings:'wdth' 62;text-transform:uppercase">Northwind</span>
+            <span class="wm" style="font-weight:300;font-variation-settings:'wdth' 125">Lumen</span>
+            <span class="wm" style="font-weight:800;letter-spacing:-.04em">fold.</span>
+            <span class="wm"
+              style="font-weight:500;font-variation-settings:'wdth' 125;letter-spacing:.2em;font-size:.72em;text-transform:uppercase">Atlas
+              Legal</span>
+            <span class="wm" style="font-weight:700;font-variation-settings:'wdth' 85"><i></i>pebble</span>
+            <span class="wm" style="font-weight:200;font-variation-settings:'wdth' 115">Orbit</span>
+            <span class="wm"
+              style="font-weight:800;font-variation-settings:'wdth' 70;text-transform:uppercase;text-decoration:underline;text-decoration-thickness:.09em;text-underline-offset:.16em">Sable</span>
+            <span class="wm"
+              style="font-weight:400;font-variation-settings:'wdth' 100;letter-spacing:-.02em">verdant</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS (image + meta cards, matches reference) ============ -->
+    <section class="projects" id="projects" aria-labelledby="proj-title">
+      <div class="svc-intro">
+        <h2 class="display" id="proj-title">Projects</h2>
+        <p>A selection of recent product and UI/UX work, from first sketch to launch.</p>
+      </div>
+      <!-- <div class="proj-items">Items: <b>04</b></div> -->
+      <div class="pgrid-list">
+        <a class="pcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+          aria-label="Northwind Coffee: Brand identity and packaging. View project">
+          <div class="cv"><canvas data-scene="letter" data-theme="dark" data-letter="N" data-cell="9"
+              data-alt="Northwind Coffee project preview"></canvas><span class="ptag">Branding</span></div>
+          <div class="pinfo"><span class="dur">2 weeks</span>
+            <h3 class="display">Northwind Coffee</h3>
+          </div>
+        </a>
+        <a class="pcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+          aria-label="Lumen Health: Website design and Webflow build. View project">
+          <div class="cv"><canvas data-scene="arch" data-theme="grey" data-cell="9"
+              data-alt="Lumen Health project preview"></canvas><span class="ptag">Web Design</span></div>
+          <div class="pinfo"><span class="dur">4 weeks</span>
+            <h3 class="display">Lumen Health</h3>
+          </div>
+        </a>
+        <a class="pcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+          aria-label="Fold: Mobile app design. View project">
+          <div class="cv"><canvas data-scene="bars" data-theme="light" data-cell="9"
+              data-alt="Fold project preview"></canvas><span class="ptag">Mobile App</span></div>
+          <div class="pinfo"><span class="dur">3 weeks</span>
+            <h3 class="display">Fold</h3>
+          </div>
+        </a>
+        <a class="pcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+          aria-label="Orbit Finance: Dashboard and React web app. View project">
+          <div class="cv"><canvas data-scene="stripes" data-theme="dark" data-cell="9"
+              data-alt="Orbit Finance project preview"></canvas><span class="ptag">Web App</span></div>
+          <div class="pinfo"><span class="dur">5 weeks</span>
+            <h3 class="display">Orbit Finance</h3>
+          </div>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ============ PROCESS ============ -->
+    <section id="process" aria-labelledby="proc-title">
+      <div class="pgrid">
+        <div class="pviz" aria-hidden="true">
+          <div class="pframe on"><canvas data-scene="grid" data-theme="dark" data-alt="Free strategy"></canvas></div>
+          <div class="pframe"><canvas data-scene="wave" data-theme="dark" data-alt="Concept"></canvas></div>
+          <div class="pframe"><canvas data-scene="blobs" data-theme="dark" data-alt="Design"></canvas></div>
+          <div class="pframe"><canvas data-scene="rings" data-theme="dark" data-alt="Delivery"></canvas></div>
+          <div class="pcap"><span class="cur"><span id="procCur">01</span><em>/</em>04</span><span id="procName">Free
+              strategy</span></div>
+        </div>
+        <div class="pmain">
+          <div class="phead">
+            <h2 class="display" id="proc-title">Process is the key to success</h2>
+            <p>A streamlined process built on collaboration, creativity and precision, so the finished project matches
+              your vision.</p>
+          </div>
+          <ol>
+            <li class="pstep on" data-name="Free strategy">
+              <div class="ps-top"><span class="pill">Free strategy</span><span class="ps-num"
+                  aria-hidden="true">01</span></div>
+              <h3 class="display">A free strategy to start</h3>
+              <p>Before our free, no-obligation call, I send a short form that takes about five minutes to fill in.</p>
+              <ul>
+                <li>Define your goals and target audience</li>
+                <li>Talk through your deliverables</li>
+                <li>Receive a free strategy document</li>
+              </ul>
+            </li>
+            <li class="pstep" data-name="Concept">
+              <div class="ps-top"><span class="pill">Concept</span><span class="ps-num" aria-hidden="true">02</span>
+              </div>
+              <h3 class="display">Onboarding</h3>
+              <p>Happy with the strategy? On our second call I onboard you to my project management system so everything
+                is clear.</p>
+              <ul>
+                <li>Create milestones and timelines</li>
+                <li>Collect assets and information from you</li>
+                <li>Set up your payment plan</li>
+              </ul>
+            </li>
+            <li class="pstep" data-name="Design">
+              <div class="ps-top"><span class="pill">Design</span><span class="ps-num" aria-hidden="true">03</span>
+              </div>
+              <h3 class="display">Let the magic happen</h3>
+              <p>With creativity and precision I bring your project to life, refining every detail so it is captivating,
+                cohesive and impactful.</p>
+              <ul>
+                <li>Project design and development</li>
+                <li>QA testing and security checks</li>
+                <li>Ready to review, with revisions</li>
+              </ul>
+            </li>
+            <li class="pstep" data-name="Delivery">
+              <div class="ps-top"><span class="pill">Delivery</span><span class="ps-num" aria-hidden="true">04</span>
+              </div>
+              <h3 class="display">Launch &amp; maintenance</h3>
+              <p>Once everything is approved and tested, I hand over source files and access, set up backups, launch,
+                and stay on for upkeep.</p>
+              <ul>
+                <li>Preparation for launch</li>
+                <li>Handover of files</li>
+                <li>Post-delivery support and maintenance</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MORE WORK (auto-scrolling marquee, drag-to-browse, 3:4 cards) ============ -->
+    <section class="extra" aria-labelledby="extra-title">
+      <div class="svc-intro">
+        <h2 class="display" id="extra-title">More work</h2>
+        <p>Extra projects and experiments, auto-scrolling on a loop. Drag anytime to browse at your own pace.</p>
+      </div>
+      <div class="extra-scroll marquee" data-speed="34" data-drag data-hover-pause data-velocity
+        aria-label="Additional projects, auto-scrolling, drag to browse">
+        <div class="track">
+          <div class="set">
+            <a class="xcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+              aria-label="Off Grid: Editorial photography. View project">
+              <div class="cv"><canvas data-scene="sphere" data-theme="dark" data-cell="8"
+                  data-alt="Off Grid project preview"></canvas></div>
+              <div class="xmeta"><span class="xcat">Editorial</span>
+                <h3>Off Grid</h3>
+                <p>Band portrait series shot on location, 2 weeks.</p>
+              </div>
+            </a>
+            <a class="xcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+              aria-label="Primary Form: Fashion campaign. View project">
+              <div class="cv"><canvas data-scene="grad" data-theme="grey" data-cell="8"
+                  data-alt="Primary Form project preview"></canvas></div>
+              <div class="xmeta"><span class="xcat">Fashion</span>
+                <h3>Primary Form</h3>
+                <p>Bold colour-blocked lookbook campaign, 4 weeks.</p>
+              </div>
+            </a>
+            <a class="xcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+              aria-label="Luma Wood: Product design. View project">
+              <div class="cv"><canvas data-scene="moon" data-theme="light" data-cell="8"
+                  data-alt="Luma Wood project preview"></canvas></div>
+              <div class="xmeta"><span class="xcat">Product Design</span>
+                <h3>Luma Wood</h3>
+                <p>Sculptural wooden desk lamp, 2 weeks.</p>
+              </div>
+            </a>
+            <a class="xcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+              aria-label="Soft Signal: Art direction. View project">
+              <div class="cv"><canvas data-scene="blobs" data-theme="dark" data-cell="8"
+                  data-alt="Soft Signal project preview"></canvas></div>
+              <div class="xmeta"><span class="xcat">Art Direction</span>
+                <h3>Soft Signal</h3>
+                <p>Close-up beauty and skincare visuals, 2 weeks.</p>
+              </div>
+            </a>
+            <a class="xcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+              aria-label="Lumen Void: Art direction. View project">
+              <div class="cv"><canvas data-scene="wave" data-theme="dark" data-cell="8"
+                  data-alt="Lumen Void project preview"></canvas></div>
+              <div class="xmeta"><span class="xcat">Art Direction</span>
+                <h3>Lumen Void</h3>
+                <p>Powder and light study, 5 weeks.</p>
+              </div>
+            </a>
+            <a class="xcard" href="YOUR-PROJECT-LINK" target="_blank" rel="noopener"
+              aria-label="Silence Studio: Branding. View project">
+              <div class="cv"><canvas data-scene="rings" data-theme="grey" data-cell="8"
+                  data-alt="Silence Studio project preview"></canvas></div>
+              <div class="xmeta"><span class="xcat">Branding</span>
+                <h3>Silence Studio</h3>
+                <p>Audio brand identity and packaging, 3 weeks.</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="contact" aria-labelledby="cta-title">
+      <h2 class="cta-mq marquee" id="cta-title" data-speed="110" data-velocity>
+        <span class="track"><span class="set">
+            <span class="u">Get started today
+              <svg class="spin" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" aria-hidden="true">
+                <path d="M20 3v34M3 20h34M8 8l24 24M32 8L8 32" />
+              </svg>
+            </span>
+            <span class="u o">No obligation call
+              <svg class="spin" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" aria-hidden="true">
+                <path d="M20 3v34M3 20h34M8 8l24 24M32 8L8 32" />
+              </svg>
+            </span>
+          </span></span>
+      </h2>
+      <!-- <div class="tiles">
+        <a class="cta-link" href="YOUR-BOOKING-LINK" target="_blank" rel="noopener">
+          <h3 class="display">Book a free strategy call</h3><span class="roll">Book now</span>
+        </a>
+        <a class="cta-link" href="YOUR-LINKEDIN" target="_blank" rel="noopener">
+          <h3 class="display">LinkedIn</h3><span class="roll">Visit LinkedIn</span>
+        </a>
+        <a class="cta-link" href="YOUR-CASE-STUDIES-LINK" target="_blank" rel="noopener">
+          <h3 class="display">My work</h3><span class="roll">Visit my work</span>
+        </a>
+      </div> -->
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-contact">
+      <span class="footer-label">Contact me</span>
+      <a class="footer-mail" href="mailto:abhidangol11@gmail.com">abhidangol11@gmail.com</a>
+    </div>
+    <div class="footer-links">
+      <a href="YOUR-LINKEDIN" target="_blank" rel="noopener"><span class="roll">LinkedIn</span></a>
+      <a href="YOUR-BEHANCE-LINK" target="_blank" rel="noopener"><span class="roll">Behance</span></a>
+      <a href="YOUR-INSTAGRAM-LINK" target="_blank" rel="noopener"><span class="roll">Instagram</span></a>
+    </div>
+    <div class="fbottom">
+      <span>&copy; <span id="year">2026</span> Abhishek Dangol. All rights reserved.</span>
+      <a href="#top" id="toTop"><span class="roll">Back to top</span></a>
+    </div>
+  </footer>
+
+  <script src="portfolio.js"></script>
+</body>
+
+</html>
