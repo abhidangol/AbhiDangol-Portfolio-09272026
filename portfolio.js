@@ -163,11 +163,31 @@
     marquees.forEach(m => mio.observe(m.el));
 
     /* ── scroll system ── */
+    // const header = $('.site-header');
+    // const svcs = $$('.svc'), steps = $$('.pstep'), spins = $$('.spin');
+    // const curEl = $('#procCur'), nameEl = $('#procName');
+    // const tops = new Map();
+    // let lastY = scrollY, ticking = false, menuOpen = false, boost = 0, curIdx = 0, rateRaf = 0;
+
+    /* ── scroll system ── */
     const header = $('.site-header');
-    const svcs = $$('.svc'), steps = $$('.pstep'), spins = $$('.spin');
-    const curEl = $('#procCur'), nameEl = $('#procName');
+    const svcs = $$('.svc');
+    const steps = $$('.pstep');
+    const pframes = $$('.pframe');
+    const spins = $$('.spin');
+
+    const curEl = $('#procCur');
+    const nameEl = $('#procName');
+
     const tops = new Map();
-    let lastY = scrollY, ticking = false, menuOpen = false, boost = 0, curIdx = 0, rateRaf = 0;
+
+    let lastY = scrollY;
+    let ticking = false;
+    let menuOpen = false;
+    let boost = 0;
+    let curIdx = 0;
+    let rateRaf = 0;
+
 
     function measure() { svcs.forEach(c => { c.style.removeProperty('--s'); tops.set(c, parseFloat(getComputedStyle(c).top) || 0); }); }
     measure();
