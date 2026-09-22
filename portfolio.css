@@ -540,7 +540,7 @@ button:focus-visible .roll>span {
     cursor: pointer
 }
 
-.pcard .cv canvas,
+/* .pcard .cv canvas, */
 .pcard .cv img {
     position: absolute;
     inset: 0;
@@ -550,9 +550,9 @@ button:focus-visible .roll>span {
     transition: transform .7s var(--ease)
 }
 
-.pcard:hover .cv canvas,
+/* .pcard:hover .cv canvas, */
 .pcard:hover .cv img,
-.pcard:focus-visible .cv canvas,
+/* .pcard:focus-visible .cv canvas, */
 .pcard:focus-visible .cv img {
     transform: scale(1.05)
 }
@@ -621,7 +621,7 @@ button:focus-visible .roll>span {
     background: var(--bg, #fff)
 }
 
-.cv canvas,
+/* .cv canvas, */
 .cv img {
     position: absolute;
     inset: 0;

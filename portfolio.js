@@ -18,121 +18,122 @@
        to paint that dot in the accent colour.
        ════════════════════════════════════════════ */
     let OR = false;
-    function renderDots(ctx, W, H, cell, sample, fg, bg, floor = 0) {
-        ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-        const pf = new Path2D(), po = new Path2D();
-        const rowH = cell * .866, rows = Math.ceil(H / rowH) + 1, cols = Math.ceil(W / cell) + 1;
-        for (let r = 0; r < rows; r++) {
-            const y = r * rowH, off = (r & 1) ? cell / 2 : 0;
-            for (let c = 0; c < cols; c++) {
-                const x = c * cell + off;
-                OR = false;
-                let v = sample(x, y);
-                if (v < floor) v = floor;
-                if (v <= .012) continue;
-                const rad = cell * .66 * Math.sqrt(v > 1 ? 1 : v);
-                const p = OR ? po : pf;
-                p.moveTo(x + rad, y); p.arc(x, y, rad, 0, 6.2832);
-            }
-        }
-        ctx.fillStyle = fg; ctx.fill(pf);
-        ctx.fillStyle = ACCENT; ctx.fill(po);
-    }
+    // function renderDots(ctx, W, H, cell, sample, fg, bg, floor = 0) {
+    //     ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    //     const pf = new Path2D(), po = new Path2D();
+    //     const rowH = cell * .866, rows = Math.ceil(H / rowH) + 1, cols = Math.ceil(W / cell) + 1;
+    //     for (let r = 0; r < rows; r++) {
+    //         const y = r * rowH, off = (r & 1) ? cell / 2 : 0;
+    //         for (let c = 0; c < cols; c++) {
+    //             const x = c * cell + off;
+    //             OR = false;
+    //             let v = sample(x, y);
+    //             if (v < floor) v = floor;
+    //             if (v <= .012) continue;
+    //             const rad = cell * .66 * Math.sqrt(v > 1 ? 1 : v);
+    //             const p = OR ? po : pf;
+    //             p.moveTo(x + rad, y); p.arc(x, y, rad, 0, 6.2832);
+    //         }
+    //     }
+    //     ctx.fillStyle = fg; ctx.fill(pf);
+    //     ctx.fillStyle = ACCENT; ctx.fill(po);
+    // }
 
-    function fitCanvas(cv) {
-        const r = cv.getBoundingClientRect(), d = dprOf();
-        const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
-        cv.width = w * d; cv.height = h * d;
-        const ctx = cv.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0);
-        return { ctx, w, h };
-    }
+    // function fitCanvas(cv) {
+    //     const r = cv.getBoundingClientRect(), d = dprOf();
+    //     const w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+    //     cv.width = w * d; cv.height = h * d;
+    //     const ctx = cv.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0);
+    //     return { ctx, w, h };
+    // }
 
     /* ── HERO: static placeholder graphic (swap via data-img on #heroCv) ── */
-    const heroCv = $('#heroCv');
-    function initHero() {
-        if (heroCv.dataset.img) {
-            const img = new Image(); img.src = heroCv.dataset.img; img.loading = 'eager';
-            img.alt = heroCv.dataset.alt || 'Portrait photo';
-            heroCv.replaceWith(img); return;
-        }
-        const f = fitCanvas(heroCv), { ctx, w: W, h: H } = f;
-        const s = Math.min(W, H), cell = W < 600 ? 10 : 13;
-        const cx = W * .46, cy = H * .5, r1 = s * .34, r2 = s * .1;
-        renderDots(ctx, W, H, cell, (x, y) => {
-            const d = Math.hypot(x - cx, y - cy);
-            if (d > r1) return 0;
-            return clamp(.16 + (1 - d / r1) * 1.05 + (d < r2 ? .3 : 0), 0, 1);
-        }, WHITE, INK, .05);
-    }
-    initHero();
+    // const heroCv = $('#heroCv');
+    // function initHero() {
+    //     if (heroCv.dataset.img) {
+    //         const img = new Image(); img.src = heroCv.dataset.img; img.loading = 'eager';
+    //         img.alt = heroCv.dataset.alt || 'Portrait photo';
+    //         heroCv.replaceWith(img); return;
+    //     }
+    //     const f = fitCanvas(heroCv), { ctx, w: W, h: H } = f;
+    //     const s = Math.min(W, H), cell = W < 600 ? 10 : 13;
+    //     const cx = W * .46, cy = H * .5, r1 = s * .34, r2 = s * .1;
+    //     renderDots(ctx, W, H, cell, (x, y) => {
+    //         const d = Math.hypot(x - cx, y - cy);
+    //         if (d > r1) return 0;
+    //         return clamp(.16 + (1 - d / r1) * 1.05 + (d < r2 ? .3 : 0), 0, 1);
+    //     }, WHITE, INK, .05);
+    // }
+    // initHero();
 
     /* ── halftone scenes: static, reused by project cards and process frames ── */
-    const SCENES = {
-        sphere: (x, y) => { const d = Math.hypot(x, y); return d > .34 ? 0 : clamp(.08 + Math.hypot(x + .13, y + .13) * 1.55, 0, 1); },
-        rings: (x, y) => { const d = Math.hypot(x, y); return d > .43 ? 0 : .5 + .5 * Math.sin(d * 40); },
-        moon: (x, y) => Math.hypot(x, y) < .33 && Math.hypot(x - .14, y - .05) > .29 ? 1 : 0,
-        wave: (x, y, ar, u, v) => (.5 + .5 * Math.sin(x * 20 + Math.sin(y * 8) * 2.4)) * (.35 + .65 * v),
-        grad: (x, y, ar, u, v) => clamp(u * 1.25 - .1 + (v - .5) * .3, 0, 1),
-        bars: (x, y, ar, u, v) => (Math.floor(u * 9) % 2 === 0) ? clamp(v * 1.1, 0, 1) : 0,
-        grid: (x, y, ar, u, v) => ((Math.floor(u * 8) + Math.floor(v * 6)) & 1) ? .9 : .22,
-        stripes: (x, y) => .5 + .5 * Math.sin((x + y) * 44),
-        blobs: (x, y) => { let s = 0; for (const [bx, by, R] of [[-.14, .06, .13], [.1, -.05, .16], [.02, .16, .1]]) s += R * R / ((x - bx) ** 2 + (y - by) ** 2 + .0009); return clamp((s - .7) * 1.1, 0, 1); },
-        arch: (x, y) => { if (Math.abs(x) > .2) return 0; const inside = y < -.1 ? Math.hypot(x, y + .1) < .2 : y <= .32; return inside ? clamp(.25 + (y + .3) * 1.4, 0, 1) : 0; },
-    };
-    const THEMES = { light: [INK, WHITE], grey: [INK, SOFT], dark: [WHITE, INK] };
-    function letterSampler(ch) {
-        const W = 120, H = 90, c = document.createElement('canvas'); c.width = W; c.height = H;
-        const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
-        g.fillStyle = '#fff'; g.font = "800 92px Archivo, 'Arial Black', Impact, sans-serif"; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
-        g.fillText(ch, W / 2, H * .82);
-        const d = g.getImageData(0, 0, W, H).data;
-        return (u, v) => { const i = ((Math.min(H - 1, Math.floor(v * H)) * W) + Math.min(W - 1, Math.floor(u * W))) * 4; return d[i] / 255; };
-    }
-    function drawScene(ctx, w, h, cell, scene, letter, fg, bg) {
-        const ar = w / h;
-        renderDots(ctx, w, h, cell, (x, y) => {
-            const u = x / w, v = y / h;
-            return letter ? letter(u, v) : scene((u - .5) * ar, v - .5, ar, u, v);
-        }, fg, bg);
-    }
+    // const SCENES = {
+    //     sphere: (x, y) => { const d = Math.hypot(x, y); return d > .34 ? 0 : clamp(.08 + Math.hypot(x + .13, y + .13) * 1.55, 0, 1); },
+    //     rings: (x, y) => { const d = Math.hypot(x, y); return d > .43 ? 0 : .5 + .5 * Math.sin(d * 40); },
+    //     moon: (x, y) => Math.hypot(x, y) < .33 && Math.hypot(x - .14, y - .05) > .29 ? 1 : 0,
+    //     wave: (x, y, ar, u, v) => (.5 + .5 * Math.sin(x * 20 + Math.sin(y * 8) * 2.4)) * (.35 + .65 * v),
+    //     grad: (x, y, ar, u, v) => clamp(u * 1.25 - .1 + (v - .5) * .3, 0, 1),
+    //     bars: (x, y, ar, u, v) => (Math.floor(u * 9) % 2 === 0) ? clamp(v * 1.1, 0, 1) : 0,
+    //     grid: (x, y, ar, u, v) => ((Math.floor(u * 8) + Math.floor(v * 6)) & 1) ? .9 : .22,
+    //     stripes: (x, y) => .5 + .5 * Math.sin((x + y) * 44),
+    //     blobs: (x, y) => { let s = 0; for (const [bx, by, R] of [[-.14, .06, .13], [.1, -.05, .16], [.02, .16, .1]]) s += R * R / ((x - bx) ** 2 + (y - by) ** 2 + .0009); return clamp((s - .7) * 1.1, 0, 1); },
+    //     arch: (x, y) => { if (Math.abs(x) > .2) return 0; const inside = y < -.1 ? Math.hypot(x, y + .1) < .2 : y <= .32; return inside ? clamp(.25 + (y + .3) * 1.4, 0, 1) : 0; },
+    // };
+
+    // const THEMES = { light: [INK, WHITE], grey: [INK, SOFT], dark: [WHITE, INK] };
+    // function letterSampler(ch) {
+    //     const W = 120, H = 90, c = document.createElement('canvas'); c.width = W; c.height = H;
+    //     const g = c.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, W, H);
+    //     g.fillStyle = '#fff'; g.font = "800 92px Archivo, 'Arial Black', Impact, sans-serif"; g.textAlign = 'center'; g.textBaseline = 'alphabetic';
+    //     g.fillText(ch, W / 2, H * .82);
+    //     const d = g.getImageData(0, 0, W, H).data;
+    //     return (u, v) => { const i = ((Math.min(H - 1, Math.floor(v * H)) * W) + Math.min(W - 1, Math.floor(u * W))) * 4; return d[i] / 255; };
+    // }
+    // function drawScene(ctx, w, h, cell, scene, letter, fg, bg) {
+    //     const ar = w / h;
+    //     renderDots(ctx, w, h, cell, (x, y) => {
+    //         const u = x / w, v = y / h;
+    //         return letter ? letter(u, v) : scene((u - .5) * ar, v - .5, ar, u, v);
+    //     }, fg, bg);
+    // }
 
     /* ── PROJECT CARDS: one static halftone scene per card (or a real image via data-img) ── */
-    function initTiles() {
-        $$('.cv canvas').forEach(cv => {
-            if (cv.dataset.img) {
-                const img = new Image(); img.src = cv.dataset.img; img.loading = 'lazy';
-                const cap = cv.closest('figure,article'); const nm = cap && cap.querySelector('b,h3');
-                img.alt = cv.dataset.alt || ((nm ? nm.textContent : 'Project') + ' preview');
-                cv.replaceWith(img); return;
-            }
-            const [fg, bg] = THEMES[cv.dataset.theme] || THEMES.light;
-            cv.parentElement.style.setProperty('--bg', bg);
-            const { ctx, w, h } = fitCanvas(cv);
-            const scene = cv.dataset.scene === 'letter' ? null : SCENES[cv.dataset.scene] || SCENES.rings;
-            const letter = cv.dataset.scene === 'letter' ? letterSampler(cv.dataset.letter || 'A') : null;
-            drawScene(ctx, w, h, +cv.dataset.cell || 8, scene, letter, fg, bg);
-        });
-    }
-    const ready = document.fonts && document.fonts.load ? Promise.race([document.fonts.load("800 92px Archivo"), new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();
-    ready.then(initTiles);
+    // function initTiles() {
+    //     $$('.cv canvas').forEach(cv => {
+    //         if (cv.dataset.img) {
+    //             const img = new Image(); img.src = cv.dataset.img; img.loading = 'lazy';
+    //             const cap = cv.closest('figure,article'); const nm = cap && cap.querySelector('b,h3');
+    //             img.alt = cv.dataset.alt || ((nm ? nm.textContent : 'Project') + ' preview');
+    //             cv.replaceWith(img); return;
+    //         }
+    //         const [fg, bg] = THEMES[cv.dataset.theme] || THEMES.light;
+    //         cv.parentElement.style.setProperty('--bg', bg);
+    //         const { ctx, w, h } = fitCanvas(cv);
+    //         const scene = cv.dataset.scene === 'letter' ? null : SCENES[cv.dataset.scene] || SCENES.rings;
+    //         const letter = cv.dataset.scene === 'letter' ? letterSampler(cv.dataset.letter || 'A') : null;
+    //         drawScene(ctx, w, h, +cv.dataset.cell || 8, scene, letter, fg, bg);
+    //     });
+    // }
+    // const ready = document.fonts && document.fonts.load ? Promise.race([document.fonts.load("800 92px Archivo"), new Promise(r => setTimeout(r, 1500))]) : Promise.resolve();
+    // ready.then(initTiles);
 
     /* ── PROCESS: one static image per step; the visible frame changes as you scroll ── */
-    const pframes = $$('.pframe');
-    function initProcFrames() {
-        pframes.forEach(frame => {
-            const cv = $('canvas', frame); if (!cv) return;
-            if (cv.dataset.img) {
-                const img = new Image(); img.src = cv.dataset.img; img.loading = 'lazy'; img.alt = cv.dataset.alt || '';
-                cv.replaceWith(img); return;
-            }
-            const [fg, bg] = THEMES[cv.dataset.theme] || THEMES.dark;
-            const { ctx, w, h } = fitCanvas(cv);
-            const scene = cv.dataset.scene === 'letter' ? null : SCENES[cv.dataset.scene] || SCENES.rings;
-            const letter = cv.dataset.scene === 'letter' ? letterSampler(cv.dataset.letter || 'A') : null;
-            drawScene(ctx, w, h, 12, scene, letter, fg, bg);
-        });
-    }
-    initProcFrames();
+    // const pframes = $$('.pframe');
+    // function initProcFrames() {
+    //     pframes.forEach(frame => {
+    //         const cv = $('canvas', frame); if (!cv) return;
+    //         if (cv.dataset.img) {
+    //             const img = new Image(); img.src = cv.dataset.img; img.loading = 'lazy'; img.alt = cv.dataset.alt || '';
+    //             cv.replaceWith(img); return;
+    //         }
+    //         const [fg, bg] = THEMES[cv.dataset.theme] || THEMES.dark;
+    //         const { ctx, w, h } = fitCanvas(cv);
+    //         const scene = cv.dataset.scene === 'letter' ? null : SCENES[cv.dataset.scene] || SCENES.rings;
+    //         const letter = cv.dataset.scene === 'letter' ? letterSampler(cv.dataset.letter || 'A') : null;
+    //         drawScene(ctx, w, h, 12, scene, letter, fg, bg);
+    //     });
+    // }
+    // initProcFrames();
 
     /* ── marquees ── */
     const marquees = [];
@@ -300,9 +301,18 @@
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     update();
 
+    // let rz; addEventListener('resize', () => {
+    //     clearTimeout(rz);
+    //     rz = setTimeout(() => { marquees.forEach(build); initHero(); initTiles(); initProcFrames(); measure(); update(); }, 200);
+    // });
+
     let rz; addEventListener('resize', () => {
         clearTimeout(rz);
-        rz = setTimeout(() => { marquees.forEach(build); initHero(); initTiles(); initProcFrames(); measure(); update(); }, 200);
+        rz = setTimeout(() => {
+            marquees.forEach(build);
+            measure();
+            update();
+        }, 200);
     });
 
     /* ── mobile menu ── */
