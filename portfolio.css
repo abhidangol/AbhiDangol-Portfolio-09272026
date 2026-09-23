@@ -330,20 +330,41 @@ button:focus-visible .roll>span {
 }
 
 /* ---------- hero ---------- */
+/* .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+    min-height: 100svh;
+    height: auto;
+    padding-top: calc(var(--tick-h) + var(--nav-h));
+    border-bottom: 1px solid var(--ink)
+} */
+
 .hero {
     display: grid;
     grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-    height: 100svh;
-    padding-top: calc(var(--tick-h) + var(--nav-h));
-    border-bottom: 1px solid var(--ink)
+
+    height: calc(100vh - var(--tick-h) - var(--nav-h));
+
+    margin-top: calc(var(--tick-h) + var(--nav-h));
+
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 20px;
 }
 
-.hero-viz {
+/* .hero-viz {
     position: relative;
     background: var(--ink);
     border-right: 1px solid var(--ink);
     min-height: 440px;
     overflow: hidden
+} */
+
+.hero-viz {
+    position: relative;
+    background: var(--ink);
+    border-right: 1px solid var(--ink);
+    min-height: 0;
+    overflow: hidden;
 }
 
 .hero-viz canvas {
@@ -366,7 +387,7 @@ button:focus-visible .roll>span {
     letter-spacing: .02em
 }
 
-.hero-copy {
+/* .hero-copy {
     display: flex;
     flex-direction: column;
     min-width: 0
@@ -375,7 +396,35 @@ button:focus-visible .roll>span {
 .hc-main {
     margin-block: auto;
     padding: clamp(28px, 4vw, 64px) clamp(22px, 3.6vw, 56px)
+} */
+
+.hero-copy {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-width: 0;
+    min-height: 0;
+    /* overflow: hidden; */
 }
+
+/* .hc-main {
+    align-self: center;
+    margin: 0;
+    padding: clamp(20px, 4vw, 64px) clamp(22px, 3.6vw, 56px);
+    overflow: hidden;
+} */
+
+.hc-main {
+    min-height: 0;
+    margin: 0;
+    padding: clamp(20px, 4vw, 64px) clamp(22px, 3.6vw, 56px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    overflow-y: hidden;
+}
+
 
 .hero h1 {
     font-size: clamp(50px, 6.3vw, 118px);
@@ -432,7 +481,8 @@ button:focus-visible .roll>span {
 .hc-bar {
     display: grid;
     grid-template-columns: 1fr auto;
-    border-top: 1px solid var(--ink)
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
 }
 
 .who {
