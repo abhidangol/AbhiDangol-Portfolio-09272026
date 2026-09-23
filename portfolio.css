@@ -374,7 +374,7 @@ button:focus-visible .roll>span {
     height: 100%
 }
 
-.hint {
+/* .hint {
     position: absolute;
     left: 0;
     bottom: 0;
@@ -385,7 +385,7 @@ button:focus-visible .roll>span {
     padding: 12px 18px;
     pointer-events: none;
     letter-spacing: .02em
-}
+} */
 
 /* .hero-copy {
     display: flex;
@@ -464,12 +464,12 @@ button:focus-visible .roll>span {
     animation-delay: .85s
 }
 
-.hf-cta {
+/* .hf-cta {
     animation-delay: 1s;
     display: flex;
     flex-wrap: wrap;
     gap: 10px
-}
+} */
 
 @keyframes up {
     to {
@@ -853,6 +853,7 @@ button:focus-visible .roll>span {
 
 .extra-scroll {
     cursor: grab;
+    touch-action: pan-y;
     padding: clamp(16px, 2.2vw, 26px) 0 clamp(40px, 5vw, 64px) var(--pad)
 }
 
@@ -1138,13 +1139,13 @@ button:focus-visible .roll>span {
 /* ---------- contact ---------- */
 
 .footer-contact {
-    min-height: 480px;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 80px var(--pad);
+    padding: 120px var(--pad);
     border-bottom: 1px solid rgba(255, 255, 255, .16);
 }
 
@@ -1183,8 +1184,7 @@ button:focus-visible .roll>span {
 }
 
 .footer-link,
-.footer-top,
-.footer-copyright {
+.footer-top {
     display: flex;
     align-items: center;
     min-width: 0;
@@ -1192,11 +1192,10 @@ button:focus-visible .roll>span {
 
 /* vertical grid lines */
 
-.footer-link,
-.footer-top,
-.footer-copyright {
+/* .footer-link,
+.footer-top {
     border-right: 1px solid rgba(255, 255, 255, .14);
-}
+} */
 
 .footer-link:last-child {
     border-right: 0;
@@ -1238,9 +1237,8 @@ button:focus-visible .roll>span {
 /* back to top */
 
 .footer-top {
-    grid-column: 4;
+    grid-column: 7;
     justify-content: center;
-    border-right: 1px solid rgba(255, 255, 255, .14);
 }
 
 .footer-top-icon {
@@ -1291,7 +1289,8 @@ button:focus-visible .roll>span {
     }
 
     .hero {
-        grid-template-columns: 1fr
+        grid-template-columns: 1fr;
+        height: auto;
     }
 
     .hero-viz {
@@ -1300,6 +1299,26 @@ button:focus-visible .roll>span {
         border-right: 0;
         border-bottom: 1px solid var(--ink)
     }
+
+    /*new code*/
+    .hero-copy {
+        display: flex;
+        flex-direction: column;
+        min-height: auto;
+        overflow: visible;
+    }
+
+    /* .hc-main {
+    min-height: auto;
+    margin: 0;
+    padding: clamp(28px, 6vw, 56px) clamp(22px, 5vw, 56px);
+    display: block;
+    overflow: visible;
+    } */
+
+    /* .hc-bar {
+        flex: none;
+    } */
 
     .hero h1 {
         font-size: clamp(50px, 15vw, 96px)
@@ -1364,6 +1383,15 @@ button:focus-visible .roll>span {
 
     .footer-links a {
         min-width: 33.33%
+    }
+
+    /* More Work: always show card information */
+    .xmeta {
+        transform: none;
+    }
+
+    .xmeta p {
+        opacity: 1;
     }
 }
 
