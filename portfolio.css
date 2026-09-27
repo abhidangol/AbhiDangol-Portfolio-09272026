@@ -772,7 +772,7 @@ button:focus-visible .roll>span {
 }
 
 .pmain {
-    min-width: 0
+    min-width: 0;
 }
 
 .phead {
