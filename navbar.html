@@ -1,0 +1,161 @@
+<style>
+
+/* ---------- header ---------- */
+.site-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    transition: transform .55s var(--ease)
+}
+
+.site-header.hide {
+    transform: translateY(-100%)
+}
+
+.ticker {
+    height: var(--tick-h);
+    background: var(--ink);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #2a2a2a
+}
+
+.ticker .tk {
+    padding-right: 44px;
+    white-space: nowrap
+}
+
+.ticker .tk em {
+    font-style: normal;
+    color: var(--accent);
+    margin-right: 6px
+}
+
+.nav {
+    height: var(--nav-h);
+    padding: 0 var(--pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    background: rgba(255, 255, 255, .94);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ink)
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 17px;
+    letter-spacing: -.01em
+}
+
+.logo i {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none
+}
+
+.links {
+    display: flex;
+    gap: clamp(24px, 3.4vw, 48px);
+    font-weight: 600;
+    font-size: 15px
+}
+
+.burger {
+    display: none;
+    padding: 9px 16px;
+    border: 1px solid currentColor;
+    font-weight: 600;
+    font-size: 14px
+}
+
+.menu {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: var(--ink);
+    color: #fff;
+    padding: calc(var(--tick-h) + var(--nav-h) + 28px) var(--pad) 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transform: translateY(-101%);
+    visibility: hidden;
+    transition: transform .7s var(--ease), visibility 0s .7s
+}
+
+.menu.open {
+    transform: none;
+    visibility: visible;
+    transition: transform .7s var(--ease)
+}
+
+.menu ul a {
+    display: block;
+    font: 800 clamp(52px, 17vw, 96px)/1.02 var(--ff-display);
+    font-variation-settings: 'wdth' 64;
+    text-transform: uppercase
+}
+
+.menu ul a:hover {
+    color: var(--accent)
+}
+
+.menu p {
+    opacity: .65;
+    font-size: 15px
+}
+
+.menu-open .site-header .nav {
+    background: var(--ink);
+    color: #fff;
+    border-color: #2a2a2a
+}
+
+</style>
+
+
+
+<header class="site-header" id="top">
+    <div class="ticker marquee" data-speed="55" aria-label="Currently open for new projects">
+      <div class="track">
+        <div class="set">
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="#top" aria-label="Abhishek Dangol, back to top"><i></i>Abhishek Dangol</a>
+      <ul class="links">
+        <li><a href="#projects"><span class="roll">Projects</span></a></li>
+        <li><a href="#process"><span class="roll">Process</span></a></li>
+        <li><a href="#contact"><span class="roll">Contact</span></a></li>
+      </ul>
+      <a class="btn" href="YOUR-BOOKING-LINK" target="_blank" rel="noopener"><span class="roll">See my work</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p>Open for new projects. Free, no-obligation strategy call.</p>
+  </div>
