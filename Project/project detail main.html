@@ -330,7 +330,9 @@
       background: var(--paper);
       color: var(--ink);
       border-bottom: 1px solid var(--ink);
-      /* height: calc(97vh - var(--tick-h) - var(--nav-h)); */
+      min-height: calc(97vh - var(--tick-h) - var(--nav-h));
+      display: flex;
+      flex-direction: column;
     }
 
     .hero-top {
@@ -354,7 +356,8 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      height: 100%;
+      flex: 1;
+      /* min-height: 100%; */
       /* min-height: calc(100svh - var(--hdr) - 58px) */
     }
 
@@ -1381,8 +1384,8 @@
     .di-left-in {
       position: sticky;
       top: var(--hdr);
-      height: calc(100svh - var(--hdr));
-      max-height: calc(100svh - var(--hdr));
+      /* height: calc(100svh - var(--hdr));
+      max-height: calc(100svh - var(--hdr)); */
       display: flex;
       flex-direction: column;
       justify-content: center;
