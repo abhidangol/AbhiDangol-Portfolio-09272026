@@ -717,7 +717,7 @@ button:focus-visible .roll>span {
 }
 
 .phead p {
-    max-width: 42ch;
+    max-width: 75ch;
     font-size: 18px
 }
 
