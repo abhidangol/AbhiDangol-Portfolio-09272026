@@ -314,6 +314,15 @@ button:focus-visible .roll>span {
     text-transform: uppercase
 }
 
+.menu .btn {
+    display: block;
+    font: 800 clamp(52px, 17vw, 96px)/1.02 var(--ff-display);
+    font-variation-settings: 'wdth' 64;
+    text-transform: uppercase;
+    padding: 0;
+    color: var(--accent);
+}
+
 .menu ul a:hover {
     color: var(--accent)
 }
@@ -515,6 +524,18 @@ button:focus-visible .roll>span {
     height: .5em;
     border-radius: 50%;
     background: var(--ink)
+}
+
+.client-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: clamp(34px, 6vw, 80px);
+    height: clamp(32px, 2.3vw, 40px);
+    line-height: 1;
+    white-space: nowrap;
+    
+    
 }
 
 
