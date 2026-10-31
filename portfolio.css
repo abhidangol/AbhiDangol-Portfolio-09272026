@@ -343,11 +343,8 @@ button:focus-visible .roll>span {
 .hero {
     display: grid;
     grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
-
     height: calc(97vh - var(--tick-h) - var(--nav-h));
-
     margin-top: calc(var(--tick-h) + var(--nav-h));
-
     border-bottom: 1px solid var(--ink);
     /* padding-bottom: 20px; */
 }

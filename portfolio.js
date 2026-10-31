@@ -239,3 +239,5 @@
     $('#year').textContent = new Date().getFullYear();
     $('#toTop').addEventListener('click', e => { e.preventDefault(); scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
 })();
+
+
