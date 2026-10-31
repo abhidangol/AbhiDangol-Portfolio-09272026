@@ -8,6 +8,9 @@
   <meta name="description"
     content="Case study: SCALA, a supply chain platform for wholesalers, distributors, retailers and sales teams. A web dashboard and a field-sales mobile app, designed end to end.">
   <meta name="theme-color" content="#ffffff">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23FF4A1C'/%3E%3C/svg%3E">
+  
   <script>
     document.documentElement.classList.add('js');
     function ph(i) { var p = i.parentElement; p.classList.add('ph'); p.dataset.file = p.dataset.file || decodeURI(i.getAttribute('src')).replace(/^\//, ''); i.remove() }
@@ -282,133 +285,172 @@
       transform: translateX(4px)
     }
 
-    /* ---------- header ---------- */
-    .hdr {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      background: var(--paper)
+    /* ---------- header (exactly matching index.html / portfolio.css) ---------- */
+    body.lock {
+      overflow: hidden;
     }
 
-    .tick {
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 60;
+      transition: transform .55s var(--ease);
+    }
+
+    .site-header.hide {
+      transform: translateY(-100%);
+    }
+
+    .ticker {
       height: var(--tick-h);
       background: var(--ink);
       color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .09em;
+      text-transform: uppercase;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 14px;
-      padding: 0 var(--pad);
-      white-space: nowrap;
-      overflow: hidden
+      border-bottom: 1px solid #2a2a2a;
     }
 
-    .tick i {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex: none
+    .ticker .tk {
+      padding-right: 44px;
+      white-space: nowrap;
+    }
+
+    .ticker .tk em {
+      font-style: normal;
+      color: var(--accent);
+      margin-right: 6px;
     }
 
     .nav {
       height: var(--nav-h);
+      padding: 0 var(--pad);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 var(--pad);
+      gap: 24px;
+      background: rgba(255, 255, 255, .94);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--ink);
-      position: relative
     }
 
-    .prog {
-      position: absolute;
-      left: 0;
-      bottom: -1px;
-      height: 2px;
-      width: 100%;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: left;
-      pointer-events: none
-    }
-
-    .brand {
-      font-weight: 800;
-      font-size: 19px;
-      letter-spacing: -.01em
-    }
-
-    .nav ul {
+    .logo {
       display: flex;
-      gap: clamp(20px, 3vw, 44px);
       align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -.01em;
+    }
+
+    .logo i {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex: none;
+    }
+
+    .links {
+      display: flex;
+      gap: clamp(24px, 3.4vw, 48px);
       font-weight: 600;
-      font-size: 16px
-    }
-
-    .nav .cv {
-      border: 1px solid var(--ink);
-      padding: 9px 18px;
-      font-weight: 700;
-      font-size: 14px;
-      transition: .3s;
-      display: inline-block
-    }
-
-    .nav .cv:hover {
-      background: var(--ink);
-      color: #fff
+      font-size: 15px;
     }
 
     .burger {
       display: none;
-      height: 40px;
-      padding: 0 16px;
+      padding: 9px 16px;
+      border: 1px solid currentColor;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .menu {
+      position: fixed;
+      inset: 0;
+      z-index: 55;
+      background: var(--ink);
+      color: #fff;
+      padding: calc(var(--tick-h) + var(--nav-h) + 28px) var(--pad) 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translateY(-101%);
+      visibility: hidden;
+      transition: transform .7s var(--ease), visibility 0s .7s;
+    }
+
+    .menu.open {
+      transform: none;
+      visibility: visible;
+      transition: transform .7s var(--ease);
+    }
+
+    .menu ul a {
+      display: block;
+      font: 800 clamp(52px, 17vw, 96px)/1.02 var(--ff-display);
+      font-variation-settings: 'wdth' 64;
+      text-transform: uppercase;
+    }
+
+    .menu .btn {
+      display: block;
+      font: 800 clamp(52px, 17vw, 96px)/1.02 var(--ff-display);
+      font-variation-settings: 'wdth' 64;
+      text-transform: uppercase;
+      padding: 0;
+      color: var(--accent);
+      background: none;
+      border: none;
+    }
+
+    .menu ul a:hover {
+      color: var(--accent);
+    }
+
+    .menu p {
+      opacity: .65;
+      font-size: 15px;
+    }
+
+    .menu-open .site-header .nav {
+      background: var(--ink);
+      color: #fff;
+      border-color: #2a2a2a;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 26px;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
       border: 1px solid var(--ink);
-      font-weight: 700;
-      font-size: 14px
+      transition: background .3s, color .3s, border-color .3s;
     }
 
-    @media(max-width:860px) {
+    .btn:hover,
+    .btn:focus-visible {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    @media (max-width:860px) {
+      .links,
+      .nav>.btn {
+        display: none;
+      }
+
       .burger {
-        display: block
-      }
-
-      .nav ul {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: var(--hdr);
-        background: var(--paper);
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: 0 var(--pad);
-        border-bottom: 1px solid var(--ink);
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height .5s var(--ease)
-      }
-
-      .nav ul.open {
-        max-height: 360px
-      }
-
-      .nav ul li {
-        border-top: 1px solid var(--ink);
-        padding: 16px 0;
-        font-size: 22px
-      }
-
-      .nav ul li:first-child {
-        border-top: 0
-      }
-    }
-
-    @media(max-width:560px) {
-      .tick span:last-of-type {
-        display: none
+        display: block;
       }
     }
 
@@ -590,12 +632,13 @@
       margin-top: 10px
     }
 
-    /* hero — simple premium two-column cover */
+    /* hero — matching index.html height and responsive behaviour */
     .hero {
+      margin-top: calc(var(--tick-h) + var(--nav-h));
+      height: calc(97vh - var(--tick-h) - var(--nav-h));
       background: var(--paper);
       color: var(--ink);
       border-bottom: 1px solid var(--ink);
-      min-height: calc(100svh - var(--hdr));
       display: flex;
       flex-direction: column;
     }
@@ -610,18 +653,20 @@
       padding: clamp(14px, 2vw, 20px) var(--pad);
       border-bottom: 1px solid var(--ink);
       font-weight: 600;
-      font-size: 14px
+      font-size: 14px;
     }
 
     .hero-back {
       display: inline-flex;
-      color: var(--ink)
+      color: var(--ink);
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
       flex: 1;
+      height: 100%;
+      min-height: 0;
     }
 
     .hero-left {
@@ -629,8 +674,10 @@
       flex-direction: column;
       justify-content: center;
       gap: clamp(18px, 2.4vw, 26px);
-      padding: clamp(40px, 6vw, 88px) var(--pad);
-      border-right: 1px solid var(--ink)
+      padding: clamp(32px, 5vw, 64px) var(--pad);
+      border-right: 1px solid var(--ink);
+      min-height: 0;
+      overflow: hidden;
     }
 
     .hero-kicker {
@@ -638,39 +685,39 @@
       font-style: italic;
       font-weight: 500;
       font-size: clamp(15px, 1.4vw, 20px);
-      color: var(--mute)
+      color: var(--mute);
     }
 
     .hero-left h1 {
-      font-size: clamp(42px, 6vw, 104px);
+      font-size: clamp(42px, 5.8vw, 100px);
       overflow-wrap: break-word;
-      word-break: break-word
+      word-break: break-word;
     }
 
     .hero-left h1 .line {
       display: block;
       overflow: hidden;
-      padding: .02em 0 .06em
+      padding: .02em 0 .06em;
     }
 
     .hero-left h1 .inner {
       display: block;
       transform: translateY(112%);
       animation: rise 1.15s var(--ease) forwards;
-      animation-delay: calc(.3s + var(--d, 0)*.12s)
+      animation-delay: calc(.3s + var(--d, 0)*.12s);
     }
 
     @keyframes rise {
       to {
-        transform: none
+        transform: none;
       }
     }
 
     .hero-dek {
-      font-size: clamp(16.5px, 1.2vw, 19px);
+      font-size: clamp(16px, 1.15vw, 18.5px);
       color: var(--mute);
-      max-width: 36ch;
-      line-height: 1.65
+      max-width: 38ch;
+      line-height: 1.6;
     }
 
     .hero-scroll {
@@ -682,29 +729,31 @@
       font-size: 12.5px;
       letter-spacing: .08em;
       text-transform: uppercase;
-      padding-top: 4px
+      padding-top: 4px;
     }
 
     .hero-scroll svg {
       width: 13px;
       height: 13px;
       color: var(--accent);
-      animation: bob 1.6s ease-in-out infinite
+      animation: bob 1.6s ease-in-out infinite;
     }
 
     @keyframes bob {
       0%,
       100% {
-        transform: translateY(0)
+        transform: translateY(0);
       }
       50% {
-        transform: translateY(5px)
+        transform: translateY(5px);
       }
     }
 
     .hero-right {
       position: relative;
-      overflow: hidden
+      overflow: hidden;
+      min-height: 0;
+      background: var(--ink);
     }
 
     .hero-right img,
@@ -715,12 +764,12 @@
       height: 100%;
       object-fit: cover;
       transform: scale(1.06);
-      animation: heroSettle 1.6s var(--ease) forwards
+      animation: heroSettle 1.6s var(--ease) forwards;
     }
 
     @keyframes heroSettle {
       to {
-        transform: scale(1)
+        transform: scale(1);
       }
     }
 
@@ -733,38 +782,49 @@
       background: var(--ink);
       color: #fff;
       font-weight: 600;
-      font-size: 13px
+      font-size: 13px;
     }
 
     @media (max-width:860px) {
       .hero {
+        grid-template-columns: 1fr;
         height: auto;
         min-height: 0;
       }
 
       .hero-grid {
         grid-template-columns: 1fr;
-        min-height: 0
+        height: auto;
+        min-height: 0;
       }
 
       .hero-left {
         border-right: 0;
         border-bottom: 1px solid var(--ink);
-        padding: clamp(36px, 7vw, 56px) var(--pad)
+        padding: clamp(36px, 7vw, 56px) var(--pad);
+        overflow: visible;
       }
 
       .hero-right {
-        aspect-ratio: 4/3
+        height: 52svh;
+        min-height: 340px;
+        border-right: 0;
+        aspect-ratio: auto;
+      }
+
+      .hero-left h1 {
+        font-size: clamp(44px, 12vw, 80px);
       }
     }
 
     @media (max-width:380px) {
       .hero-left h1 {
-        font-size: clamp(32px, 13vw, 54px)
+        font-size: clamp(32px, 13vw, 54px);
       }
 
       .hero-right {
-        aspect-ratio: 1/1
+        height: 42svh;
+        min-height: 280px;
       }
     }
 
@@ -3838,24 +3898,45 @@
 <body id="top">
   <a class="skip" href="#brief">Skip to content</a>
 
-  <header class="hdr">
-    <div class="tick micro"><i></i><span>Open for new projects</span><span
-        style="opacity:.6;font-weight:600;letter-spacing:.04em;text-transform:none">Free, no-obligation strategy
-        call</span></div>
-    <nav class="nav" aria-label="Primary">
-      <a class="brand" href="https://adangol.com.np/index.html"><span class="roll">Abhishek Dangol</span></a>
-      <ul id="menu">
-        <li><a href="https://adangol.com.np/index.html#projects"><span class="roll">Projects</span></a></li>
-        <li><a href="#process"><span class="roll">Process</span></a></li>
-        <li><a href="#product"><span class="roll">Product</span></a></li>
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="ticker marquee" data-speed="55" aria-label="Currently open for new projects">
+      <div class="track">
+        <div class="set">
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+        </div>
+        <div class="set" aria-hidden="true">
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="../index.html" aria-label="Abhishek Dangol, home"><i></i>Abhishek Dangol</a>
+      <ul class="links">
+        <li><a href="../index.html#projects"><span class="roll">Projects</span></a></li>
+        <li><a href="../index.html#process"><span class="roll">Process</span></a></li>
         <li><a href="#contact"><span class="roll">Contact</span></a></li>
-        <li><a class="cv" href="https://adangol.com.np/CV/Abhishek%20Dangol_CV.pdf"><span class="roll">My
-              Resume</span></a></li>
       </ul>
+      <a class="btn" href="../CV/Abhishek Dangol_CV.pdf" target="_blank" rel="noopener"><span class="roll">My Resume</span></a>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
-      <i class="prog" id="prog" aria-hidden="true"></i>
     </nav>
   </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <ul>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn" href="../CV/Abhishek Dangol_CV.pdf" target="_blank" rel="noopener"><span class="roll">My Resume</span></a>
+    <!-- <p>Open for new projects. Free, no-obligation strategy call.</p> -->
+  </div>
 
   <main>
     <!-- BANNER + HEADING -->
@@ -3909,8 +3990,7 @@
 
     <!-- Project Description Section -->
     <section class="di" aria-label="Project description and info">
-      <!-- <div class="di-top"><span class="chip">Overview</span></div> -->
-
+      
       <div class="di-grid">
         <div class="di-left">
           <div class="di-left-in">
@@ -5020,13 +5100,54 @@
         "use strict";
         var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        /* header */
+        /* navbar scroll behavior (consistent with index.html) */
+        var header = document.querySelector('.site-header');
+        var lastY = scrollY;
+        var ticking = false;
+        var menuOpen = false;
+
+        function updateNav() {
+          ticking = false;
+          var y = scrollY, dy = y - lastY;
+          if (!menuOpen && header) {
+            if (dy > 2 && y > 320) header.classList.add('hide');
+            else if (dy < -2) header.classList.remove('hide');
+          }
+          lastY = y;
+        }
+        addEventListener('scroll', function () {
+          if (!ticking) { ticking = true; requestAnimationFrame(updateNav); }
+        }, { passive: true });
+
+        /* mobile menu (consistent with index.html) */
         var burger = document.getElementById('burger'), menu = document.getElementById('menu');
-        burger.addEventListener('click', function () { var o = menu.classList.toggle('open'); burger.setAttribute('aria-expanded', o) });
-        menu.addEventListener('click', function (e) { if (e.target.closest('a')) { menu.classList.remove('open'); burger.setAttribute('aria-expanded', 'false') } });
-        var prog = document.getElementById('prog');
-        function onScroll() { var h = document.documentElement, m = h.scrollHeight - h.clientHeight; prog.style.transform = 'scaleX(' + (m > 0 ? Math.min(1, h.scrollTop / m) : 0) + ')' }
-        addEventListener('scroll', onScroll, { passive: true }); onScroll();
+        function setMenu(open) {
+          menuOpen = open;
+          if (menu) {
+            menu.classList.toggle('open', open);
+            menu.setAttribute('aria-hidden', String(!open));
+          }
+          if (burger) {
+            burger.setAttribute('aria-expanded', String(open));
+            burger.textContent = open ? 'Close' : 'Menu';
+          }
+          document.body.classList.toggle('menu-open', open);
+          document.body.classList.toggle('lock', open);
+          if (open && header) header.classList.remove('hide');
+        }
+        if (burger && menu) {
+          burger.addEventListener('click', function () { setMenu(!menuOpen); });
+          menu.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { setMenu(false); });
+          });
+          addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && menuOpen) setMenu(false);
+          });
+          var desktop = matchMedia('(min-width: 861px)');
+          desktop.addEventListener('change', function () {
+            if (desktop.matches) setMenu(false);
+          });
+        }
 
         /* roll links */
         document.querySelectorAll('.roll').forEach(function (r) { var t = r.textContent; r.innerHTML = '<span>' + t + '</span><span aria-hidden="true">' + t + '</span>' });
@@ -5103,8 +5224,18 @@
             im.src = m.dataset.src; sh.insertBefore(im, s);
           }
         });
-        var v = document.querySelector('.hero-right video, .hero-r video');
-        if (v) { v.addEventListener('error', function () { v.remove() }, true); var vs = v.querySelector('source'); if (vs) vs.addEventListener('error', function () { v.remove() }) }
+        var heroVideo = document.querySelector('.hero-right video, .hero-r video');
+        if (heroVideo) {
+          heroVideo.addEventListener('error', function () {
+            if (heroVideo && typeof heroVideo.remove === 'function') heroVideo.remove();
+          }, true);
+          var heroVideoSource = heroVideo.querySelector('source');
+          if (heroVideoSource) {
+            heroVideoSource.addEventListener('error', function () {
+              if (heroVideo && typeof heroVideo.remove === 'function') heroVideo.remove();
+            });
+          }
+        }
 
         /* ---------- compare slider ---------- */
         var cmp = document.getElementById('cmp');
@@ -5191,13 +5322,13 @@
         /* CTA marquee: loops seamlessly, speeds up with scroll velocity */
         var mq = document.querySelector('.cta-mq');
         if (mq && !reduce) {
-          var tr = mq.querySelector('.track'), set = tr.firstElementChild, x = 0, v = 0, vy = scrollY, sp = +mq.dataset.speed || 100, vis = true, last = performance.now();
+          var tr = mq.querySelector('.track'), set = tr.firstElementChild, x = 0, vel = 0, vy = scrollY, sp = +mq.dataset.speed || 100, vis = true, last = performance.now();
           tr.style.animation = 'none';
           while (tr.scrollWidth < innerWidth * 2 + set.offsetWidth) { var c = set.cloneNode(true); c.setAttribute('aria-hidden', 'true'); tr.appendChild(c) }
           new IntersectionObserver(function (e) { vis = e[0].isIntersecting }).observe(mq);
           requestAnimationFrame(function loop(t) {
-            var dt = Math.min((t - last) / 1000, .05); last = t; v += (Math.abs(scrollY - vy) - v) * .1; vy = scrollY;
-            if (vis) { x -= (sp + v * 12) * dt; var w = set.offsetWidth; if (x <= -w) x += w; tr.style.transform = 'translate3d(' + x + 'px,0,0)' }
+            var dt = Math.min((t - last) / 1000, .05); last = t; vel += (Math.abs(scrollY - vy) - vel) * .1; vy = scrollY;
+            if (vis) { x -= (sp + vel * 12) * dt; var w = set.offsetWidth; if (x <= -w) x += w; tr.style.transform = 'translate3d(' + x + 'px,0,0)' }
             requestAnimationFrame(loop)
           })
         }
