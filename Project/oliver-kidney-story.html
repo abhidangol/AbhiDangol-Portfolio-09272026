@@ -1,0 +1,6357 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oliver Kidney Community App | Abhishek Dangol</title>
+  <meta name="description"
+    content="Case study: Oliver, a mobile community app for people living with kidney disease. Forum, lifestyle, health and news in one calm, supportive place.">
+  <meta name="theme-color" content="#ffffff">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230A0A0A'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23FF4A1C'/%3E%3C/svg%3E">
+  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,800&family=Playfair+Display:ital,wght@1,500&family=Urbanist:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: "Mango Grotesque";
+      src: url("fonts/MangoGrotesque-SemiBold.ttf") format("truetype"),
+        url("../fonts/MangoGrotesque-SemiBold.ttf") format("truetype"),
+        url("/fonts/MangoGrotesque-SemiBold.ttf") format("truetype");
+      font-weight: 600 800;
+      font-display: swap;
+    }
+
+    :root {
+      --paper: #FFFFFF;
+      --soft: #F2F2F2;
+      --ink: #0A0A0A;
+      --mute: #6B6B6B;
+      --hair: #D9D9D9;
+      --accent: #FF4A1C;
+      --sc: #3D5919;
+      /* Oliver olive: used only inside product mockups */
+      --pad: clamp(22px, 4.4vw, 64px);
+      --tick-h: 34px;
+      --nav-h: 68px;
+      --hdr: calc(var(--tick-h) + var(--nav-h));
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --disp: "Mango Grotesque", "Archivo", "Impact", sans-serif;
+      --ff-display: "Mango Grotesque", "Archivo", "Impact", sans-serif;
+      --ff-serif: "Playfair Display", Georgia, serif;
+      --ff-body: "Urbanist", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      overflow-x: clip;
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--hdr)
+    }
+
+    body {
+      font: 400 17px/1.55 "Urbanist", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip
+    }
+
+    img,
+    svg,
+    video {
+      display: block;
+      max-width: 100%
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    ul,
+    ol {
+      list-style: none
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      cursor: pointer
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--ink)
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px
+    }
+
+    .disp {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      line-height: .9;
+      letter-spacing: -.005em
+    }
+
+    .display {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+      line-height: .9;
+    }
+
+    .kicker {
+      font-family: "Playfair Display", serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(15px, 1.4vw, 20px);
+      color: var(--mute)
+    }
+
+    .micro {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase
+    }
+
+    .mute {
+      color: var(--mute)
+    }
+
+    .mc {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 14px;
+      display: block
+    }
+
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: 8px;
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 16px;
+      z-index: 300
+    }
+
+    .skip:focus {
+      left: 12px
+    }
+
+    /* ---------- chips, links ---------- */
+    .chip {
+      display: inline-block;
+      background: var(--ink);
+      color: #fff;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap
+    }
+
+    .chip.line {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--ink)
+    }
+
+    .roll {
+      display: inline-block;
+      overflow: hidden;
+      height: 1.25em;
+      line-height: 1.25;
+      vertical-align: top;
+      position: relative
+    }
+
+    .roll>span {
+      display: block;
+      transition: transform .55s var(--ease)
+    }
+
+    a:hover .roll>span,
+    button:hover .roll>span {
+      transform: translateY(-100%)
+    }
+
+    .alink {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-size: 20px;
+      letter-spacing: .02em;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .alink svg {
+      width: 16px;
+      height: 16px;
+      transition: transform .4s var(--ease)
+    }
+
+    .alink:hover svg {
+      transform: translate(3px, -3px)
+    }
+
+    .circ {
+      display: grid;
+      place-items: center;
+      width: clamp(40px, 4vw, 52px);
+      height: clamp(40px, 4vw, 52px);
+      border: 1px solid var(--ink);
+      border-radius: 50%;
+      transition: .4s var(--ease);
+      flex: none;
+      background: var(--paper)
+    }
+
+    .circ svg {
+      width: 40%;
+      height: 40%;
+      transition: transform .4s var(--ease)
+    }
+
+    .on-hover:hover .circ,
+    button.circ:hover {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .on-hover:hover .circ svg {
+      transform: translateX(4px)
+    }
+
+    /* ---------- header (exactly matching index.html / portfolio.css) ---------- */
+    body.lock {
+      overflow: hidden;
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 60;
+      transition: transform .55s var(--ease);
+    }
+
+    .site-header.hide {
+      transform: translateY(-100%);
+    }
+
+    .ticker {
+      height: var(--tick-h);
+      background: var(--ink);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #2a2a2a;
+    }
+
+    .ticker .tk {
+      padding-right: 44px;
+      white-space: nowrap;
+    }
+
+    .ticker .tk em {
+      font-style: normal;
+      color: var(--accent);
+      margin-right: 6px;
+    }
+
+    .nav {
+      height: var(--nav-h);
+      padding: 0 var(--pad);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      background: rgba(255, 255, 255, .94);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -.01em;
+    }
+
+    .logo i {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex: none;
+    }
+
+    .links {
+      display: flex;
+      gap: clamp(24px, 3.4vw, 48px);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .burger {
+      display: none;
+      padding: 9px 16px;
+      border: 1px solid currentColor;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .menu {
+      position: fixed;
+      inset: 0;
+      z-index: 55;
+      background: var(--ink);
+      color: #fff;
+      padding: calc(var(--tick-h) + var(--nav-h) + 28px) var(--pad) 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translateY(-101%);
+      visibility: hidden;
+      transition: transform .7s var(--ease), visibility 0s .7s;
+    }
+
+    .menu.open {
+      transform: none;
+      visibility: visible;
+      transition: transform .7s var(--ease);
+    }
+
+    .menu ul a {
+      display: block;
+      font: 800 clamp(52px, 17vw, 96px)/1.02 var(--ff-display);
+      font-variation-settings: 'wdth' 64;
+      text-transform: uppercase;
+    }
+
+    .menu .btn {
+      display: block;
+      font: 800 clamp(52px, 17vw, 96px)/1.02 var(--ff-display);
+      font-variation-settings: 'wdth' 64;
+      text-transform: uppercase;
+      padding: 0;
+      color: var(--accent);
+      background: none;
+      border: none;
+    }
+
+    .menu ul a:hover {
+      color: var(--accent);
+    }
+
+    .menu p {
+      opacity: .65;
+      font-size: 15px;
+    }
+
+    .menu-open .site-header .nav {
+      background: var(--ink);
+      color: #fff;
+      border-color: #2a2a2a;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 15px 26px;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid var(--ink);
+      transition: background .3s, color .3s, border-color .3s;
+    }
+
+    .btn:hover,
+    .btn:focus-visible {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    @media (max-width:860px) {
+
+      .links,
+      .nav>.btn {
+        display: none;
+      }
+
+      .burger {
+        display: block;
+      }
+    }
+
+    /* marquee ticker */
+    .marquee {
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .track {
+      display: flex;
+      width: max-content;
+      animation: mq var(--t, 38s) linear infinite;
+    }
+
+    .track .set,
+    .set {
+      display: flex;
+      flex: none;
+      align-items: center;
+    }
+
+    @keyframes mq {
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ---------- reveal ---------- */
+    .ln {
+      display: block;
+      overflow: hidden;
+      padding-bottom: .1em;
+      margin-bottom: -.1em
+    }
+
+    .ln>span {
+      display: block
+    }
+
+    .js .ln>span {
+      transform: translateY(112%);
+      transition: transform 1.15s var(--ease);
+      transition-delay: calc(var(--i, 0)*.12s)
+    }
+
+    .js .in .ln>span,
+    .js .ln.in>span {
+      transform: none
+    }
+
+    .js .rv {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease);
+      transition-delay: calc(var(--i, 0)*.1s)
+    }
+
+    .js .rv.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .js .settle {
+      transform: scale(1.06);
+      transition: transform 1.6s var(--ease)
+    }
+
+    .js .settle.in {
+      transform: none
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      .js .ln>span,
+      .js .rv,
+      .js .settle {
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important
+      }
+
+      .scue svg,
+      .roll>span {
+        animation: none !important;
+        transition: none !important
+      }
+    }
+
+    /* ---------- common ruled bits ---------- */
+    .bar {
+      padding: 14px var(--pad);
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px
+    }
+
+    .rg {
+      display: grid;
+      grid-template-columns: repeat(var(--c, 3), minmax(0, 1fr));
+      gap: 1px;
+      background: var(--ink);
+      border: 1px solid var(--ink)
+    }
+
+    .rg>* {
+      background: var(--paper);
+      padding: clamp(16px, 2vw, 28px);
+      min-width: 0
+    }
+
+    .rg.g12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr))
+    }
+
+    .sp3 {
+      grid-column: span 3
+    }
+
+    .sp4 {
+      grid-column: span 4
+    }
+
+    .sp5 {
+      grid-column: span 5
+    }
+
+    .sp7 {
+      grid-column: span 7
+    }
+
+    .sp8 {
+      grid-column: span 8
+    }
+
+    .sp12 {
+      grid-column: 1/-1
+    }
+
+    @media(max-width:1000px) {
+      .rg {
+        --c: 2
+      }
+
+      .rg.g12 {
+        grid-template-columns: 1fr
+      }
+
+      .rg.g12>* {
+        grid-column: 1/-1
+      }
+    }
+
+    @media(max-width:620px) {
+      .rg {
+        --c: 1
+      }
+    }
+
+    .stage {
+      background: var(--soft);
+      border: 1px solid var(--ink);
+      padding: clamp(16px, 2.6vw, 40px)
+    }
+
+    .todo {
+      border: 1px dashed var(--accent);
+      padding: 14px 16px;
+      position: relative;
+      color: var(--mute);
+      font-size: 14.5px;
+      line-height: 1.45;
+      background: var(--paper)
+    }
+
+    .todo::before {
+      content: "ADD";
+      position: absolute;
+      top: -8px;
+      left: 12px;
+      background: var(--paper);
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      padding: 0 6px
+    }
+
+    .cell-title {
+      font-size: clamp(20px, 1.7vw, 26px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1.2
+    }
+
+    .cell-text {
+      color: var(--mute);
+      font-size: 16px;
+      margin-top: 10px
+    }
+
+    /* ---------- hero (matching index.html / supply-chain-story.html) ---------- */
+    .hero {
+      margin-top: calc(var(--tick-h) + var(--nav-h));
+      height: calc(97vh - var(--tick-h) - var(--nav-h));
+      background: var(--paper);
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-bar,
+    .hero-top {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: clamp(14px, 2vw, 20px) var(--pad);
+      border-bottom: 1px solid var(--ink);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .hero-back {
+      display: inline-flex;
+      color: var(--ink);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+      flex: 1;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .hero-left,
+    .hero-l {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(18px, 2.4vw, 26px);
+      padding: clamp(32px, 5vw, 64px) var(--pad);
+      border-right: 1px solid var(--ink);
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .hero-kicker {
+      font-family: var(--ff-serif);
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(15px, 1.4vw, 20px);
+      color: var(--mute);
+    }
+
+    .hero-left h1,
+    .hero-l h1,
+    .hero h1 {
+      font-family: var(--ff-display);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+      line-height: .9;
+      font-size: clamp(42px, 5.8vw, 100px);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .hero-left h1 .line,
+    .hero-l h1 .line {
+      display: block;
+      overflow: hidden;
+      padding: .02em 0 .06em;
+    }
+
+    .hero-left h1 .inner,
+    .hero-l h1 .inner {
+      display: block;
+      transform: translateY(112%);
+      animation: rise 1.15s var(--ease) forwards;
+      animation-delay: calc(.3s + var(--d, 0)*.12s);
+    }
+
+    @keyframes rise {
+      to {
+        transform: none;
+      }
+    }
+
+    .hero-dek {
+      font-size: clamp(16px, 1.15vw, 18.5px);
+      color: var(--mute);
+      max-width: 38ch;
+      line-height: 1.6;
+    }
+
+    .hero-scroll,
+    .scue {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      width: fit-content;
+      font-weight: 700;
+      font-size: 12.5px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding-top: 4px;
+    }
+
+    .hero-scroll svg,
+    .scue svg {
+      width: 13px;
+      height: 13px;
+      color: var(--accent);
+      animation: bob 1.6s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    .hero-right,
+    .hero-r {
+      position: relative;
+      overflow: hidden;
+      background: var(--soft);
+      min-height: 0;
+    }
+
+    .hero-right .settle,
+    .hero-r .settle {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-right video,
+    .hero-r video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-r .shot.h-web {
+      position: absolute;
+      left: 7%;
+      top: 11%;
+      width: 90%;
+      box-shadow: 0 0 0 1px var(--ink);
+    }
+
+    .hero-r .shot.h-ph {
+      position: absolute;
+      left: auto;
+      right: 9%;
+      bottom: 8%;
+      width: 25%;
+      box-shadow: 0 0 0 1px var(--ink), 0 18px 40px -18px rgba(10, 10, 10, .5);
+      z-index: 2;
+    }
+
+    .hero-r .sch {
+      display: none;
+    }
+
+    .capt,
+    .hero-right-cap {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      background: var(--ink);
+      color: #fff;
+      padding: 9px 16px;
+      z-index: 3;
+    }
+
+    @media (max-width:860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 0;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 0;
+      }
+
+      .hero-left,
+      .hero-l {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink);
+        padding: clamp(36px, 7vw, 56px) var(--pad);
+        overflow: visible;
+      }
+
+      .hero-right,
+      .hero-r {
+        height: 52svh;
+        min-height: 340px;
+        border-right: 0;
+        aspect-ratio: auto;
+      }
+
+      .hero-left h1,
+      .hero-l h1,
+      .hero h1 {
+        font-size: clamp(44px, 12vw, 80px);
+      }
+    }
+
+    @media (max-width:380px) {
+
+      .hero-left h1,
+      .hero-l h1,
+      .hero h1 {
+        font-size: clamp(32px, 13vw, 54px);
+      }
+
+      .hero-right,
+      .hero-r {
+        height: 42svh;
+        min-height: 280px;
+      }
+    }
+
+    /* ---------- brief ---------- */
+    .brief {
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100svh - var(--hdr))
+    }
+
+    .brief-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      align-items: center
+    }
+
+    .brief-main>div {
+      padding: clamp(32px, 6vw, 88px) var(--pad)
+    }
+
+    .brief-main>div:first-child {
+      border-right: 1px solid var(--ink)
+    }
+
+    .statement {
+      font-size: clamp(26px, 3.3vw, 50px);
+      line-height: 1.12;
+      font-weight: 600;
+      letter-spacing: -.025em
+    }
+
+    .statement em {
+      font-style: normal;
+      color: var(--accent)
+    }
+
+    .brief-main p.sub {
+      font-size: clamp(17px, 1.4vw, 21px);
+      color: var(--mute);
+      max-width: 36ch
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--ink)
+    }
+
+    .meta div {
+      padding: 22px var(--pad) 26px;
+      border-right: 1px solid var(--ink)
+    }
+
+    .meta div:last-child {
+      border-right: 0
+    }
+
+    .meta dt {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      margin-bottom: 6px
+    }
+
+    .meta dd {
+      font-weight: 600;
+      font-size: clamp(16px, 1.1vw, 18px);
+      line-height: 1.4
+    }
+
+    @media(max-width:860px) {
+      .brief-main {
+        grid-template-columns: 1fr
+      }
+
+      .brief-main>div:first-child {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .meta {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .meta div:nth-child(2) {
+        border-right: 0
+      }
+
+      .meta div:nth-child(-n+2) {
+        border-bottom: 1px solid var(--ink)
+      }
+    }
+
+    @media(max-width:480px) {
+      .meta {
+        grid-template-columns: 1fr
+      }
+
+      .meta div {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .meta div:last-child {
+        border-bottom: 0
+      }
+    }
+
+    /* ---------- stats ---------- */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .stats>div {
+      padding: clamp(24px, 3.4vw, 52px) var(--pad) clamp(22px, 3vw, 44px) clamp(16px, 2vw, 32px);
+      border-right: 1px solid var(--ink)
+    }
+
+    .stats>div:first-child {
+      padding-left: var(--pad)
+    }
+
+    .stats>div:last-child {
+      border-right: 0
+    }
+
+    .stats b {
+      display: block;
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(72px, 10vw, 168px);
+      line-height: .8;
+      letter-spacing: -.01em
+    }
+
+    .stats b sup {
+      font-size: .45em;
+      vertical-align: top;
+      color: var(--accent);
+      margin-left: .04em
+    }
+
+    .stats span {
+      display: block;
+      margin-top: 18px;
+      color: var(--mute);
+      font-size: 15.5px;
+      line-height: 1.4;
+      max-width: 24ch
+    }
+
+    @media(max-width:860px) {
+      .stats {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .stats>div:nth-child(2) {
+        border-right: 0
+      }
+
+      .stats>div:nth-child(-n+2) {
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .stats>div:nth-child(3) {
+        padding-left: var(--pad)
+      }
+    }
+
+    /* ---------- description & info ---------- */
+    .di {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .di-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr
+    }
+
+    .di-l {
+      border-right: 1px solid var(--ink);
+      position: sticky;
+      top: var(--hdr);
+      height: calc(100svh - var(--hdr));
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 var(--pad);
+      gap: 28px
+    }
+
+    .di-l p {
+      font-size: clamp(21px, 2vw, 28px);
+      font-weight: 500;
+      line-height: 1.5;
+      letter-spacing: -.01em;
+      max-width: 34ch
+    }
+
+    .di-r {
+      min-width: 0
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: minmax(120px, 200px) 1fr;
+      gap: 20px;
+      padding: clamp(24px, 3vw, 40px) var(--pad);
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .row:last-child {
+      border-bottom: 0
+    }
+
+    .row dt {
+      font-weight: 600;
+      font-size: clamp(16px, 1.1vw, 18px)
+    }
+
+    .row dd {
+      color: var(--mute);
+      font-size: clamp(16px, 1.1vw, 18px);
+      line-height: 1.65;
+      max-width: 58ch
+    }
+
+    .row dd li+li {
+      margin-top: 10px
+    }
+
+    .row dd.dots li {
+      position: relative;
+      padding-left: 20px
+    }
+
+    .row dd.dots li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    @media(max-width:860px) {
+      .di-grid {
+        grid-template-columns: 1fr
+      }
+
+      .di-l {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--ink);
+        padding: 36px var(--pad)
+      }
+
+      .row {
+        grid-template-columns: 1fr;
+        gap: 10px
+      }
+    }
+
+    /* ---------- journey index ---------- */
+    .jr {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .jr-head {
+      padding: clamp(40px, 6vw, 90px) var(--pad) clamp(28px, 4vw, 56px);
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: clamp(20px, 4vw, 64px);
+      align-items: end
+    }
+
+    .jr-head h2 {
+      font-size: clamp(52px, 7.2vw, 120px)
+    }
+
+    .jr-head p {
+      color: var(--mute);
+      max-width: 36ch
+    }
+
+    .jr-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid var(--ink)
+    }
+
+    .jr-grid a {
+      padding: 20px var(--pad) 24px clamp(14px, 1.6vw, 24px);
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      min-height: 150px;
+      justify-content: space-between;
+      transition: background .4s var(--ease), color .4s
+    }
+
+    .jr-grid a:nth-child(5n) {
+      border-right: 0
+    }
+
+    .jr-grid a:nth-last-child(-n+5) {
+      border-bottom: 0
+    }
+
+    .jr-grid a:hover {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .jr-grid .n {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(36px, 3.4vw, 56px);
+      color: var(--accent);
+      line-height: .85
+    }
+
+    .jr-grid b {
+      font-weight: 700;
+      font-size: clamp(15px, 1.1vw, 17px);
+      line-height: 1.25
+    }
+
+    @media(max-width:1000px) {
+      .jr-head {
+        grid-template-columns: 1fr
+      }
+
+      .jr-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .jr-grid a:nth-child(5n) {
+        border-right: 1px solid var(--ink)
+      }
+
+      .jr-grid a:nth-child(2n) {
+        border-right: 0
+      }
+
+      .jr-grid a:nth-last-child(-n+5) {
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .jr-grid a:nth-last-child(-n+2) {
+        border-bottom: 0
+      }
+    }
+
+    /* ---------- chapters ---------- */
+    .ch {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .ch-h {
+      display: grid;
+      grid-template-columns: 1fr 5fr 4fr;
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .ch-h>* {
+      padding: clamp(22px, 3vw, 44px) clamp(16px, 2.4vw, 36px);
+      min-width: 0
+    }
+
+    .ch-h>*+* {
+      border-left: 1px solid var(--ink)
+    }
+
+    .ch-h>:first-child {
+      padding-left: var(--pad)
+    }
+
+    .ch-h>:last-child {
+      padding-right: var(--pad)
+    }
+
+    .ch-n {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(52px, 5.6vw, 96px);
+      color: var(--accent);
+      line-height: .82
+    }
+
+    .ch-n.sm {
+      font-size: clamp(30px, 2.7vw, 40px)
+    }
+
+    .ch-t {
+      font-size: clamp(48px, 6.4vw, 104px)
+    }
+
+    .ch-d {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .ch-d p {
+      font-size: clamp(17px, 1.25vw, 20px);
+      max-width: 38ch;
+      color: var(--mute)
+    }
+
+    .ch-d .chip {
+      align-self: flex-start
+    }
+
+    .ch-b {
+      padding: clamp(22px, 3.4vw, 56px) var(--pad)
+    }
+
+    @media(max-width:860px) {
+      .ch-h {
+        grid-template-columns: 1fr
+      }
+
+      .ch-h>*+* {
+        border-left: 0;
+        border-top: 1px solid var(--ink)
+      }
+
+      .ch-h>:first-child {
+        padding-bottom: 6px
+      }
+
+      .ch-h>.ch-tt {
+        border-top: 0;
+        padding-top: 0
+      }
+
+      .ch-t {
+        font-size: clamp(52px, 15vw, 84px)
+      }
+    }
+
+    /* c1 spec sheet */
+    .sws {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--ink)
+    }
+
+    .sws div {
+      height: clamp(150px, 15vw, 230px);
+      padding: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      line-height: 1.25;
+      border-right: 1px solid var(--ink)
+    }
+
+    .sws div:last-child {
+      border-right: 0
+    }
+
+    .sws small {
+      font-weight: 500;
+      opacity: .8;
+      font-size: 11px
+    }
+
+    .ds-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px
+    }
+
+    .d-btn {
+      background: var(--sc);
+      color: #fff;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .05em
+    }
+
+    .d-btn.o {
+      background: #fff;
+      color: var(--sc);
+      border: 1.5px solid var(--sc)
+    }
+
+    .d-btn.x {
+      background: #b9c5ff
+    }
+
+    .d-in {
+      border: 1px solid #e0e0ec;
+      background: #f7f7fb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #888;
+      min-width: 170px
+    }
+
+    .d-ch {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800
+    }
+
+    .ok {
+      background: #dcfce7;
+      color: #15803d
+    }
+
+    .wn {
+      background: #fef3c7;
+      color: #b45309
+    }
+
+    .er {
+      background: #fee2e2;
+      color: #b91c1c
+    }
+
+    .if {
+      background: #dbe5ff;
+      color: #1d3fd1
+    }
+
+    .d-kpi {
+      border: 1px solid #e8e8f0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px
+    }
+
+    .d-kpi small {
+      display: block;
+      font-size: 11px;
+      color: #666
+    }
+
+    .d-kpi b {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -.02em
+    }
+
+    .d-menu {
+      display: grid;
+      gap: 4px
+    }
+
+    .d-menu span {
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600
+    }
+
+    .d-menu .on {
+      background: var(--sc);
+      color: #fff
+    }
+
+    .anat {
+      display: grid;
+      grid-template-columns: minmax(120px, 18%) 1fr;
+      border: 1px solid var(--ink);
+      min-height: 300px
+    }
+
+    .anat .a-side {
+      background: var(--soft);
+      padding: 18px;
+      border-right: 1px solid var(--ink);
+      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between
+    }
+
+    .anat .a-side small,
+    .anat .a-r small {
+      display: block;
+      color: var(--mute);
+      font-weight: 500;
+      font-size: 13px
+    }
+
+    .anat .a-main {
+      display: grid;
+      grid-template-rows: auto auto auto 1fr
+    }
+
+    .anat .a-r {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      font-weight: 700
+    }
+
+    .anat .a-r:last-child {
+      border-bottom: 0;
+      align-items: flex-start;
+      background: repeating-linear-gradient(0deg, transparent 0 41px, var(--hair) 41px 42px)
+    }
+
+    .anat .a-r b {
+      font-family: var(--disp);
+      font-stretch: 70%;
+      font-weight: 800;
+      font-size: 28px;
+      color: var(--accent);
+      line-height: .9;
+      min-width: 20px
+    }
+
+    .anat .a-r span {
+      flex: 1
+    }
+
+    .anat .a-r small {
+      display: inline;
+      margin-left: 10px
+    }
+
+    /* c2 research */
+    .qcell .q-n {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      color: var(--accent);
+      font-size: 44px;
+      line-height: .85;
+      margin-bottom: 34px;
+      display: block
+    }
+
+    .qcell .arr {
+      display: block;
+      margin: 22px 0 14px;
+      height: 1px;
+      background: var(--ink);
+      position: relative
+    }
+
+    .qcell .arr::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: -4px;
+      width: 9px;
+      height: 9px;
+      border-top: 1px solid var(--ink);
+      border-right: 1px solid var(--ink);
+      transform: rotate(45deg)
+    }
+
+    .qcell .ev {
+      margin-top: 20px;
+      white-space: normal
+    }
+
+    /* c3 personas */
+    .pcell {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 340px
+    }
+
+    .pcell .av {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--ink);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: 34px;
+      margin-bottom: 10px
+    }
+
+    .pcell .tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    .pcell h4 {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(34px, 3vw, 48px);
+      line-height: .9
+    }
+
+    .pcell p.g {
+      font-size: 17px;
+      font-weight: 500;
+      line-height: 1.4
+    }
+
+    .pcell dl {
+      margin-top: auto;
+      display: grid;
+      gap: 10px;
+      border-top: 1px solid var(--ink);
+      padding-top: 14px;
+      font-size: 14px
+    }
+
+    .pcell dt {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--mute)
+    }
+
+    /* c4 flows */
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr));
+      gap: 1px;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      counter-reset: f
+    }
+
+    .flow li {
+      background: var(--paper);
+      padding: 18px 18px 22px;
+      position: relative;
+      counter-increment: f;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .flow li::before {
+      content: counter(f, decimal-leading-zero);
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: 36px;
+      color: var(--accent);
+      line-height: .9;
+      margin-bottom: auto;
+      padding-bottom: 22px
+    }
+
+    .flow li b {
+      font-size: 17px;
+      line-height: 1.2
+    }
+
+    .flow li small {
+      color: var(--mute);
+      font-size: 13.5px;
+      line-height: 1.35
+    }
+
+    .flow li.end {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .flow li.end small {
+      color: #bbb
+    }
+
+    .flow li:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -9px;
+      top: 20px;
+      z-index: 2;
+      background: var(--paper);
+      color: var(--ink);
+      width: 17px;
+      height: 17px;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      line-height: 1;
+      border: 1px solid var(--ink);
+      border-radius: 50%
+    }
+
+    @media(max-width:900px) {
+      .flow {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .flow li:not(:last-child)::after {
+        display: none
+      }
+    }
+
+    @media(max-width:520px) {
+      .flow {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .toc li {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 11px 0;
+      border-top: 1px solid var(--hair);
+      font-weight: 600;
+      font-size: 16px
+    }
+
+    .toc li:first-child {
+      border-top: 0
+    }
+
+    .toc li small {
+      color: var(--mute);
+      font-weight: 500;
+      font-size: 14px;
+      text-align: right;
+      min-width: 0
+    }
+
+    @media(max-width:520px) {
+      .toc li {
+        flex-direction: column;
+        gap: 2px
+      }
+
+      .toc li small {
+        text-align: left
+      }
+    }
+
+    .toc li.grp {
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      border-top: 1px solid var(--ink);
+      padding-top: 16px;
+      margin-top: 6px
+    }
+
+    /* c5-6 wireframes + compare */
+    .wr {
+      display: grid;
+      grid-template-columns: 17cqw 1fr;
+      height: 100%;
+      background: #fff
+    }
+
+    .wr .sd {
+      border-right: .15cqw solid #b5b5b5;
+      padding: 2cqw 1.4cqw;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5cqw
+    }
+
+    .wr .sd i {
+      display: block;
+      height: 1cqw;
+      background: #d6d6d6
+    }
+
+    .wr .sd i:first-child {
+      height: 2cqw;
+      width: 60%;
+      margin-bottom: 1.5cqw;
+      background: #bdbdbd
+    }
+
+    .wr .mn {
+      display: flex;
+      flex-direction: column;
+      min-width: 0
+    }
+
+    .wr .tp {
+      height: 4cqw;
+      border-bottom: .15cqw solid #b5b5b5;
+      padding: 1.4cqw 1.8cqw
+    }
+
+    .wr .tp i {
+      display: block;
+      width: 12cqw;
+      height: 1.2cqw;
+      background: #cfcfcf
+    }
+
+    .wr .bd {
+      padding: 1.4cqw 1.8cqw;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1cqw;
+      min-height: 0
+    }
+
+    .wr .bx {
+      background: repeating-linear-gradient(135deg, #f4f4f4 0 .7cqw, #ebebeb .7cqw 1.4cqw);
+      border: .12cqw solid #c4c4c4
+    }
+
+    .wr .r4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .9cqw;
+      height: 7cqw;
+      flex: none
+    }
+
+    .wr .bt {
+      align-self: flex-end;
+      width: 12cqw;
+      height: 3cqw;
+      background: #c9c9c9;
+      flex: none
+    }
+
+    .wr .tabs {
+      display: flex;
+      gap: 1.6cqw;
+      flex: none;
+      border-bottom: .12cqw solid #c4c4c4;
+      padding-bottom: .8cqw
+    }
+
+    .wr .tabs i {
+      width: 6cqw;
+      height: 1cqw;
+      background: #cfcfcf
+    }
+
+    .wr .tb {
+      flex: 1;
+      border: .12cqw solid #c4c4c4;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden
+    }
+
+    .wr .tb i {
+      display: block;
+      height: 2.8cqw;
+      flex: none;
+      border-bottom: .12cqw solid #dcdcdc;
+      background: linear-gradient(90deg, #e2e2e2 0 8%, transparent 8% 14%, #e8e8e8 14% 34%, transparent 34% 42%, #e8e8e8 42% 60%, transparent 60% 66%, #e8e8e8 66% 74%, transparent 74%)
+    }
+
+    .wr .tb i:first-child {
+      background: #eee
+    }
+
+    .wr .cc {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: .9cqw;
+      flex: 1;
+      min-height: 0
+    }
+
+    .wp {
+      height: 100%;
+      padding: 7cqw 6cqw 6cqw;
+      display: flex;
+      flex-direction: column;
+      gap: 3.4cqw;
+      background: #fff
+    }
+
+    .wp .h {
+      height: 3cqw;
+      background: #cfcfcf;
+      width: 50%;
+      align-self: center
+    }
+
+    .wp .l {
+      height: 2cqw;
+      width: 34%;
+      background: #cfcfcf
+    }
+
+    .wp .f {
+      height: 9cqw;
+      border: .4cqw solid #c4c4c4;
+      background: #f4f4f4
+    }
+
+    .wp .b {
+      height: 11cqw;
+      background: #c9c9c9;
+      margin-top: auto
+    }
+
+    .wp .m {
+      flex: 1;
+      border: .4cqw solid #c4c4c4;
+      background: repeating-linear-gradient(135deg, #f4f4f4 0 2cqw, #ebebeb 2cqw 4cqw)
+    }
+
+    .wires {
+      display: grid;
+      grid-template-columns: 8fr 2fr 2fr;
+      gap: clamp(12px, 2vw, 28px);
+      align-items: end
+    }
+
+    .wires .cap,
+    .cap {
+      font-size: 13px;
+      color: var(--mute);
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px
+    }
+
+    .wires .cap b,
+    .cap b {
+      color: var(--ink);
+      font-weight: 700
+    }
+
+    @media(max-width:700px) {
+      .wires {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .wires>:first-child {
+        grid-column: 1/-1
+      }
+    }
+
+    .cmp {
+      position: relative;
+      --v: 50;
+      border: 1px solid var(--ink);
+      background: #fff;
+      user-select: none
+    }
+
+    .cmp .mock {
+      display: block
+    }
+
+    .cmp .wire-o {
+      position: absolute;
+      inset: 0;
+      clip-path: inset(0 calc(100% - var(--v)*1%) 0 0);
+      background: #fff
+    }
+
+    .cmp .hnd {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--v)*1%);
+      width: 2px;
+      background: var(--accent);
+      transform: translateX(-1px);
+      pointer-events: none;
+      z-index: 4
+    }
+
+    .cmp .hnd::after {
+      content: "↔";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      border: 2px solid var(--paper)
+    }
+
+    .cmp input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+      z-index: 5;
+      touch-action: pan-y;
+      margin: 0
+    }
+
+    .cmp input:focus-visible+.hnd::after {
+      outline: 2px solid var(--ink);
+      outline-offset: 3px
+    }
+
+    .cmp .lb {
+      position: absolute;
+      top: 0;
+      z-index: 3;
+      background: var(--ink);
+      color: #fff;
+      padding: 6px 12px
+    }
+
+    .cmp .lb.l {
+      left: 0
+    }
+
+    .cmp .lb.r {
+      right: 0;
+      background: var(--sc)
+    }
+
+    /* c7 table */
+    .tt {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .tt th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      padding: 0 12px 12px 0;
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .tt td {
+      padding: 16px 12px 16px 0;
+      border-bottom: 1px solid var(--hair);
+      font-weight: 600;
+      vertical-align: top;
+      font-size: 16px
+    }
+
+    .tt td.d {
+      font-family: var(--disp);
+      font-stretch: 70%;
+      font-weight: 800;
+      font-size: 30px;
+      color: var(--hair);
+      line-height: 1
+    }
+
+    .tt .tn {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px
+    }
+
+    .abx {
+      background: var(--soft);
+      border: 1px dashed var(--mute);
+      aspect-ratio: 16/9;
+      display: grid;
+      place-items: center;
+      margin-top: 10px
+    }
+
+    .abx span {
+      font-family: var(--disp);
+      font-stretch: 70%;
+      font-weight: 800;
+      font-size: 52px;
+      color: var(--hair)
+    }
+
+    /* c8 loop */
+    .loop {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1px;
+      background: var(--ink);
+      border: 1px solid var(--ink);
+      counter-reset: l
+    }
+
+    .loop>div {
+      background: var(--paper);
+      padding: 20px 16px;
+      font-weight: 700;
+      counter-increment: l;
+      display: flex;
+      flex-direction: column;
+      gap: 30px
+    }
+
+    .loop>div::before {
+      content: counter(l, decimal-leading-zero);
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: 30px;
+      line-height: .9;
+      color: var(--accent)
+    }
+
+    .loop-back {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 14px 0 26px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    .loop-back::before,
+    .loop-back::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--accent)
+    }
+
+    @media(max-width:700px) {
+      .loop {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    /* c9 + c10 */
+    .log {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .log th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      padding: 0 14px 12px 0;
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .log td {
+      padding: 18px 14px 18px 0;
+      border-bottom: 1px solid var(--hair);
+      vertical-align: top;
+      font-weight: 600
+    }
+
+    .log td.add {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 14.5px
+    }
+
+    .dec {
+      width: 100%;
+      border-collapse: collapse
+    }
+
+    .dec th {
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--mute);
+      padding: 0 14px 12px 0;
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .dec td {
+      padding: 15px 14px 15px 0;
+      border-bottom: 1px solid var(--hair);
+      vertical-align: top;
+      line-height: 1.35
+    }
+
+    .dec td:first-child {
+      font-weight: 800;
+      white-space: nowrap
+    }
+
+    .dec td:nth-child(2) {
+      color: var(--mute);
+      text-decoration: line-through;
+      text-decoration-color: var(--accent)
+    }
+
+    .dec td:last-child {
+      font-weight: 700
+    }
+
+    .pull {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(48px, 5.6vw, 92px);
+      line-height: .9
+    }
+
+    .pull em {
+      font-style: normal;
+      color: var(--accent)
+    }
+
+    .tw {
+      overflow-x: auto
+    }
+
+    /* ---------- interlude ---------- */
+    .inter {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .inter-main {
+      min-height: calc(100svh - var(--hdr));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: clamp(24px, 3vw, 44px);
+      padding: clamp(40px, 7vw, 100px) var(--pad)
+    }
+
+    .inter h2 {
+      font-size: clamp(64px, 13vw, 230px);
+      line-height: .82
+    }
+
+    .inter h2 span.a {
+      color: var(--accent)
+    }
+
+    .inter .row2 {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 56px;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--ink);
+      padding-top: 22px
+    }
+
+    .inter .row2 p {
+      max-width: 42ch;
+      color: var(--mute);
+      font-size: clamp(16px, 1.3vw, 20px)
+    }
+
+    /* ---------- problem / answer ---------- */
+    .pa {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .pa-row {
+      display: grid;
+      grid-template-columns: 90px 1fr 1fr;
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .pa-row:last-child {
+      border-bottom: 0
+    }
+
+    .pa-row>* {
+      padding: clamp(20px, 2.6vw, 34px) clamp(14px, 2vw, 28px);
+      min-width: 0
+    }
+
+    .pa-row>*+* {
+      border-left: 1px solid var(--ink)
+    }
+
+    .pa-row .n {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      color: var(--accent);
+      font-size: clamp(32px, 3vw, 48px);
+      line-height: .9
+    }
+
+    .pa-row h3 {
+      font-size: clamp(20px, 1.9vw, 28px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1.2
+    }
+
+    .pa-row p {
+      color: var(--mute);
+      margin-top: 8px;
+      font-size: 16px
+    }
+
+    .pa-h {
+      display: grid;
+      grid-template-columns: 90px 1fr 1fr;
+      border-bottom: 1px solid var(--ink);
+      background: var(--soft)
+    }
+
+    .pa-h span {
+      padding: 12px clamp(14px, 2vw, 28px)
+    }
+
+    .pa-h span+span {
+      border-left: 1px solid var(--ink)
+    }
+
+    @media(max-width:760px) {
+
+      .pa-row,
+      .pa-h {
+        grid-template-columns: 50px 1fr
+      }
+
+      .pa-row>*:nth-child(3) {
+        grid-column: 2;
+        border-left: 0;
+        border-top: 1px solid var(--ink)
+      }
+
+      .pa-h span:nth-child(3) {
+        display: none
+      }
+    }
+
+    /* ---------- product viewer ---------- */
+    .vtabs {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--ink);
+      border-bottom: 0
+    }
+
+    .vtabs button {
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+      padding: 16px 18px;
+      text-align: left;
+      border-right: 1px solid var(--ink);
+      font-weight: 700;
+      font-size: 15px;
+      transition: background .35s var(--ease), color .35s;
+      white-space: nowrap
+    }
+
+    .vtabs button:last-child {
+      border-right: 0
+    }
+
+    .vtabs .n {
+      font-family: var(--disp);
+      font-stretch: 70%;
+      font-weight: 800;
+      font-size: 26px;
+      color: var(--accent);
+      line-height: .9
+    }
+
+    .vtabs button:hover:not([aria-selected="true"]) {
+      background: var(--soft)
+    }
+
+    .vtabs button[aria-selected="true"] {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .vgrid {
+      display: grid;
+      grid-template-columns: 8fr 4fr;
+      border: 1px solid var(--ink)
+    }
+
+    .vstage {
+      background: var(--soft);
+      padding: clamp(16px, 2.4vw, 36px);
+      border-right: 1px solid var(--ink);
+      min-width: 0;
+      display: flex;
+      align-items: center
+    }
+
+    .vframe {
+      display: grid;
+      width: 100%
+    }
+
+    .vframe>.shot {
+      grid-area: 1/1;
+      border: 1px solid var(--ink);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .6s var(--ease), visibility 0s .6s;
+      box-shadow: 14px 14px 0 rgba(10, 10, 10, .07)
+    }
+
+    .vframe>.shot.on {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .6s var(--ease)
+    }
+
+    .vinfo {
+      padding: clamp(20px, 2.6vw, 40px);
+      display: flex;
+      flex-direction: column;
+      min-width: 0
+    }
+
+    .vi {
+      display: none;
+      flex-direction: column;
+      gap: 16px
+    }
+
+    .vi.on {
+      display: flex;
+      animation: rise .7s var(--ease)
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .vi h3 {
+      font-size: clamp(44px, 4.6vw, 76px)
+    }
+
+    .vi .lead {
+      color: var(--mute);
+      font-size: 17px;
+      max-width: 40ch
+    }
+
+    .vi ul {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .vi li {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 12px;
+      padding: 13px 0;
+      border-top: 1px solid var(--ink);
+      font-size: 15.5px;
+      line-height: 1.4;
+      transition: background .3s
+    }
+
+    .vi li .b {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 12px;
+      display: grid;
+      place-items: center;
+      transition: transform .3s var(--ease);
+      margin-top: -1px
+    }
+
+    .vi li.hl .b {
+      transform: scale(1.25)
+    }
+
+    .vi .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .vi .chips span {
+      border: 1px solid var(--ink);
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600
+    }
+
+    .pins {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none
+    }
+
+    .shot.real .pins {
+      display: none
+    }
+
+    .pin {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 12px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff;
+      transform: translate(-50%, -50%);
+      transition: transform .35s var(--ease), box-shadow .35s;
+      pointer-events: auto
+    }
+
+    .pin.hl {
+      transform: translate(-50%, -50%) scale(1.3);
+      box-shadow: 0 0 0 7px rgba(255, 74, 28, .25)
+    }
+
+    @media(max-width:1000px) {
+      .vgrid {
+        grid-template-columns: 1fr
+      }
+
+      .vstage {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .vtabs {
+        display: flex;
+        overflow-x: auto;
+        scrollbar-width: none
+      }
+
+      .vtabs button {
+        flex: none
+      }
+    }
+
+    /* ---------- modules grid ---------- */
+    .mods {
+      --c: 4
+    }
+
+    .mods>div {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 210px
+    }
+
+    .mods .mn {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(30px, 2.6vw, 42px);
+      line-height: .9
+    }
+
+    .mods p {
+      color: var(--mute);
+      font-size: 15.5px;
+      line-height: 1.45
+    }
+
+    .mods .mt {
+      margin-top: auto;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    @media(max-width:1000px) {
+      .mods {
+        --c: 2
+      }
+    }
+
+    @media(max-width:620px) {
+      .mods {
+        --c: 1
+      }
+    }
+
+    /* ---------- mockup system ---------- */
+    .shot {
+      position: relative;
+      overflow: hidden;
+      background: #fff
+    }
+
+    .shot>img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      z-index: 2;
+      background: #fff
+    }
+
+    .shot .sch {
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: 3;
+      background: var(--ink);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      opacity: .85
+    }
+
+    .shot.real .sch {
+      display: none
+    }
+
+    .mock {
+      container-type: inline-size;
+      width: 100%;
+      background: #fff;
+      color: #111;
+      position: relative;
+      overflow: hidden
+    }
+
+    .mock.web {
+      aspect-ratio: 1600/1024
+    }
+
+    .mock.pho {
+      aspect-ratio: 440/956
+    }
+
+    .w {
+      display: grid;
+      grid-template-columns: 17cqw 1fr;
+      height: 100%
+    }
+
+    .w-side {
+      padding: 1.8cqw 1cqw;
+      border-right: 1px solid #ececf2;
+      display: flex;
+      flex-direction: column;
+      gap: .25cqw
+    }
+
+    .w-logo {
+      font: 800 1.9cqw "Archivo", sans-serif;
+      font-stretch: 100%;
+      color: var(--sc);
+      letter-spacing: .1em;
+      margin: 0 0 1.4cqw 1cqw
+    }
+
+    .w-i {
+      font-size: .95cqw;
+      font-weight: 600;
+      padding: .72cqw 1cqw;
+      border-radius: .45cqw;
+      color: #333;
+      white-space: nowrap
+    }
+
+    .w-i.on {
+      background: var(--sc);
+      color: #fff
+    }
+
+    .w-main {
+      background: #f6f6f9;
+      display: flex;
+      flex-direction: column;
+      min-width: 0
+    }
+
+    .w-top {
+      height: 4cqw;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.8cqw;
+      font-size: 1.6cqw;
+      font-weight: 500;
+      flex: none
+    }
+
+    .w-top .ic {
+      display: flex;
+      gap: .6cqw
+    }
+
+    .w-top .ic i {
+      width: 1.6cqw;
+      height: 1.6cqw;
+      border-radius: .4cqw;
+      background: #ececf2
+    }
+
+    .w-body {
+      padding: 1.4cqw 1.8cqw;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1cqw;
+      min-height: 0
+    }
+
+    .kp {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .9cqw
+    }
+
+    .kp>div {
+      background: #fff;
+      padding: .95cqw 1.2cqw;
+      border-radius: .5cqw;
+      box-shadow: 0 .1cqw .4cqw rgba(0, 0, 0, .06)
+    }
+
+    .kp small {
+      display: block;
+      font-size: .85cqw;
+      color: #555
+    }
+
+    .kp b {
+      font-size: 1.9cqw;
+      font-weight: 600;
+      letter-spacing: -.02em
+    }
+
+    .mtabs {
+      display: flex;
+      gap: 1.6cqw;
+      font-size: .95cqw;
+      color: #777;
+      border-bottom: 1px solid #dcdce6;
+      padding-bottom: .5cqw;
+      font-weight: 600
+    }
+
+    .mtabs .on {
+      color: var(--sc);
+      box-shadow: 0 .2cqw 0 var(--sc)
+    }
+
+    .tb {
+      background: #fff;
+      border-radius: .5cqw;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0
+    }
+
+    .tr {
+      display: grid;
+      grid-template-columns: 1.2fr 2.2fr 2fr 1.2fr .8fr 1.2fr;
+      padding: .7cqw 1.2cqw;
+      font-size: .88cqw;
+      border-bottom: 1px solid #eee;
+      align-items: center;
+      gap: .5cqw
+    }
+
+    .tr.h {
+      background: #f1f1f6;
+      font-weight: 700
+    }
+
+    .tr .pc {
+      display: flex;
+      gap: .6cqw;
+      align-items: center
+    }
+
+    .tr .pc i {
+      width: 2cqw;
+      height: 2cqw;
+      border-radius: 50%;
+      background: #e4e8ff;
+      flex: none
+    }
+
+    .tr a {
+      color: var(--sc);
+      text-decoration: underline;
+      font-weight: 600
+    }
+
+    .row-act {
+      display: flex;
+      justify-content: flex-end
+    }
+
+    .btn-o {
+      border: .15cqw solid var(--sc);
+      color: var(--sc);
+      padding: .6cqw 1.3cqw;
+      border-radius: .5cqw;
+      font-size: .95cqw;
+      font-weight: 600;
+      background: #fff
+    }
+
+    .cards2 {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: .9cqw;
+      flex: 1;
+      min-height: 0
+    }
+
+    .cd {
+      background: #fff;
+      border-radius: .5cqw;
+      padding: 1cqw 1.2cqw;
+      display: flex;
+      flex-direction: column;
+      min-height: 0
+    }
+
+    .cd small {
+      font-size: .9cqw;
+      font-weight: 700
+    }
+
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: .5cqw;
+      flex: 1;
+      padding-top: .8cqw
+    }
+
+    .bars i {
+      flex: 1;
+      background: #d9e0ff;
+      border-radius: .2cqw .2cqw 0 0
+    }
+
+    .bars i.hi {
+      background: var(--sc)
+    }
+
+    .cd svg {
+      flex: 1;
+      width: 100%;
+      min-height: 0
+    }
+
+    .shp {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: .9cqw;
+      flex: 1;
+      min-height: 0
+    }
+
+    .ls {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: .4cqw 1cqw;
+      font-size: .85cqw;
+      color: #777
+    }
+
+    .ls b {
+      color: #111;
+      text-align: right;
+      font-weight: 600
+    }
+
+    .pills {
+      display: flex;
+      align-items: center;
+      gap: .7cqw;
+      font-size: .85cqw;
+      font-weight: 600;
+      background: #fff;
+      border-radius: 2cqw;
+      padding: .7cqw 1.2cqw
+    }
+
+    .pills i {
+      width: 1.6cqw;
+      height: 1.6cqw;
+      border-radius: 50%;
+      background: #e12;
+      flex: none
+    }
+
+    .pills u {
+      flex: 1;
+      height: 0;
+      border-top: .2cqw solid #e12
+    }
+
+    .pills u.d {
+      border-top-style: dashed;
+      border-color: #999
+    }
+
+    .map {
+      flex: 1;
+      position: relative;
+      background: #e9e6df;
+      overflow: hidden;
+      min-height: 0
+    }
+
+    .map svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .sp {
+      display: grid;
+      grid-template-columns: .4fr 2fr 2.4fr 1fr;
+      padding: .75cqw 1.2cqw;
+      font-size: .9cqw;
+      border-bottom: 1px solid #eee;
+      align-items: center
+    }
+
+    .sp .pc {
+      display: flex;
+      gap: .7cqw;
+      align-items: center;
+      font-weight: 600
+    }
+
+    .sp .pc i {
+      width: 2.3cqw;
+      height: 2.3cqw;
+      border-radius: 50%;
+      background: #cfd6ff;
+      flex: none
+    }
+
+    .ob {
+      display: grid;
+      grid-template-columns: 34% 1fr;
+      height: 100%;
+      position: relative
+    }
+
+    .ob-l {
+      background: linear-gradient(160deg, #0a3cff, #0a1f8f);
+      color: #fff;
+      padding: 6cqw 3.4cqw;
+      display: flex;
+      flex-direction: column;
+      gap: 2.6cqw;
+      position: relative
+    }
+
+    .ob-l .lg {
+      position: absolute;
+      top: 2.6cqw;
+      left: 3.4cqw;
+      font: 800 2.1cqw Archivo, sans-serif;
+      font-stretch: 100%;
+      letter-spacing: .1em
+    }
+
+    .ob-l div {
+      font-size: 1cqw;
+      font-weight: 800;
+      letter-spacing: .06em;
+      padding-left: 2.4cqw;
+      position: relative;
+      opacity: .65
+    }
+
+    .ob-l div small {
+      display: block;
+      font-weight: 500;
+      opacity: .8;
+      letter-spacing: 0;
+      margin-top: .2cqw;
+      font-size: .82cqw
+    }
+
+    .ob-l div::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .2cqw;
+      width: 1.3cqw;
+      height: 1.3cqw;
+      border-radius: 50%;
+      border: .2cqw solid #fff
+    }
+
+    .ob-l div.on {
+      opacity: 1
+    }
+
+    .ob-l div.on::before {
+      background: #fff
+    }
+
+    .ob-r {
+      padding: 8cqw 6cqw 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2cqw
+    }
+
+    .ob-r h3 {
+      font-size: 3cqw;
+      font-weight: 600;
+      letter-spacing: -.02em
+    }
+
+    .ob-r p {
+      font-size: 1cqw;
+      color: #777
+    }
+
+    .rc {
+      border: 1px solid #e5e5ee;
+      border-radius: .5cqw;
+      padding: 1.6cqw 2cqw;
+      font-size: 1.2cqw;
+      font-weight: 600;
+      box-shadow: 0 .1cqw .5cqw rgba(0, 0, 0, .05)
+    }
+
+    .rc.on {
+      background: var(--sc);
+      color: #fff;
+      border-color: var(--sc)
+    }
+
+    .ob-nx {
+      position: absolute;
+      right: 3cqw;
+      bottom: 3cqw;
+      background: var(--sc);
+      color: #fff;
+      font-size: 1cqw;
+      font-weight: 700;
+      padding: 1cqw 2.2cqw;
+      border-radius: .4cqw
+    }
+
+    .p {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      font-size: 3.2cqw
+    }
+
+    .p-st {
+      height: 7cqw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 7cqw;
+      font-size: 3.2cqw;
+      font-weight: 700;
+      flex: none
+    }
+
+    .p-hd {
+      height: 11cqw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4cqw;
+      font-weight: 600;
+      flex: none;
+      position: relative;
+      box-shadow: 0 .6cqw 1.6cqw rgba(0, 0, 0, .05)
+    }
+
+    .p-hd::before {
+      content: "←";
+      position: absolute;
+      left: 5cqw;
+      font-weight: 400
+    }
+
+    .p-hd.nb::before {
+      content: ""
+    }
+
+    .p-b {
+      padding: 4cqw 5cqw;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2.6cqw;
+      min-height: 0;
+      overflow: hidden
+    }
+
+    .p-l {
+      font-weight: 700;
+      font-size: 3.1cqw;
+      margin-bottom: -1cqw
+    }
+
+    .p-f {
+      border: 1px solid #e4e4ee;
+      background: #f6f6fb;
+      border-radius: 2cqw;
+      padding: 3cqw 3.4cqw;
+      color: #888;
+      font-size: 3cqw
+    }
+
+    .p-btn {
+      background: var(--sc);
+      color: #fff;
+      text-align: center;
+      border-radius: 2.4cqw;
+      padding: 3.8cqw;
+      font-weight: 700;
+      letter-spacing: .05em;
+      font-size: 3cqw;
+      margin-top: auto
+    }
+
+    .p-btn.x {
+      background: #b9c5ff
+    }
+
+    .p-tabs {
+      display: flex;
+      justify-content: space-around;
+      padding: 3cqw 4cqw 5cqw;
+      font-size: 2.6cqw;
+      font-weight: 600;
+      color: #888;
+      flex: none;
+      border-top: 1px solid #eee
+    }
+
+    .p-tabs .on {
+      background: var(--sc);
+      color: #fff;
+      padding: 1.8cqw 3cqw;
+      border-radius: 2cqw
+    }
+
+    .p-card {
+      border: 1px solid #e8e8f0;
+      border-radius: 2.4cqw;
+      padding: 3cqw;
+      box-shadow: 0 .4cqw 1.4cqw rgba(0, 0, 0, .05)
+    }
+
+    .p-card small {
+      color: #777;
+      font-size: 2.7cqw
+    }
+
+    .p-ln {
+      display: flex;
+      justify-content: space-between;
+      font-size: 3cqw;
+      padding: .8cqw 0
+    }
+
+    .p-ln.t {
+      font-weight: 800;
+      font-size: 3.6cqw;
+      border-top: 1px solid #e4e4ee;
+      padding-top: 2.4cqw;
+      margin-top: 1cqw
+    }
+
+    .p-mp {
+      height: 46cqw;
+      position: relative;
+      border-radius: 2.4cqw;
+      overflow: hidden;
+      background: #e9e6df;
+      flex: none
+    }
+
+    .p-mp svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%
+    }
+
+    .p-tl {
+      display: grid;
+      gap: 3cqw;
+      padding-left: 5cqw;
+      position: relative;
+      font-size: 3cqw
+    }
+
+    .p-tl::before {
+      content: "";
+      position: absolute;
+      left: 1.5cqw;
+      top: 1.5cqw;
+      bottom: 1.5cqw;
+      border-left: .5cqw solid #e12
+    }
+
+    .p-tl div {
+      position: relative
+    }
+
+    .p-tl div::before {
+      content: "";
+      position: absolute;
+      left: -5.4cqw;
+      top: .7cqw;
+      width: 3cqw;
+      height: 3cqw;
+      border-radius: 50%;
+      background: #e12
+    }
+
+    .p-tl div.n::before {
+      background: #999
+    }
+
+    .p-yn {
+      display: flex;
+      gap: 2cqw
+    }
+
+    .p-yn span {
+      flex: 1;
+      border: 1px solid #e4e4ee;
+      border-radius: 2cqw;
+      padding: 2.6cqw;
+      text-align: center;
+      font-size: 3cqw
+    }
+
+    .p-ok {
+      width: 22cqw;
+      height: 22cqw;
+      border-radius: 50%;
+      background: var(--sc);
+      margin: 6cqw auto 2cqw;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 11cqw;
+      font-weight: 800
+    }
+
+    .p-av {
+      width: 11cqw;
+      height: 11cqw;
+      border-radius: 50%;
+      background: #dfe5ff;
+      color: var(--sc);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 3.6cqw;
+      flex: none
+    }
+
+    /* ---------- phone rail ---------- */
+    .rail-wrap {
+      background: var(--soft);
+      border: 1px solid var(--ink)
+    }
+
+    .rail-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px clamp(16px, 2.4vw, 32px);
+      border-bottom: 1px solid var(--ink);
+      gap: 16px
+    }
+
+    .rail-bar .ctl {
+      display: flex;
+      gap: 10px
+    }
+
+    .rail {
+      display: flex;
+      gap: clamp(14px, 2vw, 28px);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding: clamp(20px, 3vw, 44px) clamp(16px, 2.4vw, 32px) clamp(22px, 3vw, 40px);
+      scrollbar-width: none;
+      cursor: grab;
+      scroll-padding-left: clamp(16px, 2.4vw, 32px)
+    }
+
+    .rail::-webkit-scrollbar {
+      display: none
+    }
+
+    .rail.drag {
+      cursor: grabbing;
+      scroll-snap-type: none
+    }
+
+    .pcard {
+      flex: none;
+      width: clamp(210px, 21vw, 290px);
+      scroll-snap-align: start
+    }
+
+    .pcard .shot {
+      border: 1px solid var(--ink);
+      box-shadow: 10px 10px 0 rgba(10, 10, 10, .07)
+    }
+
+    .pcard .t {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+      align-items: baseline
+    }
+
+    .pcard .t b.n {
+      font-family: var(--disp);
+      font-stretch: 70%;
+      font-weight: 800;
+      font-size: 30px;
+      color: var(--accent);
+      line-height: .9
+    }
+
+    .pcard .t strong {
+      font-size: 17px;
+      line-height: 1.2
+    }
+
+    .pcard p {
+      color: var(--mute);
+      font-size: 14.5px;
+      line-height: 1.4;
+      margin-top: 6px
+    }
+
+    .rail img,
+    .rail .mock {
+      -webkit-user-drag: none;
+      user-select: none
+    }
+
+    /* ---------- demo ---------- */
+    .demo {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr
+    }
+
+    .demo-l {
+      border-right: 1px solid var(--ink);
+      padding: clamp(28px, 4vw, 64px) var(--pad);
+      display: flex;
+      flex-direction: column;
+      gap: 26px;
+      justify-content: center
+    }
+
+    .demo-l h2 {
+      font-size: clamp(52px, 7.2vw, 120px)
+    }
+
+    .demo-l p {
+      color: var(--mute);
+      max-width: 36ch
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      padding: 16px 0;
+      border-top: 1px solid var(--ink);
+      transition: .4s var(--ease);
+      opacity: .4
+    }
+
+    .steps li:last-child {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .steps li.on {
+      opacity: 1
+    }
+
+    .steps .n {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: 34px;
+      color: var(--accent);
+      line-height: .9
+    }
+
+    .steps b {
+      display: block;
+      font-size: 17px
+    }
+
+    .steps small {
+      display: block;
+      color: var(--mute);
+      font-size: 14.5px;
+      line-height: 1.4;
+      margin-top: 2px
+    }
+
+    .demo-r {
+      background: var(--soft);
+      display: grid;
+      place-items: center;
+      padding: clamp(24px, 4vw, 64px) var(--pad);
+      min-width: 0
+    }
+
+    .dphone {
+      width: min(340px, 100%);
+      aspect-ratio: 440/956;
+      background: #fff;
+      border: 1px solid var(--ink);
+      box-shadow: 12px 12px 0 var(--ink);
+      container-type: inline-size;
+      overflow: hidden;
+      position: relative
+    }
+
+    .dopt {
+      border: 1px solid #e4e4ee;
+      border-radius: 2cqw;
+      padding: 3.4cqw;
+      font-size: 3.3cqw;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      transition: .25s
+    }
+
+    .dopt:hover {
+      border-color: var(--sc)
+    }
+
+    .dopt.sel {
+      background: var(--sc);
+      color: #fff;
+      border-color: var(--sc)
+    }
+
+    .dopt small {
+      display: block;
+      font-weight: 500;
+      opacity: .75;
+      font-size: 2.7cqw
+    }
+
+    .qty {
+      display: flex;
+      align-items: center;
+      gap: 2.6cqw
+    }
+
+    .qty button {
+      width: 7.4cqw;
+      height: 7.4cqw;
+      border: 1px solid #cfcfe0;
+      border-radius: 50%;
+      font-size: 4cqw;
+      line-height: 1;
+      display: grid;
+      place-items: center;
+      background: #fff
+    }
+
+    .qty button:hover {
+      border-color: var(--sc);
+      color: var(--sc)
+    }
+
+    .qty b {
+      min-width: 5cqw;
+      text-align: center
+    }
+
+    .dbtn {
+      background: var(--sc);
+      color: #fff;
+      border-radius: 2.4cqw;
+      padding: 3.8cqw;
+      font-weight: 700;
+      letter-spacing: .05em;
+      font-size: 3cqw;
+      margin-top: auto;
+      width: 100%;
+      transition: .3s
+    }
+
+    .dbtn:disabled {
+      background: #b9c5ff;
+      cursor: not-allowed
+    }
+
+    .hint {
+      font-size: 2.6cqw;
+      color: #888;
+      text-align: center;
+      margin-top: -1.4cqw
+    }
+
+    @media(max-width:860px) {
+      .demo-grid {
+        grid-template-columns: 1fr
+      }
+
+      .demo-l {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink)
+      }
+    }
+
+    /* ---------- reflect ---------- */
+    .rf {
+      border-bottom: 1px solid var(--ink)
+    }
+
+    .rf-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr)
+    }
+
+    .rf-grid>div {
+      padding: clamp(28px, 4vw, 56px) var(--pad);
+      border-right: 1px solid var(--ink);
+      min-width: 0
+    }
+
+    .rf-grid>div:last-child {
+      border-right: 0
+    }
+
+    .rf h3 {
+      font-size: clamp(34px, 3.6vw, 56px);
+      margin: 16px 0 22px
+    }
+
+    .rf li {
+      position: relative;
+      padding: 12px 0 12px 20px;
+      border-top: 1px solid var(--hair);
+      color: var(--mute);
+      font-size: 16.5px
+    }
+
+    .rf li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.15em;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent)
+    }
+
+    .rf li b {
+      color: var(--ink);
+      display: block;
+      font-weight: 700
+    }
+
+    @media(max-width:860px) {
+      .rf-grid {
+        grid-template-columns: 1fr
+      }
+
+      .rf-grid>div {
+        border-right: 0;
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .rf-grid>div:last-child {
+        border-bottom: 0
+      }
+    }
+
+    /* ---------- next project (compact 2-col card) ---------- */
+    .next-project {
+      background: var(--paper);
+      color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+      padding: clamp(28px, 4vw, 48px) var(--pad)
+    }
+
+    .np {
+      display: grid;
+      grid-template-columns: clamp(96px, 20vw, 176px) 1fr;
+      align-items: stretch;
+      max-width: 720px;
+      margin: 0 auto;
+      border: 1px solid var(--ink);
+      transition: box-shadow .35s
+    }
+
+    .np:hover {
+      box-shadow: 0 14px 34px rgba(10, 10, 10, .12)
+    }
+
+    .np-media {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+      border-right: 1px solid var(--ink);
+      background-color: var(--soft)
+    }
+
+    .np-media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s var(--ease)
+    }
+
+    .np:hover .np-media img {
+      transform: scale(1.07)
+    }
+
+    .np-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(12px, 2.4vw, 24px);
+      min-width: 0;
+      padding: clamp(16px, 2.6vw, 26px) clamp(16px, 2.6vw, 28px)
+    }
+
+    .np-text {
+      min-width: 0
+    }
+
+    .np-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--mute)
+    }
+
+    .np-title {
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: clamp(19px, 2.6vw, 32px)
+    }
+
+    .np-btn {
+      flex: none;
+      width: clamp(40px, 4vw, 52px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+      transition: background .3s, color .3s, transform .3s
+    }
+
+    .np-btn svg {
+      width: 40%;
+      height: 40%
+    }
+
+    .np:hover .np-btn {
+      background: var(--ink);
+      color: #fff;
+      transform: translateX(4px)
+    }
+
+    @media (max-width:480px) {
+      .np {
+        grid-template-columns: 88px 1fr
+      }
+
+      .np-body {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px
+      }
+
+      .np-btn {
+        align-self: flex-end
+      }
+    }
+
+    /* ---------- cta ---------- */
+    .cta {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .cta-mq {
+      padding: clamp(40px, 5vw, 72px) 0;
+      border-bottom: 1px solid #3a3a3a;
+      font: 800 clamp(64px, 11vw, 190px)/.9 var(--ff-display);
+      font-variation-settings: 'wdth' 64;
+      text-transform: uppercase
+    }
+
+    .cta-mq .u {
+      display: flex;
+      align-items: center;
+      gap: .28em;
+      padding-right: .28em;
+      white-space: nowrap
+    }
+
+    .cta-mq .o {
+      -webkit-text-stroke: 2px #fff;
+      color: transparent
+    }
+
+    .cta-mq .spin {
+      width: .42em;
+      height: .42em;
+      color: var(--accent)
+    }
+
+    /* ---------- footer ---------- */
+
+    .footer {
+      position: relative;
+      background: var(--ink);
+      color: #fff;
+      background-image: repeating-linear-gradient(to right,
+          rgba(255, 255, 255, .14) 0 1px,
+          transparent 1px 100%);
+      background-size: calc(100% / 7) 100%;
+    }
+
+    /* ---------- contact ---------- */
+
+    .footer-contact {
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px var(--pad);
+      border-bottom: 1px solid rgba(255, 255, 255, .16);
+    }
+
+    .footer-label {
+      display: block;
+      margin-bottom: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #B5B5B5;
+    }
+
+    .footer-mail {
+      display: inline-block;
+      font-family: var(--ff-serif);
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(32px, 6.2vw, 80px);
+      line-height: 1;
+      color: #F2F2F2;
+      transition: color .3s;
+    }
+
+    .footer-mail:hover {
+      color: var(--accent);
+    }
+
+    /* ---------- bottom grid ---------- */
+
+    .footer-bottom {
+      min-height: 96px;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border-bottom: 0;
+    }
+
+    .footer-link,
+    .footer-top {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .footer-link:last-child {
+      border-right: 0;
+    }
+
+    /* social links */
+
+    .footer-link {
+      padding: 20px var(--pad);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+
+    .footer-link:hover {
+      color: var(--accent);
+    }
+
+    /* LinkedIn */
+
+    .footer-link-1 {
+      grid-column: 1;
+    }
+
+    /* Behance */
+
+    .footer-link-2 {
+      grid-column: 2;
+    }
+
+    /* Dribbble */
+
+    .footer-link-3 {
+      grid-column: 3;
+    }
+
+    /* back to top */
+
+    .footer-top {
+      grid-column: 7;
+      justify-content: center;
+    }
+
+    .footer-top-icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--ink);
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      transition:
+        background .3s,
+        color .3s,
+        transform .3s;
+    }
+
+    .footer-top:hover .footer-top-icon {
+      background: var(--accent);
+      color: var(--ink);
+      transform: translateY(-4px);
+    }
+
+    /* copyright */
+
+    .footer-copyright {
+      grid-column: 5 / 8;
+      justify-content: flex-end;
+      padding: 20px var(--pad);
+      font-size: 14px;
+      color: #B5B5B5;
+      border-right: 0;
+    }
+
+    @media (max-width:860px) {
+      .footer {
+        background-size: calc(100% / 3) 100%;
+      }
+
+      .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .footer-link-1,
+      .footer-link-2,
+      .footer-link-3,
+      .footer-top {
+        grid-column: auto;
+      }
+    }
+
+    /* ================= Oliver additions (same system, new components) ================= */
+    .mock.pho {
+      background: #F5F5F5
+    }
+
+    .jr4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--ink)
+    }
+
+    .jr4 a {
+      padding: 20px var(--pad) 24px clamp(14px, 1.6vw, 24px);
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      min-height: 150px;
+      justify-content: space-between;
+      transition: background .4s var(--ease), color .4s
+    }
+
+    .jr4 a:nth-child(4n) {
+      border-right: 0
+    }
+
+    .jr4 a:nth-last-child(-n+4) {
+      border-bottom: 0
+    }
+
+    .jr4 a:hover {
+      background: var(--ink);
+      color: #fff
+    }
+
+    .jr4 .n {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(36px, 3.4vw, 56px);
+      color: var(--accent);
+      line-height: .85
+    }
+
+    .jr4 b {
+      font-weight: 700;
+      font-size: clamp(15px, 1.1vw, 17px);
+      line-height: 1.25
+    }
+
+    @media(max-width:1000px) {
+      .jr4 {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .jr4 a:nth-child(4n) {
+        border-right: 1px solid var(--ink)
+      }
+
+      .jr4 a:nth-child(2n) {
+        border-right: 0
+      }
+
+      .jr4 a:nth-last-child(-n+4) {
+        border-bottom: 1px solid var(--ink)
+      }
+
+      .jr4 a:nth-last-child(-n+2) {
+        border-bottom: 0
+      }
+    }
+
+    /* hero phones */
+    .hero-r .hp {
+      position: absolute;
+      width: 27%;
+      box-shadow: 0 0 0 1px var(--ink)
+    }
+
+    .hero-r .hp.a {
+      left: 12%;
+      top: 14%;
+      z-index: 1
+    }
+
+    .hero-r .hp.b {
+      left: 37%;
+      top: 8%;
+      z-index: 3;
+      width: 29%
+    }
+
+    .hero-r .hp.c {
+      left: 64%;
+      top: 18%;
+      z-index: 2
+    }
+
+    .hero-r .sch {
+      display: none
+    }
+
+    @media(max-width:860px) {
+      .hero-r .hp.a {
+        left: 8%;
+        width: 28%
+      }
+
+      .hero-r .hp.b {
+        left: 35%;
+        width: 30%
+      }
+
+      .hero-r .hp.c {
+        left: 66%;
+        width: 28%
+      }
+    }
+
+    /* swatches (Oliver) */
+    .sws.o {
+      grid-template-columns: repeat(5, 1fr)
+    }
+
+    .sw-note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--mute)
+    }
+
+    /* personas/paths */
+    .path .tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    /* decision cells */
+    .dcell {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 240px
+    }
+
+    .dcell .mn {
+      font-family: var(--disp);
+      font-weight: 800;
+      font-stretch: 70%;
+      font-size: clamp(28px, 2.4vw, 38px);
+      line-height: .9
+    }
+
+    .dcell p {
+      color: var(--mute);
+      font-size: 15.5px;
+      line-height: 1.45
+    }
+
+    .dcell .why {
+      margin-top: auto;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent)
+    }
+
+    /* phone-set viewer */
+    .vframe>.pset {
+      grid-area: 1/1;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(10px, 1.6vw, 24px);
+      align-items: start;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .6s var(--ease), visibility 0s .6s;
+      justify-content: center
+    }
+
+    .vframe>.pset.on {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .6s var(--ease)
+    }
+
+    .pset.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 66%;
+      margin: 0 auto;
+      width: 100%
+    }
+
+    .pset .shot {
+      border: 1px solid var(--ink);
+      transition: transform .5s var(--ease), box-shadow .5s var(--ease)
+    }
+
+    .pset .shot.hl {
+      transform: translateY(-8px);
+      box-shadow: 0 0 0 2px var(--accent)
+    }
+
+    .pset .pnum {
+      position: absolute;
+      left: 8px;
+      top: 30px;
+      z-index: 4;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 12px;
+      display: grid;
+      place-items: center;
+      border: 2px solid #fff
+    }
+
+    .shot.real .pnum {
+      display: none
+    }
+
+    @media(max-width:700px) {
+      .pset.two {
+        max-width: none
+      }
+    }
+
+    .vstage {
+      align-items: flex-start
+    }
+
+    @media(max-width:700px) {
+      .pset .sch {
+        display: none
+      }
+
+      .pset .pnum {
+        top: 22px;
+        left: 4px;
+        width: 20px;
+        height: 20px;
+        font-size: 10px
+      }
+    }
+
+    /* phone mock bits (Oliver) */
+    .x-top {
+      display: flex;
+      align-items: center;
+      gap: 2.4cqw;
+      padding: 2cqw 4cqw 3cqw;
+      flex: none
+    }
+
+    .x-av {
+      width: 8.4cqw;
+      height: 8.4cqw;
+      border-radius: 50%;
+      background: #c9b8a6;
+      flex: none;
+      position: relative;
+      display: block
+    }
+
+    .x-av::after {
+      content: "";
+      position: absolute;
+      left: 25%;
+      top: 20%;
+      width: 50%;
+      height: 36%;
+      border-radius: 50%;
+      background: #e2c9ae
+    }
+
+    .x-av.s {
+      width: 7cqw;
+      height: 7cqw
+    }
+
+    .x-search {
+      flex: 1;
+      background: #e6e6e6;
+      border-radius: 2cqw;
+      padding: 2.2cqw 3cqw;
+      font-size: 2.8cqw;
+      color: #888
+    }
+
+    .x-ic {
+      width: 7.6cqw;
+      height: 7.6cqw;
+      border-radius: 2cqw;
+      background: #fff;
+      border: 1px solid #e2e2e2;
+      flex: none;
+      position: relative
+    }
+
+    .x-ic.r::after {
+      content: "";
+      position: absolute;
+      right: 1cqw;
+      top: 1cqw;
+      width: 1.8cqw;
+      height: 1.8cqw;
+      border-radius: 50%;
+      background: #d63a3a
+    }
+
+    .x-seg {
+      display: flex;
+      gap: 1.4cqw;
+      margin: 0 4cqw 2.4cqw;
+      background: #ececec;
+      padding: 1.2cqw;
+      border-radius: 2.4cqw;
+      flex: none
+    }
+
+    .x-seg span {
+      flex: 1;
+      text-align: center;
+      font-size: 2.7cqw;
+      padding: 2cqw 0;
+      border-radius: 1.8cqw;
+      color: #666;
+      white-space: nowrap
+    }
+
+    .x-seg span.on {
+      background: #fff;
+      color: var(--sc);
+      font-weight: 700;
+      box-shadow: 0 .2cqw .8cqw rgba(0, 0, 0, .08)
+    }
+
+    .x-chips {
+      display: flex;
+      gap: 1.6cqw;
+      overflow: hidden;
+      flex: none
+    }
+
+    .x-chips span {
+      border: 1px solid #cfd5c7;
+      border-radius: 5cqw;
+      padding: 1.2cqw 3cqw;
+      font-size: 2.5cqw;
+      color: #555;
+      white-space: nowrap;
+      background: #fff
+    }
+
+    .x-chips span.on {
+      background: var(--sc);
+      color: #fff;
+      border-color: var(--sc)
+    }
+
+    .x-comp {
+      display: flex;
+      align-items: center;
+      gap: 2cqw;
+      background: #fff;
+      border-radius: 2.4cqw;
+      padding: 2cqw;
+      flex: none
+    }
+
+    .x-comp span {
+      flex: 1;
+      background: #eee;
+      border-radius: 1.6cqw;
+      padding: 2.2cqw 2.6cqw;
+      font-size: 2.7cqw;
+      color: #888
+    }
+
+    .x-comp b {
+      background: var(--sc);
+      color: #fff;
+      border-radius: 1.6cqw;
+      padding: 2.4cqw 3cqw;
+      font-size: 2.7cqw
+    }
+
+    .x-post {
+      background: #fff;
+      border-radius: 2.6cqw;
+      padding: 3.2cqw;
+      display: flex;
+      flex-direction: column;
+      gap: 1.8cqw;
+      flex: none
+    }
+
+    .x-post .who {
+      display: flex;
+      align-items: center;
+      gap: 2.4cqw;
+      font-size: 3cqw;
+      font-weight: 700;
+      line-height: 1.1
+    }
+
+    .x-post .who small {
+      display: block;
+      font-weight: 400;
+      font-size: 2.2cqw;
+      color: #999
+    }
+
+    .x-post h5 {
+      font-size: 3.2cqw;
+      line-height: 1.25;
+      font-weight: 700
+    }
+
+    .x-post .tx {
+      display: grid;
+      gap: 1cqw
+    }
+
+    .x-post .tx i {
+      display: block;
+      height: 1.2cqw;
+      background: #e2e2e2;
+      border-radius: 1cqw
+    }
+
+    .x-post .tx i:nth-child(3) {
+      width: 70%
+    }
+
+    .x-post .tg {
+      display: flex;
+      gap: 1.4cqw
+    }
+
+    .x-post .tg span {
+      border: 1px solid #cfd5c7;
+      border-radius: 4cqw;
+      padding: .8cqw 2.2cqw;
+      font-size: 2.2cqw;
+      color: #777
+    }
+
+    .x-post .ft {
+      display: flex;
+      justify-content: space-between;
+      font-size: 2.4cqw;
+      color: #888
+    }
+
+    .x-img {
+      border-radius: 2.4cqw;
+      background: #d8cdb8;
+      position: relative;
+      overflow: hidden;
+      flex: none
+    }
+
+    .x-img.g {
+      background: #9db87a
+    }
+
+    .x-img.y {
+      background: #d9b98a
+    }
+
+    .x-img.b {
+      background: #8fa6b8
+    }
+
+    .x-img.r {
+      background: #c98a7a
+    }
+
+    .x-img::after {
+      content: "";
+      position: absolute;
+      left: 18%;
+      top: 22%;
+      width: 48%;
+      height: 56%;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .28)
+    }
+
+    .x-img i {
+      position: absolute;
+      left: 3cqw;
+      bottom: 2.4cqw;
+      font-style: normal;
+      font-size: 2.6cqw;
+      font-weight: 700;
+      color: #fff;
+      z-index: 1
+    }
+
+    .x-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2cqw;
+      flex: none
+    }
+
+    .x-kpis div {
+      background: #fff;
+      border-radius: 2.4cqw;
+      padding: 2.6cqw;
+      font-size: 2.4cqw;
+      color: #777;
+      line-height: 1.2
+    }
+
+    .x-kpis b {
+      display: block;
+      font-size: 5.2cqw;
+      color: #111;
+      font-weight: 700;
+      margin-top: 1cqw
+    }
+
+    .x-kpis small {
+      font-size: 2.2cqw
+    }
+
+    .x-sched {
+      background: #7B9A5E;
+      border-radius: 3cqw;
+      padding: 3cqw;
+      flex: none
+    }
+
+    .x-days {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2.4cqw
+    }
+
+    .x-days span {
+      width: 11cqw;
+      height: 13cqw;
+      border-radius: 2.4cqw;
+      background: var(--sc);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 4cqw;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center
+    }
+
+    .x-days span small {
+      display: block;
+      font-size: 1.8cqw;
+      font-weight: 500;
+      margin-top: .8cqw
+    }
+
+    .x-days span.w {
+      background: #fff;
+      color: #222
+    }
+
+    .x-sched .ev {
+      background: #fff;
+      border-radius: 2cqw;
+      padding: 2.4cqw;
+      font-size: 2.6cqw
+    }
+
+    .x-sched .ev b {
+      display: block;
+      background: #D2E9B6;
+      border-radius: 1.6cqw;
+      padding: 2cqw;
+      font-weight: 600;
+      color: #222
+    }
+
+    .x-h {
+      font-size: 3.6cqw;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex: none
+    }
+
+    .x-h small {
+      font-size: 2.4cqw;
+      font-weight: 500;
+      text-decoration: underline;
+      color: #555
+    }
+
+    .x-quote {
+      background: #fff;
+      border-radius: 2.6cqw;
+      padding: 4cqw;
+      font-size: 3.6cqw;
+      line-height: 1.25;
+      font-weight: 600;
+      position: relative;
+      flex: none;
+      overflow: hidden;
+      min-height: 30cqw
+    }
+
+    .x-quote b {
+      display: inline-block;
+      background: var(--sc);
+      color: #fff;
+      border-radius: 1.4cqw;
+      padding: 1.8cqw 3cqw;
+      font-size: 2.5cqw;
+      margin-top: 3cqw
+    }
+
+    .x-quote::after {
+      content: "";
+      position: absolute;
+      right: -6cqw;
+      top: -4cqw;
+      width: 36cqw;
+      height: 50cqw;
+      background: #cfd9c0;
+      border-radius: 40% 0 0 40%;
+      z-index: 0
+    }
+
+    .x-quote>* {
+      position: relative;
+      z-index: 1
+    }
+
+    .x-cat {
+      display: flex;
+      justify-content: space-between;
+      flex: none
+    }
+
+    .x-cat span {
+      width: 15cqw;
+      text-align: center;
+      font-size: 2.2cqw;
+      color: #666
+    }
+
+    .x-cat span i {
+      display: block;
+      height: 12cqw;
+      border-radius: 2.6cqw;
+      background: #fff;
+      margin-bottom: 1cqw;
+      border: 1px solid #e6e6e6
+    }
+
+    .x-rec {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.4cqw;
+      flex: none
+    }
+
+    .x-ring {
+      position: relative;
+      width: 34cqw;
+      height: 34cqw;
+      border-radius: 50%;
+      background: conic-gradient(var(--sc) 0 80%, #d4d4d4 80% 100%);
+      display: grid;
+      place-items: center;
+      flex: none
+    }
+
+    .x-ring::before {
+      content: "";
+      position: absolute;
+      inset: 4.6cqw;
+      background: #fff;
+      border-radius: 50%
+    }
+
+    .x-ring b {
+      position: relative;
+      font-size: 7cqw;
+      font-weight: 500
+    }
+
+    .x-prog {
+      display: flex;
+      align-items: center;
+      gap: 4cqw;
+      background: #fff;
+      border-radius: 2.6cqw;
+      padding: 3cqw;
+      flex: none
+    }
+
+    .x-prog div {
+      display: grid;
+      gap: 1.6cqw;
+      font-size: 2.6cqw;
+      color: #666
+    }
+
+    .x-prog div b {
+      font-size: 3.6cqw;
+      color: #111
+    }
+
+    .x-mood {
+      display: flex;
+      justify-content: space-between;
+      flex: none
+    }
+
+    .x-mood span {
+      text-align: center;
+      font-size: 2.2cqw;
+      color: #777;
+      display: grid;
+      gap: 1cqw;
+      justify-items: center
+    }
+
+    .x-slider {
+      height: 1.6cqw;
+      background: var(--sc);
+      border-radius: 1cqw;
+      position: relative;
+      flex: none
+    }
+
+    .x-slider::after {
+      content: "";
+      position: absolute;
+      right: 20%;
+      top: -1.6cqw;
+      width: 4.8cqw;
+      height: 4.8cqw;
+      border-radius: 50%;
+      background: #fff;
+      border: .8cqw solid var(--sc)
+    }
+
+    .x-tiles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2cqw;
+      flex: none
+    }
+
+    .x-tiles span {
+      background: #fff;
+      border-radius: 2.4cqw;
+      padding: 3cqw 1cqw;
+      text-align: center;
+      font-size: 2.3cqw;
+      color: #666;
+      display: grid;
+      gap: 1.6cqw;
+      justify-items: center
+    }
+
+    .x-tiles span i {
+      width: 7cqw;
+      height: 7cqw;
+      border-radius: 2cqw;
+      border: .5cqw solid #777
+    }
+
+    .x-log {
+      background: #fff;
+      border-radius: 2.4cqw;
+      overflow: hidden;
+      flex: none
+    }
+
+    .x-log div {
+      display: flex;
+      justify-content: space-between;
+      padding: 1.8cqw 3cqw;
+      font-size: 2.6cqw
+    }
+
+    .x-log div:nth-child(even) {
+      background: #E6F0D8
+    }
+
+    .x-row {
+      background: #fff;
+      border-radius: 2.4cqw;
+      padding: 3cqw;
+      display: flex;
+      gap: 3cqw;
+      align-items: center;
+      font-size: 2.9cqw;
+      flex: none
+    }
+
+    .x-row b {
+      display: block;
+      font-size: 3.2cqw
+    }
+
+    .x-row small {
+      color: #888;
+      font-size: 2.4cqw
+    }
+
+    .x-row .dot {
+      margin-left: auto;
+      width: 5cqw;
+      height: 5cqw;
+      border-radius: 50%;
+      background: #d63a3a;
+      flex: none
+    }
+
+    .x-ni {
+      display: flex;
+      gap: 3cqw;
+      align-items: flex-start;
+      background: #fff;
+      border-radius: 2.4cqw;
+      padding: 3cqw;
+      font-size: 2.7cqw;
+      line-height: 1.3;
+      flex: none
+    }
+
+    .x-ni>i {
+      width: 9cqw;
+      height: 9cqw;
+      border-radius: 50%;
+      background: #D9E8C6;
+      flex: none
+    }
+
+    .x-ni.rd>i {
+      background: #f3d4d4
+    }
+
+    .x-ni .bt {
+      display: flex;
+      gap: 2cqw;
+      margin-top: 2cqw
+    }
+
+    .x-ni .bt b {
+      background: var(--sc);
+      color: #fff;
+      border-radius: 1.2cqw;
+      padding: 1.2cqw 3cqw;
+      font-size: 2.3cqw
+    }
+
+    .x-ni .bt u {
+      text-decoration: none;
+      color: #888;
+      padding: 1.2cqw 2cqw;
+      font-size: 2.3cqw;
+      border: 1px solid #ddd;
+      border-radius: 1.2cqw
+    }
+
+    .x-splash {
+      height: 100%;
+      background: var(--sc);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2cqw
+    }
+
+    .x-splash .sc {
+      font: italic 500 17cqw "Playfair Display", serif;
+      line-height: 1
+    }
+
+    .x-splash small {
+      font-size: 3cqw;
+      opacity: .85
+    }
+
+    .x-sub {
+      font-size: 2.9cqw;
+      color: #777;
+      line-height: 1.35;
+      margin-top: -1cqw
+    }
+
+    .x-t {
+      font-size: 6.4cqw;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      line-height: 1.1
+    }
+
+    .x-opt {
+      display: flex;
+      gap: 3cqw;
+      align-items: center;
+      background: #fff;
+      border-radius: 2cqw;
+      padding: 3.4cqw;
+      font-size: 3cqw;
+      flex: none
+    }
+
+    .x-opt i {
+      width: 4.4cqw;
+      height: 4.4cqw;
+      border-radius: 50%;
+      border: .5cqw solid #777;
+      flex: none
+    }
+
+    .x-opt.on i {
+      border: 1.4cqw solid var(--sc)
+    }
+
+    .x-opt.ck i {
+      border-radius: 1cqw
+    }
+
+    .x-opt.ck.on i {
+      background: var(--sc);
+      border: .5cqw solid var(--sc)
+    }
+
+    .x-mas {
+      width: 46cqw;
+      margin: 2cqw auto;
+      flex: none
+    }
+
+    .x-bar {
+      height: 9cqw;
+      display: flex;
+      align-items: center;
+      padding: 0 5cqw;
+      font-size: 4cqw;
+      color: #777;
+      border-bottom: 1px solid #e0e0e0;
+      flex: none
+    }
+
+    /* mood faces (demo + mocks) */
+    .face {
+      width: 8.4cqw;
+      height: 8.4cqw;
+      border-radius: 50%;
+      background: #f1cf63;
+      position: relative;
+      display: block;
+      flex: none
+    }
+
+    .face::before {
+      content: "";
+      position: absolute;
+      left: 27%;
+      top: 32%;
+      width: 13%;
+      height: 13%;
+      border-radius: 50%;
+      background: #333;
+      box-shadow: 2.6cqw 0 0 #333
+    }
+
+    .face::after {
+      content: "";
+      position: absolute;
+      left: 28%;
+      right: 28%;
+      height: 20%;
+      bottom: 20%;
+      border: .6cqw solid #333;
+      border-top: 0;
+      border-radius: 0 0 50% 50%
+    }
+
+    .face.f1 {
+      background: #e07b4a
+    }
+
+    .face.f1::after,
+    .face.f2::after {
+      border: .6cqw solid #333;
+      border-bottom: 0;
+      border-radius: 50% 50% 0 0;
+      bottom: 22%
+    }
+
+    .face.f3::after {
+      height: 0;
+      border: 0;
+      border-top: .6cqw solid #333;
+      bottom: 30%;
+      border-radius: 0
+    }
+
+    .face.f5 {
+      background: #f4b93e
+    }
+
+    .mood {
+      display: flex;
+      justify-content: space-between;
+      gap: 1cqw;
+      flex: none
+    }
+
+    .mood button {
+      display: grid;
+      gap: 1.6cqw;
+      justify-items: center;
+      font-size: 2.8cqw;
+      color: #666;
+      padding: 2cqw 1cqw;
+      border: 1px solid transparent;
+      border-radius: 2cqw;
+      flex: 1;
+      transition: .25s
+    }
+
+    .mood button:hover {
+      border-color: #cfd5c7;
+      background: #fff
+    }
+
+    .mood button[aria-pressed="true"] {
+      border-color: var(--sc);
+      background: #fff;
+      color: #111;
+      font-weight: 700
+    }
+
+    .sug {
+      display: flex;
+      gap: 3cqw;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #e4e4ee;
+      border-radius: 2.4cqw;
+      padding: 3.6cqw;
+      font-size: 3.1cqw;
+      width: 100%;
+      text-align: left
+    }
+
+    .sug b {
+      display: block;
+      font-size: 3.3cqw
+    }
+
+    .sug small {
+      color: #777;
+      font-size: 2.6cqw
+    }
+
+    .sug i {
+      width: 9cqw;
+      height: 9cqw;
+      border-radius: 50%;
+      background: #D9E8C6;
+      flex: none
+    }
+
+    .note-s {
+      font-size: 2.6cqw;
+      color: #777;
+      line-height: 1.4;
+      background: #fff7e0;
+      border-radius: 2cqw;
+      padding: 2.6cqw
+    }
+
+    .prop {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      padding: 3px 8px;
+      text-transform: uppercase
+    }
+  </style>
+</head>
+
+<body id="top">
+  <a class="skip" href="#brief">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="ticker marquee" data-speed="55" aria-label="Currently open for new projects">
+      <div class="track">
+        <div class="set">
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+        </div>
+        <div class="set" aria-hidden="true">
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+          <span class="tk"><em>+++</em>Open for new projects</span>
+        </div>
+      </div>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a class="logo" href="../index.html" aria-label="Abhishek Dangol, home"><i></i>Abhishek Dangol</a>
+      <ul class="links">
+        <li><a href="../index.html#projects"><span class="roll">Projects</span></a></li>
+        <li><a href="#process"><span class="roll">Process</span></a></li>
+        <li><a href="#product"><span class="roll">Product</span></a></li>
+        <li><a href="#contact"><span class="roll">Contact</span></a></li>
+      </ul>
+      <a class="btn" href="../CV/Abhishek Dangol_CV.pdf" target="_blank" rel="noopener"><span class="roll">My
+          Resume</span></a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menu</button>
+    </nav>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <ul>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#product">Product</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn" href="../CV/Abhishek Dangol_CV.pdf" target="_blank" rel="noopener"><span class="roll">My
+        Resume</span></a>
+    <!-- <p>Open for new projects. Free, no-obligation strategy call.</p> -->
+  </div>
+
+  <main>
+    <!-- ================= HERO ================= -->
+    <section class="hero" aria-labelledby="t">
+      <!-- <div class="hero-top">
+        <a class="hero-back" href="../index.html#projects"><span class="roll">&larr; All projects</span></a>
+        <span class="chip">Product Design</span>
+      </div> -->
+      <div class="hero-grid">
+        <div class="hero-left">
+          <p class="hero-kicker">Case study &mdash; Oliver</p>
+          <h1 class="display" id="t"><span class="line"><span class="inner" style="--d:0">Kidney</span></span><span
+              class="line"><span class="inner" style="--d:1">community</span></span>
+          </h1>
+          <p class="hero-dek">A mobile app where people living with kidney disease find support, knowledge and each
+            other.</p>
+          <a class="hero-scroll" href="#brief"><span class="roll">Scroll to explore</span><svg viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true">
+              <path d="M12 4v16M6 14l6 6 6-6" />
+            </svg></a>
+        </div>
+        <div class="hero-right">
+          <div class="settle">
+            <div class="shot hp a">
+              <div class="mock pho" data-mock="forum"></div>
+            </div>
+            <div class="shot hp b">
+              <div class="mock pho" data-mock="home" data-src="../images/oliver/home.png"></div>
+            </div>
+            <div class="shot hp c">
+              <div class="mock pho" data-mock="welcome" data-src="../images/oliver/welcome.png"></div>
+            </div>
+          </div>
+          <span class="hero-right-cap capt micro">Home, Forum and Welcome</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BRIEF ================= -->
+    <section class="brief" id="brief" aria-labelledby="brief-h">
+      <div class="bar"><span class="chip" id="brief-h">The Brief</span><span class="micro mute">Oliver · Your Online
+          Kidney Community</span></div>
+      <div class="brief-main">
+        <div>
+          <p class="statement rv">Help people with kidney disease feel <em>not alone</em>: a community, a daily routine
+            and trustworthy information in one app.</p>
+        </div>
+        <div>
+          <p class="sub rv" style="--i:1">A freelance project for a health community with a patient side and a doctor
+            side. I designed the mobile app, from the first welcome screen to the daily routine.</p>
+        </div>
+      </div>
+      <dl class="meta">
+        <div>
+          <dt>Type</dt>
+          <dd>Freelance project</dd>
+        </div>
+        <div>
+          <dt>My role</dt>
+          <dd>Product Designer</dd>
+        </div>
+        <div>
+          <dt>Scope</dt>
+          <dd>MVP, on a tight schedule</dd>
+        </div>
+        <div>
+          <dt>Platform</dt>
+          <dd>Mobile app</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ================= STATS ================= -->
+    <section class="stats" aria-label="At a glance">
+      <div><b data-n="44">0</b><span>Mobile screens, from splash to notifications</span></div>
+      <div><b data-n="5">0</b><span>Main tabs: Community, Forum, Lifestyle, Health, News</span></div>
+      <div><b data-n="4">0</b><span>Ways to join: patient, caregiver, professional, just looking</span></div>
+      <div><b data-n="7">0</b><span>Interests to shape each person's feed</span></div>
+    </section>
+
+    <!-- ================= OVERVIEW ================= -->
+    <section class="di" aria-label="Description and info">
+      <div class="bar"><span class="chip">Overview</span></div>
+      <div class="di-grid">
+        <div class="di-l">
+          <p class="rv">A warm, olive-green community app where patients share, learn and keep up with daily care,
+            alongside doctors who answer.</p>
+          <a class="alink rv" style="--i:1" href="#product">See the product <svg viewBox="0 0 16 16" fill="none"
+              stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 12L12 4M5 4h7v7" />
+            </svg></a>
+        </div>
+        <dl class="di-r">
+          <div class="row">
+            <dt>Services</dt>
+            <dd>User flows<br>Information architecture<br>Mobile UI design<br>Rough style guide<br>Content design</dd>
+          </div>
+          <div class="row">
+            <dt>Industries</dt>
+            <dd>Healthcare<br>Online communities</dd>
+          </div>
+          <div class="row">
+            <dt>Challenge</dt>
+            <dd>Living with kidney disease can be isolating and tiring. The app had to feel supportive and simple, never
+              clinical or overwhelming.</dd>
+          </div>
+          <div class="row">
+            <dt>What we did</dt>
+            <dd>
+              <ul class="dots">
+                <li>Designed onboarding that asks who you are and what you need</li>
+                <li>Built a five-tab structure around community and daily care</li>
+                <li>Designed a forum where doctors and patients share posts</li>
+                <li>Added nutrition, exercise and meditation, open to contributions</li>
+                <li>Added a mood check-in and medical logs</li>
+                <li>Designed news, messages and actionable notifications</li>
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= JOURNEY INDEX ================= -->
+    <section class="jr" id="process" aria-labelledby="jr-h">
+      <div class="jr-head">
+        <h2 id="jr-h" class="disp"><span class="ln"><span>The design</span></span><span class="ln"
+            style="--i:1"><span>journey</span></span></h2>
+        <p class="rv">Eight stages, from a rough style guide to what I would refine next. Pick one, or keep scrolling.
+        </p>
+      </div>
+      <div class="jr4">
+        <a href="#c1"><span class="n">01</span><b>Look &amp; feel: a rough style guide</b></a>
+        <a href="#c2"><span class="n">02</span><b>Understanding the people</b></a>
+        <a href="#c3"><span class="n">03</span><b>Who the app is for</b></a>
+        <a href="#c4"><span class="n">04</span><b>Structure &amp; navigation</b></a>
+        <a href="#c5"><span class="n">05</span><b>Key flows</b></a>
+        <a href="#c6"><span class="n">06</span><b>Design decisions</b></a>
+        <a href="#c7"><span class="n">07</span><b>Testing &amp; feedback</b></a>
+        <a href="#c8"><span class="n">08</span><b>What I'd refine next</b></a>
+      </div>
+    </section>
+
+    <!-- ============ 01 LOOK & FEEL ============ -->
+    <section class="ch" id="c1" aria-labelledby="c1t">
+      <div class="ch-h">
+        <div class="ch-n">01</div>
+        <div class="ch-tt">
+          <h3 id="c1t" class="disp ch-t"><span class="ln"><span>Look &amp;</span></span><span class="ln"
+              style="--i:1"><span>feel</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>One calm green, soft cards, a friendly mascot. A rough guide, made for speed.</p><span
+            class="chip line">Foundation</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rg g12 rv">
+          <div class="sp7"><span class="mc">Colour</span>
+            <div class="sws o">
+              <div style="background:#3D5919;color:#fff">Olive<small>#3D5919 · actions, active</small></div>
+              <div style="background:#7B9A5E;color:#fff">Leaf<small>#7B9A5E · schedule card</small></div>
+              <div style="background:#D2E9B6">Sage<small>#D2E9B6 · highlights</small></div>
+              <div style="background:#F5F5F5;color:#444">Canvas<small>#F5F5F5 · screens</small></div>
+              <div style="background:#B22E2E;color:#fff">Alert<small>#B22E2E · errors</small></div>
+            </div>
+            <p class="sw-note">Colours sampled from the MVP screens.</p>
+          </div>
+          <div class="sp5"><span class="mc">Parts</span>
+            <div class="ds-row"><span class="d-btn" style="border-radius:6px;padding:11px 28px">Continue</span><span
+                class="d-btn x" style="border-radius:6px">Continue</span></div>
+            <div class="ds-row"><span class="d-in" style="border-radius:6px;background:#fff">Email Address</span></div>
+            <div class="ds-row"><span class="d-ch" style="background:#D9E8C6;color:#3D5919">Nutrition</span><span
+                class="d-ch" style="background:#fff;border:1px solid #cfd5c7;color:#555">Question</span><span
+                class="d-ch" style="background:#3D5919;color:#fff">Leader</span></div>
+          </div>
+          <div class="sp12"><span class="mc">Anatomy of a screen</span>
+            <div class="anat">
+              <div class="a-side"><span>Bottom tab bar<small>5 tabs, active one filled</small></span><span
+                  class="mute micro">Always there</span></div>
+              <div class="a-main">
+                <div class="a-r"><b>1</b><span>Header<small>avatar · search · messages · notifications</small></span>
+                </div>
+                <div class="a-r"><b>2</b><span>Section tabs<small>a segmented control inside each area</small></span>
+                </div>
+                <div class="a-r"><b>3</b><span>Contribute bar<small>one line to share something</small></span></div>
+                <div class="a-r"><b>4</b><span>Cards<small>posts, recipes, stories, logs</small></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 UNDERSTANDING ============ -->
+    <section class="ch" id="c2" aria-labelledby="c2t">
+      <div class="ch-h">
+        <div class="ch-n">02</div>
+        <div class="ch-tt">
+          <h3 id="c2t" class="disp ch-t"><span class="ln"><span>Understanding</span></span><span class="ln"
+              style="--i:1"><span>the people</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>Three questions guided every screen.</p><span class="chip line">Discover</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rg rv" style="--c:3">
+          <div class="qcell"><span class="q-n">Q1</span>
+            <p class="cell-title">What makes a diagnosis feel lonely?</p><span class="arr"></span><span class="mc">It
+              shaped</span>
+            <p class="cell-text" style="margin-top:0">A community-first home: share, ask, join groups and chat before
+              anything else.</p><span class="chip line ev">Community and Forum</span>
+          </div>
+          <div class="qcell"><span class="q-n">Q2</span>
+            <p class="cell-title">What does a good day look like?</p><span class="arr"></span><span class="mc">It
+              shaped</span>
+            <p class="cell-text" style="margin-top:0">Gentle daily care: reminders, meals, light exercise, meditation
+              and a mood check-in.</p><span class="chip line ev">Lifestyle and Health</span>
+          </div>
+          <div class="qcell"><span class="q-n">Q3</span>
+            <p class="cell-title">Who can I trust for answers?</p><span class="arr"></span><span class="mc">It
+              shaped</span>
+            <p class="cell-text" style="margin-top:0">Doctor-authored posts, expert tags on recipes and a News section
+              with categories.</p><span class="chip line ev">Posts and News</span>
+          </div>
+        </div>
+        <div class="todo" style="margin-top:22px">Add what you learned from the client or from patients: a real quote, a
+          finding, or what the client told you about their users.</div>
+      </div>
+    </section>
+
+    <!-- ============ 03 WHO IT'S FOR ============ -->
+    <section class="ch" id="c3" aria-labelledby="c3t">
+      <div class="ch-h">
+        <div class="ch-n">03</div>
+        <div class="ch-tt">
+          <h3 id="c3t" class="disp ch-t"><span class="ln"><span>Who it's</span></span><span class="ln"
+              style="--i:1"><span>for</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>The app asks one question first, then shapes itself around the answer.</p><span
+            class="chip line">Define</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rg rv" style="--c:4">
+          <div class="pcell path">
+            <div class="av">P</div><span class="tag">Path 01</span>
+            <h4>Patient</h4>
+            <p class="g">"I have been diagnosed with a kidney condition."</p>
+            <dl>
+              <div>
+                <dt>Needs</dt>
+                <dd>Peers, daily routine, safe advice</dd>
+              </div>
+              <div>
+                <dt>Lives in</dt>
+                <dd>Forum, Lifestyle, Health</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="pcell path">
+            <div class="av">C</div><span class="tag">Path 02</span>
+            <h4>Caregiver</h4>
+            <p class="g">"I am a caregiver or loved one of someone diagnosed."</p>
+            <dl>
+              <div>
+                <dt>Needs</dt>
+                <dd>Knowledge, shared stories, support</dd>
+              </div>
+              <div>
+                <dt>Lives in</dt>
+                <dd>News, Forum, Mental Health</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="pcell path">
+            <div class="av">D</div><span class="tag">Path 03</span>
+            <h4>Professional</h4>
+            <p class="g">"I am a medical professional or other specialty."</p>
+            <dl>
+              <div>
+                <dt>Needs</dt>
+                <dd>To answer, guide and be found</dd>
+              </div>
+              <div>
+                <dt>Lives in</dt>
+                <dd>Posts, expert tags, Contact</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="pcell path">
+            <div class="av">L</div><span class="tag">Path 04</span>
+            <h4>Just looking</h4>
+            <p class="g">"I am just looking around."</p>
+            <dl>
+              <div>
+                <dt>Needs</dt>
+                <dd>A low-pressure way in</dd>
+              </div>
+              <div>
+                <dt>Lives in</dt>
+                <dd>News, Community</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <div class="todo" style="margin-top:22px">Add the doctor-side plan: is there a separate doctor portal, and what
+          does it include?</div>
+      </div>
+    </section>
+
+    <!-- ============ 04 STRUCTURE ============ -->
+    <section class="ch" id="c4" aria-labelledby="c4t">
+      <div class="ch-h">
+        <div class="ch-n">04</div>
+        <div class="ch-tt">
+          <h3 id="c4t" class="disp ch-t"><span class="ln"><span>Structure &amp;</span></span><span class="ln"
+              style="--i:1"><span>navigation</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>Five tabs for what people do daily. Messages and alerts live in the header.</p><span
+            class="chip line">Structure</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rg rv" style="--c:5">
+          <div><span class="mc">Tab 01</span>
+            <p class="cell-title">Community</p>
+            <ul class="toc" style="margin-top:14px">
+              <li>Welcome &amp; stats</li>
+              <li>Daily reminders</li>
+              <li>Daily discussions</li>
+              <li>Lifestyle picks</li>
+              <li>Support groups</li>
+              <li>Professionals</li>
+            </ul>
+          </div>
+          <div><span class="mc">Tab 02</span>
+            <p class="cell-title">Forum</p>
+            <ul class="toc" style="margin-top:14px">
+              <li>Topic filters</li>
+              <li>Contribute bar</li>
+              <li>Posts and questions</li>
+              <li>Post details</li>
+              <li>Create post</li>
+            </ul>
+          </div>
+          <div><span class="mc">Tab 03</span>
+            <p class="cell-title">Lifestyle</p>
+            <ul class="toc" style="margin-top:14px">
+              <li>Nutrition</li>
+              <li>Exercise</li>
+              <li>Meditation</li>
+              <li>Share a recipe or workout</li>
+            </ul>
+          </div>
+          <div><span class="mc">Tab 04</span>
+            <p class="cell-title">Health</p>
+            <ul class="toc" style="margin-top:14px">
+              <li>Mental Health</li>
+              <li>Mood check-in</li>
+              <li>User stories</li>
+              <li>Medical Logs</li>
+              <li>Emergency contact</li>
+            </ul>
+          </div>
+          <div><span class="mc">Tab 05</span>
+            <p class="cell-title">News</p>
+            <ul class="toc" style="margin-top:14px">
+              <li>Latest news</li>
+              <li>Popular, by category</li>
+              <li>News details</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rg rv" style="--c:3;margin-top:22px">
+          <div><span class="mc">Header</span>
+            <p class="cell-title">Profile, search, messages, alerts</p>
+            <p class="cell-text">The avatar opens the profile. Messages and notifications sit beside search.</p>
+          </div>
+          <div><span class="mc">Profile</span>
+            <p class="cell-title">Your posts, your settings</p>
+            <p class="cell-text">Filter by posts, forum, exercises, nutrition and mental health. Edit profile and
+              settings.</p>
+          </div>
+          <div><span class="mc">Messages</span>
+            <p class="cell-title">Group chats</p>
+            <p class="cell-text">Circles like Wellness Circle and Kidney Care 101, with unread counts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 FLOWS ============ -->
+    <section class="ch" id="c5" aria-labelledby="c5t">
+      <div class="ch-h">
+        <div class="ch-n">05</div>
+        <div class="ch-tt">
+          <h3 id="c5t" class="disp ch-t"><span class="ln"><span>Key</span></span><span class="ln"
+              style="--i:1"><span>flows</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>Short steps, one decision per screen, a clear ending every time.</p><span
+            class="chip line">Structure</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <span class="mc">Flow 01 · Joining</span>
+        <ol class="flow rv" style="--n:6;margin-bottom:40px">
+          <li><b>Welcome</b><small>"You're not alone."</small></li>
+          <li><b>Create account</b><small>Email and password</small></li>
+          <li><b>Confirm email</b><small>Link, with a resend timer</small></li>
+          <li><b>Set up profile</b><small>Name, birthday, city</small></li>
+          <li><b>Your health journey</b><small>Who you are, then what you want</small></li>
+          <li class="end"><b>Home</b><small>A feed built for you</small></li>
+        </ol>
+        <span class="mc">Flow 02 · Contributing a recipe or exercise</span>
+        <ol class="flow rv" style="--n:5;margin-bottom:40px">
+          <li><b>Contribute</b><small>From the Lifestyle tab</small></li>
+          <li><b>Details</b><small>Name, photo, description</small></li>
+          <li><b>Ingredients</b><small>Or exercise instructions</small></li>
+          <li><b>Instructions</b><small>Step by step</small></li>
+          <li class="end"><b>Submitted for review</b><small>Notified once approved</small></li>
+        </ol>
+        <span class="mc">Flow 03 · Getting back in</span>
+        <ol class="flow rv" style="--n:5">
+          <li><b>Forgot password</b><small>Enter your email</small></li>
+          <li><b>Check your email</b><small>Masked address, resend timer</small></li>
+          <li><b>Reset password</b><small>New password, confirm</small></li>
+          <li class="end"><b>Success</b><small>Go back to login</small></li>
+          <li><b>Or: failed</b><small>"Try again", in red</small></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ 06 DECISIONS ============ -->
+    <section class="ch" id="c6" aria-labelledby="c6t">
+      <div class="ch-h">
+        <div class="ch-n">06</div>
+        <div class="ch-tt">
+          <h3 id="c6t" class="disp ch-t"><span class="ln"><span>Design</span></span><span class="ln"
+              style="--i:1"><span>decisions</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>Six choices that make a serious topic feel human.</p><span class="chip line">Build</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rg mods rv" style="--c:3">
+          <div class="dcell"><span class="mn">One calm green</span>
+            <p>A single olive green marks every action and active state. Everything else stays neutral, so nothing
+              shouts.</p><span class="why">Calm, not clinical</span>
+          </div>
+          <div class="dcell"><span class="mn">A friendly guide</span>
+            <p>An olive mascot welcomes people, delivers the confirmation email and celebrates the verified account.</p>
+            <span class="why">A face to the app</span>
+          </div>
+          <div class="dcell"><span class="mn">Always a way to speak</span>
+            <p>A "Contribute" bar sits above feeds, so sharing a question, recipe, workout or story is one tap away.</p>
+            <span class="why">Join, don't just read</span>
+          </div>
+          <div class="dcell"><span class="mn">Review before publishing</span>
+            <p>Recipes and exercises go "for review" with a clear confirmation, so shared advice can be checked.</p>
+            <span class="why">Trust</span>
+          </div>
+          <div class="dcell"><span class="mn">Routine on Home</span>
+            <p>A week strip and today's appointment sit on Home and in Health, next to the numbers that matter that day.
+            </p><span class="why">Daily care</span>
+          </div>
+          <div class="dcell"><span class="mn">Alerts you can act on</span>
+            <p>Notifications carry their own answers, such as "Yes / Not yet" for medication, without opening another
+              screen.</p><span class="why">Fewer taps</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 07 TESTING ============ -->
+    <section class="ch" id="c7" aria-labelledby="c7t">
+      <div class="ch-h">
+        <div class="ch-n">07</div>
+        <div class="ch-tt">
+          <h3 id="c7t" class="disp ch-t"><span class="ln"><span>Testing &amp;</span></span><span class="ln"
+              style="--i:1"><span>feedback</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>What the client and real users said, and what changed.</p><span class="chip line">Validate</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="tw rv">
+          <table class="log">
+            <thead>
+              <tr>
+                <th style="width:22%">Stage</th>
+                <th style="width:40%">What they said</th>
+                <th>What I did</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Client review</td>
+                <td class="add">Add feedback</td>
+                <td class="add">Add the change it led to</td>
+              </tr>
+              <tr>
+                <td>Prototype walkthrough</td>
+                <td class="add">Add feedback</td>
+                <td class="add">Add the change it led to</td>
+              </tr>
+              <tr>
+                <td>Early users</td>
+                <td class="add">Add feedback</td>
+                <td class="add">Add the change it led to</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="todo" style="margin-top:22px">Add real feedback only. If there was no testing because of the
+          schedule, say so; it is an honest part of this story.</div>
+      </div>
+    </section>
+
+    <!-- ============ 08 REFINE ============ -->
+    <section class="ch" id="c8" aria-labelledby="c8t">
+      <div class="ch-h">
+        <div class="ch-n">08</div>
+        <div class="ch-tt">
+          <h3 id="c8t" class="disp ch-t"><span class="ln"><span>Refine</span></span><span class="ln"
+              style="--i:1"><span>next</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>An audit of the MVP. What I would change first, and why.</p><span class="chip line">Refine</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rg g12 rv">
+          <div class="sp4" style="display:flex;flex-direction:column;justify-content:space-between;gap:32px">
+            <p class="pull">A fast MVP leaves <em>honest</em> gaps.</p>
+            <p class="cell-text">Reviewing my own screens, these are the issues I would fix before launch.</p>
+          </div>
+          <div class="sp8 tw">
+            <table class="dec">
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>MVP today</th>
+                  <th>Next decision</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Water</td>
+                  <td>A daily intake goal in litres</td>
+                  <td>A fluid limit set with the care team</td>
+                </tr>
+                <tr>
+                  <td>Health data</td>
+                  <td>Steps, pulse, calories</td>
+                  <td>Kidney needs: fluid, sodium, potassium, appointments</td>
+                </tr>
+                <tr>
+                  <td>Mood</td>
+                  <td>Faces from "Worst" to "Happy"</td>
+                  <td>Gentler labels and a path to support</td>
+                </tr>
+                <tr>
+                  <td>Notifications</td>
+                  <td>Accept / Decline on every alert</td>
+                  <td>Actions that match: Yes / Not yet, Call, Dismiss</td>
+                </tr>
+                <tr>
+                  <td>Tabs</td>
+                  <td>Community and Forum overlap</td>
+                  <td>Merge, or give each a clear job</td>
+                </tr>
+                <tr>
+                  <td>Doctors</td>
+                  <td>A "professional" option, same flow</td>
+                  <td>Verification and a verified badge</td>
+                </tr>
+                <tr>
+                  <td>Contrast</td>
+                  <td>White on mid-green, light placeholders</td>
+                  <td>Darker greens and 4.5:1 text</td>
+                </tr>
+                <tr>
+                  <td>Text size</td>
+                  <td>Small body and chips</td>
+                  <td>Larger type and 44px targets</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= INTERLUDE ================= -->
+    <section class="inter" id="product" aria-labelledby="inter-h">
+      <div class="bar"><span class="chip">Part two</span><span class="micro mute">The final product</span></div>
+      <div class="inter-main">
+        <h2 id="inter-h" class="disp"><span class="ln"><span>Meet</span></span><span class="ln" style="--i:1"><span
+              class="a">Oliver.</span></span></h2>
+        <div class="row2">
+          <p class="rv">Everything above, in your pocket. Five tabs, one friendly guide and a community that answers.
+          </p>
+          <a href="#answers" class="on-hover"
+            style="display:inline-flex;align-items:center;gap:14px;font-weight:700"><span class="roll">How it answers
+              the brief</span><span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROBLEM → ANSWER ================= -->
+    <section class="pa" id="answers" aria-label="Problems and answers">
+      <div class="bar"><span class="chip">Problem and answer</span></div>
+      <div class="pa-h micro mute"><span></span><span>The problem</span><span>The answer</span></div>
+      <div class="pa-row">
+        <div class="n">01</div>
+        <div>
+          <h3>A diagnosis can feel isolating</h3>
+        </div>
+        <div>
+          <h3>A community-first app</h3>
+          <p>Forum, support groups and group chats, one tap from Home.</p>
+        </div>
+      </div>
+      <div class="pa-row">
+        <div class="n">02</div>
+        <div>
+          <h3>Good information is hard to find and trust</h3>
+        </div>
+        <div>
+          <h3>Doctor-authored posts and News</h3>
+          <p>Expert tags, categories and reviewed contributions.</p>
+        </div>
+      </div>
+      <div class="pa-row">
+        <div class="n">03</div>
+        <div>
+          <h3>Daily routines are easy to lose</h3>
+        </div>
+        <div>
+          <h3>Reminders, logs and check-ins</h3>
+          <p>A week strip, medical logs and a mood check-in.</p>
+        </div>
+      </div>
+      <div class="pa-row">
+        <div class="n">04</div>
+        <div>
+          <h3>Healthy-living advice feels generic</h3>
+        </div>
+        <div>
+          <h3>Lifestyle shared by the community</h3>
+          <p>Nutrition, exercise and meditation, open to contributions.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB VIEWER ================= -->
+    <section class="ch" id="app" aria-labelledby="appt">
+      <div class="ch-h">
+        <div class="ch-n sm">APP</div>
+        <div class="ch-tt">
+          <h3 id="appt" class="disp ch-t"><span class="ln"><span>Five tabs,</span></span><span class="ln"
+              style="--i:1"><span>explored</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>Pick a tab, then hover a note to find the screen it describes.</p><span class="chip line">Mobile app</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="view" id="viewApp">
+          <div class="vtabs" role="tablist" aria-label="App tabs">
+            <button role="tab" aria-selected="true"><span class="n">01</span>Community</button>
+            <button role="tab" aria-selected="false"><span class="n">02</span>Forum</button>
+            <button role="tab" aria-selected="false"><span class="n">03</span>Lifestyle</button>
+            <button role="tab" aria-selected="false"><span class="n">04</span>Health</button>
+            <button role="tab" aria-selected="false"><span class="n">05</span>News</button>
+          </div>
+          <div class="vgrid">
+            <div class="vstage">
+              <div class="vframe">
+                <div class="pset on">
+                  <div class="shot"><span class="pnum">1</span>
+                    <div class="mock pho" data-mock="home" data-src="/images/oliver/home.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">2</span>
+                    <div class="mock pho" data-mock="chat" data-src="/images/oliver/chat.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">3</span>
+                    <div class="mock pho" data-mock="notif" data-src="/images/oliver/notifications.png"></div>
+                  </div>
+                </div>
+                <div class="pset">
+                  <div class="shot"><span class="pnum">1</span>
+                    <div class="mock pho" data-mock="forum" data-src="/images/oliver/forum.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">2</span>
+                    <div class="mock pho" data-mock="post" data-src="/images/oliver/post-details.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">3</span>
+                    <div class="mock pho" data-mock="createPost" data-src="/images/oliver/create-post.png"></div>
+                  </div>
+                </div>
+                <div class="pset">
+                  <div class="shot"><span class="pnum">1</span>
+                    <div class="mock pho" data-mock="nutrition" data-src="/images/oliver/nutrition.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">2</span>
+                    <div class="mock pho" data-mock="exercise" data-src="/images/oliver/exercise.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">3</span>
+                    <div class="mock pho" data-mock="meditation" data-src="/images/oliver/meditation.png"></div>
+                  </div>
+                </div>
+                <div class="pset two">
+                  <div class="shot"><span class="pnum">1</span>
+                    <div class="mock pho" data-mock="mental" data-src="/images/oliver/mental-health.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">2</span>
+                    <div class="mock pho" data-mock="logs" data-src="/images/oliver/medical-logs.png"></div>
+                  </div>
+                </div>
+                <div class="pset two">
+                  <div class="shot"><span class="pnum">1</span>
+                    <div class="mock pho" data-mock="news" data-src="/images/oliver/news.png"></div>
+                  </div>
+                  <div class="shot"><span class="pnum">2</span>
+                    <div class="mock pho" data-mock="newsDet" data-src="/images/oliver/news-details.png"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vinfo">
+              <div class="vi on">
+                <h3 class="disp">Start with<br>people</h3>
+                <p class="lead">Home opens on who you are today, then on what others are saying.</p>
+                <ul>
+                  <li><span class="b">1</span><span>Welcome, your status, and activity cards. Below them, a week strip
+                      with today's appointment, then daily discussions, lifestyle picks, support groups and
+                      professionals.</span></li>
+                  <li><span class="b">2</span><span>Messages opens group chats such as Wellness Circle and Kidney Care
+                      101, with unread counts.</span></li>
+                  <li><span class="b">3</span><span>Notifications answer themselves: Yes / Not yet for medication,
+                      Accept / Decline for invitations.</span></li>
+                </ul>
+                <div class="chips"><span>Support groups</span><span>Mental health professionals</span><span>Daily
+                    discussions</span></div>
+              </div>
+              <div class="vi">
+                <h3 class="disp">Ask, share,<br>answer</h3>
+                <p class="lead">A forum where a nephrologist's tips sit beside a patient's question.</p>
+                <ul>
+                  <li><span class="b">1</span><span>Topic filters across the top, a Contribute bar below, then posts and
+                      questions with tags, likes, comments and Save.</span></li>
+                  <li><span class="b">2</span><span>Post details give long posts room to breathe, with replies and a
+                      comment bar at the bottom.</span></li>
+                  <li><span class="b">3</span><span>Create Post keeps the screen empty and the keyboard ready. One
+                      field, one Post button.</span></li>
+                </ul>
+                <div class="chips"><span>Doctor-authored posts</span><span>Questions</span><span>Save post</span></div>
+              </div>
+              <div class="vi">
+                <h3 class="disp">Gentle daily<br>habits</h3>
+                <p class="lead">Nutrition, exercise and meditation, each with a quote, a recommendation and a way to
+                  contribute.</p>
+                <ul>
+                  <li><span class="b">1</span><span>Nutrition: a recipe of the day, food categories and recommendations.
+                      Recipes open to ingredients, steps and reviews.</span></li>
+                  <li><span class="b">2</span><span>Exercise: a daily progress ring, goals by activity and popular
+                      exercises with level and time.</span></li>
+                  <li><span class="b">3</span><span>Meditation: recommendations and playlists such as Nature, Sleep and
+                      Rain.</span></li>
+                </ul>
+                <div class="chips"><span>Share your recipe</span><span>Share your workout</span><span>Reviews</span>
+                </div>
+              </div>
+              <div class="vi">
+                <h3 class="disp">Check in<br>with yourself</h3>
+                <p class="lead">A place for how you feel, and for the numbers your care team asks about.</p>
+                <ul>
+                  <li><span class="b">1</span><span>Mental Health: a mood check-in, user stories, support groups and
+                      professionals you can contact.</span></li>
+                  <li><span class="b">2</span><span>Medical Logs: add records, emergency contact, resources, today's
+                      schedule and recent logs of blood pressure, weight and medication.</span></li>
+                </ul>
+                <div class="chips"><span>Share your story</span><span>Emergency contact</span></div>
+              </div>
+              <div class="vi">
+                <h3 class="disp">Stay<br>informed</h3>
+                <p class="lead">Research and policy news, written for patients and sorted by topic.</p>
+                <ul>
+                  <li><span class="b">1</span><span>Latest News as large cards, and Popular News filtered by Breaking,
+                      Pharmacology, Inspirational Stories, Clinical Trials and Research.</span></li>
+                  <li><span class="b">2</span><span>News Details: a headline, the author and date, a hero image and a
+                      comfortable reading column.</span></li>
+                </ul>
+                <div class="chips"><span>Breaking news</span><span>Inspirational stories</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RAILS ================= -->
+    <section class="ch" id="start" aria-labelledby="startt">
+      <div class="ch-h">
+        <div class="ch-n sm">JOIN</div>
+        <div class="ch-tt">
+          <h3 id="startt" class="disp ch-t"><span class="ln"><span>First steps,</span></span><span class="ln"
+              style="--i:1"><span>and sharing</span></span></h3>
+        </div>
+        <div class="ch-d">
+          <p>How someone joins, and how they contribute once they have. Drag to browse.</p><span
+            class="chip line">Mobile app</span>
+        </div>
+      </div>
+      <div class="ch-b">
+        <div class="rail-wrap rv" style="margin-bottom:40px" data-rail>
+          <div class="rail-bar"><span class="micro">Getting started · 6 screens</span>
+            <div class="ctl"><button class="circ" data-dir="-1" aria-label="Previous screens"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" style="transform:scaleX(-1)">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg></button><button class="circ" data-dir="1" aria-label="Next screens"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg></button></div>
+          </div>
+          <div class="rail">
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="welcome" data-src="/images/oliver/welcome.png"></div>
+              </div>
+              <div class="t"><b class="n">01</b><strong>Welcome</strong></div>
+              <p>"You're not alone." The mascot, one tagline, two buttons.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="create" data-src="/images/oliver/create-account.png"></div>
+              </div>
+              <div class="t"><b class="n">02</b><strong>Create Account</strong></div>
+              <p>Email, password and consent, with the terms in plain sight.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="confirm" data-src="/images/oliver/confirm-email.png"></div>
+              </div>
+              <div class="t"><b class="n">03</b><strong>Confirm Email</strong></div>
+              <p>The mascot delivers the letter. A resend timer counts down.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="setup" data-src="/images/oliver/setup-profile.png"></div>
+              </div>
+              <div class="t"><b class="n">04</b><strong>Set Up Profile</strong></div>
+              <p>A few details and a photo. "Just a few more," says the screen.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="journey1" data-src="/images/oliver/journey-1.png"></div>
+              </div>
+              <div class="t"><b class="n">05</b><strong>Your Health Journey</strong></div>
+              <p>Who are you? Patient, caregiver, professional or just looking.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="journey2" data-src="/images/oliver/journey-2.png"></div>
+              </div>
+              <div class="t"><b class="n">06</b><strong>What You Want</strong></div>
+              <p>Seven interests that decide what the first feed shows.</p>
+            </div>
+          </div>
+        </div>
+        <div class="rail-wrap rv" data-rail>
+          <div class="rail-bar"><span class="micro">Sharing a recipe · 4 screens</span>
+            <div class="ctl"><button class="circ" data-dir="-1" aria-label="Previous screens"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" style="transform:scaleX(-1)">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg></button><button class="circ" data-dir="1" aria-label="Next screens"><svg viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg></button></div>
+          </div>
+          <div class="rail">
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="shareRecipe" data-src="/images/oliver/share-recipe.png"></div>
+              </div>
+              <div class="t"><b class="n">01</b><strong>Share Recipe</strong></div>
+              <p>Name, photo and a short description.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="shareIng" data-src="/images/oliver/share-recipe-ingredients.png"></div>
+              </div>
+              <div class="t"><b class="n">02</b><strong>Ingredients</strong></div>
+              <p>Name and quantity, with Add More for the next one.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="shareSteps" data-src="/images/oliver/share-recipe-instructions.png">
+                </div>
+              </div>
+              <div class="t"><b class="n">03</b><strong>Instructions</strong></div>
+              <p>Numbered steps, then Submit for review.</p>
+            </div>
+            <div class="pcard">
+              <div class="shot">
+                <div class="mock pho" data-mock="shareSent" data-src="/images/oliver/share-recipe-sent.png"></div>
+              </div>
+              <div class="t"><b class="n">04</b><strong>Submitted</strong></div>
+              <p>"You'll be notified once it's approved."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= DEMO ================= -->
+    <section class="demo" id="demo" aria-labelledby="demo-h">
+      <div class="bar"><span class="chip">Try it</span><span class="prop">Proposed, not in the MVP</span></div>
+      <div class="demo-grid">
+        <div class="demo-l">
+          <h2 id="demo-h" class="disp"><span class="ln"><span>A check-in</span></span><span class="ln"
+              style="--i:1"><span>that listens</span></span></h2>
+          <p>The MVP asks how you feel. This concept shows how the answer could lead to help instead of a dead end. Try
+            each mood.</p>
+          <ol class="steps" id="steps">
+            <li class="on"><span class="n">01</span>
+              <div><b>Check in</b><small>Choose how today feels.</small></div>
+            </li>
+            <li><span class="n">02</span>
+              <div><b>Oliver responds</b><small>Suggestions shift with the mood.</small></div>
+            </li>
+          </ol>
+        </div>
+        <div class="demo-r">
+          <div class="dphone" id="dphone" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= REFLECTION ================= -->
+    <section class="rf" aria-label="Reflection">
+      <div class="bar"><span class="chip">Reflection</span></div>
+      <div class="rf-grid">
+        <div><span class="micro mute">Lessons</span>
+          <h3 class="disp">What I learned</h3>
+          <ul>
+            <li><b>Warmth is a feature.</b>For a serious topic, tone and a friendly guide do real work.</li>
+            <li><b>Make sharing easy.</b>A community only exists if contributing takes one tap.</li>
+            <li><b>Speed leaves gaps.</b>Auditing my own MVP showed where care and safety needed more thought.</li>
+          </ul>
+        </div>
+        <div><span class="micro mute">Next</span>
+          <h3 class="disp">What I'd do next</h3>
+          <ul>
+            <li><b>Design the doctor side.</b>Verification, answering tools and a clear badge.</li>
+            <li><b>Make it kidney-specific.</b>Fluid, diet and appointments as first-class data.</li>
+            <li><b>Test with patients.</b>Check type size, contrast and tone with real people.</li>
+          </ul>
+        </div>
+        <div><span class="micro mute">Outcome</span>
+          <h3 class="disp">What happened</h3>
+          <div class="todo" style="margin-top:8px">Launch status, client feedback or any result you can stand behind.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT PROJECT -->
+    <section class="next-project" aria-label="Next project">
+      <a class="np" href="supply-chain-story.html">
+        <div class="np-media" data-file="images/supply.jpg"><img src="../images/supply.jpg"
+            alt="Supply chain platform dashboard preview" loading="lazy" onerror="this.src='/images/supply.jpg'"></div>
+        <div class="np-body">
+          <div class="np-text">
+            <span class="np-label">Next project</span>
+            <h3 class="display np-title"><span class="roll">Supply chain application</span></h3>
+          </div>
+          <span class="np-btn" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
+        </div>
+      </a>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="cta" id="contact" aria-labelledby="cta-title">
+      <h2 class="cta-mq marquee" id="cta-title" data-speed="110" data-velocity>
+        <span class="track"><span class="set">
+            <span class="u">Get started today
+              <svg class="spin" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" aria-hidden="true">
+                <path d="M20 3v34M3 20h34M8 8l24 24M32 8L8 32" />
+              </svg>
+            </span>
+            <span class="u o">No obligation call
+              <svg class="spin" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" aria-hidden="true">
+                <path d="M20 3v34M3 20h34M8 8l24 24M32 8L8 32" />
+              </svg>
+            </span>
+          </span></span>
+      </h2>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-contact">
+      <span class="footer-label">Contact me</span>
+      <a class="footer-mail" href="mailto:abhidangol11@gmail.com">
+        abhidangol11@gmail.com
+      </a>
+    </div>
+
+    <div class="footer-bottom">
+      <a class="footer-link footer-link-1" href="https://www.linkedin.com/in/adangol11/" target="_blank" rel="noopener">
+        <span class="roll">LinkedIn</span>
+      </a>
+
+      <a class="footer-link footer-link-2" href="https://www.behance.net/abhishekdangol1" target="_blank"
+        rel="noopener">
+        <span class="roll">Behance</span>
+      </a>
+
+      <a class="footer-link footer-link-3" href="https://dribbble.com/adangol12" target="_blank" rel="noopener">
+        <span class="roll">Dribbble</span>
+      </a>
+
+      <a class="footer-top" href="#top" id="toTop" aria-label="Back to top">
+        <span class="footer-top-icon">↑</span>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+      (function () {
+        "use strict";
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* navbar scroll behavior (consistent with index.html) */
+        var header = document.querySelector('.site-header');
+        var lastY = scrollY;
+        var ticking = false;
+        var menuOpen = false;
+
+        function updateNav() {
+          ticking = false;
+          var y = scrollY, dy = y - lastY;
+          if (!menuOpen && header) {
+            if (dy > 2 && y > 320) header.classList.add('hide');
+            else if (dy < -2) header.classList.remove('hide');
+          }
+          lastY = y;
+        }
+        addEventListener('scroll', function () {
+          if (!ticking) { ticking = true; requestAnimationFrame(updateNav); }
+        }, { passive: true });
+
+        /* mobile menu (consistent with index.html) */
+        var burger = document.getElementById('burger'), menu = document.getElementById('menu');
+        function setMenu(open) {
+          menuOpen = open;
+          if (menu) {
+            menu.classList.toggle('open', open);
+            menu.setAttribute('aria-hidden', String(!open));
+          }
+          if (burger) {
+            burger.setAttribute('aria-expanded', String(open));
+            burger.textContent = open ? 'Close' : 'Menu';
+          }
+          document.body.classList.toggle('menu-open', open);
+          document.body.classList.toggle('lock', open);
+          if (open && header) header.classList.remove('hide');
+        }
+        if (burger && menu) {
+          burger.addEventListener('click', function () { setMenu(!menuOpen); });
+          menu.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () { setMenu(false); });
+          });
+          addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && menuOpen) setMenu(false);
+          });
+          var desktop = matchMedia('(min-width: 861px)');
+          desktop.addEventListener('change', function () {
+            if (desktop.matches) setMenu(false);
+          });
+        }
+
+        /* roll links */
+        document.querySelectorAll('.roll').forEach(function (r) {
+          var t = r.textContent;
+          r.innerHTML = '<span>' + t + '</span><span aria-hidden="true">' + t + '</span>';
+        });
+
+        /* toTop smooth scroll */
+        var toTop = document.getElementById('toTop');
+        if (toTop) {
+          toTop.addEventListener('click', function (e) {
+            e.preventDefault();
+            scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+          });
+        }
+
+        /* reveal + count */
+        function count(el) { var n = +el.dataset.n; if (reduce) { el.textContent = n; return } var t0 = null, d = 1300; function f(t) { if (!t0) t0 = t; var p = Math.min(1, (t - t0) / d), e = 1 - Math.pow(1 - p, 4); el.textContent = Math.round(n * e); if (p < 1) requestAnimationFrame(f) } requestAnimationFrame(f) }
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target) } }) }, { threshold: .12 });
+        document.querySelectorAll('.rv,.settle,.jr-head h2,.hero h1,.inter h2,.demo-l h2,.cta h2,.ch-tt').forEach(function (el) { io.observe(el) });
+        var co = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { count(e.target); co.unobserve(e.target) } }) }, { threshold: .5 });
+        document.querySelectorAll('.stats b').forEach(function (b) { co.observe(b) });
+
+        /* ---------- phone mocks ---------- */
+        var MAS = '<svg class="x-mas" viewBox="0 0 100 124" aria-hidden="true"><ellipse cx="50" cy="70" rx="34" ry="42" fill="#7fb239"/><path d="M50 30C40 12 22 14 16 22 28 30 40 32 50 30Z" fill="#3D5919"/><circle cx="39" cy="64" r="9" fill="#fff"/><circle cx="62" cy="64" r="9" fill="#fff"/><circle cx="40" cy="65" r="4.6" fill="#2b1a0c"/><circle cx="61" cy="65" r="4.6" fill="#2b1a0c"/><path d="M38 84Q51 96 64 84" stroke="#2b1a0c" fill="none" stroke-width="3" stroke-linecap="round"/><rect x="34" y="108" width="7" height="14" rx="3" fill="#3D5919"/><rect x="60" y="108" width="7" height="14" rx="3" fill="#3D5919"/></svg>';
+        var TABS = ['Community', 'Forum', 'Lifestyle', 'Health', 'News'];
+        function ST() { return '<div class="p-st"><span>9:41</span><span>▮▮▮</span></div>' }
+        function TOP() { return '<div class="x-top"><i class="x-av"></i><span class="x-search">Search ...</span><i class="x-ic"></i><i class="x-ic r"></i></div>' }
+        function TB(a) { return '<div class="p-tabs">' + TABS.map(function (t, i) { return '<span class="' + (i === a ? 'on' : '') + '">' + t + '</span>' }).join('') + '</div>' }
+        function SEG(a, on) { return a ? '<div class="x-seg">' + a.map(function (t, i) { return '<span class="' + (i === on ? 'on' : '') + '">' + t + '</span>' }).join('') + '</div>' : '' }
+        function SCR(inner, tab, seg, on) { return '<div class="p">' + ST() + TOP() + SEG(seg, on) + '<div class="p-b" style="padding-top:1cqw;gap:2.6cqw">' + inner + '</div>' + TB(tab) + '</div>' }
+        function PH(title, inner, tab) { return '<div class="p">' + ST() + '<div class="p-hd">' + title + '</div><div class="p-b">' + inner + '</div>' + (tab != null ? TB(tab) : '') + '</div>' }
+        function SUB(t, s, inner, btn) { return '<div class="p">' + ST() + '<div class="x-bar">←</div><div class="p-b" style="padding-top:5cqw"><div class="x-t">' + t + '</div><div class="x-sub">' + s + '</div>' + inner + (btn ? '<div class="p-btn">' + btn + '</div>' : '') + '</div></div>' }
+        function COMP(t) { return '<div class="x-comp"><i class="x-av s"></i><span>' + t + '</span><b>Contribute</b></div>' }
+        function POST(n, t, tags, body) { return '<div class="x-post"><div class="who"><i class="x-av s"></i><div>' + n + '<small>Posted on Apr 14, 2025</small></div></div><h5>' + t + '</h5>' + (body ? '<div class="tx"><i></i><i></i><i></i></div>' : '') + '<div class="tg">' + tags.map(function (x) { return '<span>' + x + '</span>' }).join('') + '</div><div class="ft"><span>♡ 122 &nbsp; ◌ 42</span><span>Save Post</span></div></div>' }
+        function IMG(h, l, c) { return '<div class="x-img ' + (c || '') + '" style="height:' + h + 'cqw">' + (l ? '<i>' + l + '</i>' : '') + '</div>' }
+        function REC(n) { var o = ''; for (var i = 0; i < n; i++)o += '<div><div class="x-img ' + ['g', 'y', 'r', 'b'][i % 4] + '" style="height:30cqw"><i>Healthy Breakfast Bowl</i></div></div>'; return '<div class="x-rec">' + o + '</div>' }
+        function HEAD(t, l) { return '<div class="x-h">' + t + (l ? '<small>' + l + '</small>' : '') + '</div>' }
+        function FACE(i, l) { return '<span><i class="face f' + i + '"></i>' + l + '</span>' }
+
+        var M = {
+          splash: function () { return '<div class="p">' + ST().replace('p-st', 'p-st" style="color:#fff') + '<div class="x-splash"><div class="sc">Oliver</div><small>Your Online Kidney Community</small></div></div>' },
+          welcome: function () { return '<div class="p">' + ST() + '<div class="p-b" style="align-items:center;text-align:center;gap:1.6cqw;padding-top:7cqw"><div style="font:italic 500 13cqw/1 \'Playfair Display\',serif;color:#3D5919">Oliver</div><div style="font-size:2.6cqw;color:#3D5919">Your Online Kidney Community</div>' + MAS + '<div style="font-size:3.6cqw;font-weight:600;line-height:1.25;margin-top:2cqw">You\'re not alone. Find support, knowledge, and care here.</div><div class="p-btn" style="width:100%;margin-top:3cqw">Sign Up</div><div style="font-size:3.2cqw;font-weight:700;margin-top:1cqw">Login</div></div></div>' },
+          create: function () { return SUB('Create Account', 'Join the community and take control of your kidney wellness.', '<div class="p-f" style="background:#fff">Email Address</div><div class="p-f" style="background:#fff">Password</div><div class="p-f" style="background:#fff">Confirm Password</div><div class="x-sub" style="margin:0">☑ By creating an account, you agree to our Terms of Service and Privacy Policy.</div>', 'Create Account') },
+          confirm: function () { return SUB('Confirm Email', 'A link has been sent to your email. Please click on it to continue.', MAS + '<div style="text-align:center;font-size:3cqw;margin-top:auto"><u>Resend</u> email in 00:58s</div>') },
+          setup: function () { return SUB('Setup Your Profile', 'Just a few more details and we are ready to go.', '<i class="x-av" style="width:20cqw;height:20cqw"></i><div style="display:grid;grid-template-columns:1fr 1fr;gap:2cqw"><div class="p-f" style="background:#fff">First Name</div><div class="p-f" style="background:#fff">Last Name</div></div><div class="p-f" style="background:#fff">Date of birth</div><div class="p-f" style="background:#fff">City (Zip Code)</div><div class="p-f" style="background:#fff">Gender</div>', 'Continue') },
+          journey1: function () { return SUB('Your Health Journey', 'Sharing this helps us match you with the information that suits you.', '<div class="x-opt on"><i></i>I have been diagnosed with a kidney condition</div><div class="x-opt"><i></i>I am a caregiver or loved one of someone diagnosed</div><div class="x-opt"><i></i>I am a medical professional or other specialty</div><div class="x-opt"><i></i>I am just looking around</div>', 'Continue') },
+          journey2: function () { return SUB('Your Health Journey', 'Choose what you would like to see.', ['Nutrition Tips|on', 'Recipe', 'Exercise and Motivation', 'Community Connection', 'News and Research', 'Mental Wellbeing Resources', 'Medical Resources'].map(function (x) { x = x.split('|'); return '<div class="x-opt ck ' + (x[1] || '') + '"><i></i>' + x[0] + '</div>' }).join(''), 'Get Started') },
+          home: function () { return SCR('<div style="font-size:5cqw;font-weight:700;line-height:1.1;display:flex;justify-content:space-between;flex:none"><span>Welcome Back,<br>Alex</span><span style="font-size:2.4cqw;font-weight:500;text-align:right;color:#777">Status: Leader<br><span style="color:#e8a317;font-size:3cqw">★★★★★</span></span></div><div class="x-kpis"><div>Activities<b>1.2k</b><small>steps</small></div><div>Pulse<b>80</b><small>BPM</small></div><div>Water<b>0.8</b><small>liters</small></div></div>' + HEAD('Your Daily Reminders', 'Schedule +') + '<div class="x-sched"><div class="x-days"><span class="w">9<small>MON</small></span><span class="w">10<small>TUE</small></span><span>11<small>WED</small></span><span class="w">12<small>THU</small></span><span>13<small>FRI</small></span><span>14<small>SAT</small></span></div><div class="ev"><b>Dr. Emily Carter<br><span style="font-weight:400">Appointment at 11 am today</span></b></div></div>' + HEAD('Daily Discussions', 'View Detail') + POST('Dr. Emily Carter', 'Managing Kidney Disease: Small Daily Changes Can Make a Big Impact', ['Nutrition', 'Lifestyle'], 1), 0) },
+          forum: function () { return SCR('<div class="x-chips"><span class="on">All</span><span>Questions</span><span>Nutrition</span><span>Lifestyle</span><span>Treatment</span></div>' + COMP('What’s on your mind?') + POST('Dr. Emily Carter', 'Managing Kidney Disease: Small Daily Changes Can Make a Big Impact', ['Nutrition', 'Lifestyle'], 1) + POST('Tony Ferguson', 'Can anyone explain the difference between peritoneal and hemodialysis?', ['Question', 'Medical'], 0) + POST('Tony Ferguson', 'Has anyone felt isolated after their diagnosis? How do you cope?', ['Question', 'Mental Health', 'Support'], 0), 1) },
+          post: function () { return PH('View Post', '<div class="x-post" style="padding:0;background:none"><div class="who"><i class="x-av s"></i><div>Dr. Emily Carter<small>Posted on Apr 14, 2025</small></div></div><h5 style="font-size:3.6cqw">Managing Kidney Disease: Small Daily Changes Can Make a Big Impact</h5></div>' + IMG(46, '', 'g') + '<div class="x-post" style="padding:0;background:none"><div class="tx"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="x-post"><div class="who"><i class="x-av s"></i><div>Ram Kumar<small>Apr 14, 2025 · 06:12 AM</small></div></div><div class="tx"><i></i><i></i></div></div><div class="x-comp"><span>Comment ...</span></div>') },
+          createPost: function () { return PH('Create Post', '<div class="x-comp" style="background:none;padding:0"><i class="x-av s"></i><span style="background:none;color:#aaa">What’s on your mind?</span><b>Post</b></div><div style="flex:1"></div><div style="background:#d3d5db;height:44cqw;border-radius:2cqw;display:grid;place-items:center;color:#666;font-size:3cqw;margin:0 -5cqw -4cqw">keyboard</div>') },
+          nutrition: function () { return SCR(COMP('Share your Recipe') + '<div class="x-quote">"Healthy food improves your mood."<br><b>Recipe Of The Day</b></div><div class="x-cat"><span><i></i>Western</span><span><i></i>Noodles</span><span><i></i>Soup</span><span><i></i>Curry</span><span><i></i>Mixed</span></div>' + HEAD('Recommendation', 'See All') + REC(2), 2, ['Nutrition', 'Exercise', 'Meditation'], 0) },
+          exercise: function () { return SCR(COMP('Share your Workout') + '<div class="x-quote">"Sweat is your body\'s way of showing progress."<br><b>Start Exercise</b></div>' + HEAD('Your Daily Progress', 'Set Goal') + '<div class="x-prog"><div class="x-ring"><b>80%</b></div><div><span>Push ups <b>30 / 50 reps</b></span><span>Jogging <b>5 / 15 mins</b></span><span>Yoga <b>10 / 15 mins</b></span></div></div>' + HEAD('Recommendation', 'See All') + REC(2), 2, ['Nutrition', 'Exercise', 'Meditation'], 1) },
+          meditation: function () { return SCR('<div class="x-quote">“Music is the literature of the heart.”<br><b>Start Meditation</b></div>' + HEAD('Recommendation', 'See All') + REC(2) + HEAD('Playlist', 'See All') + '<div class="x-rec">' + IMG(24, 'Nature', 'g') + IMG(24, 'Sleep', 'b') + '</div>', 2, ['Nutrition', 'Exercise', 'Meditation'], 2) },
+          mental: function () { return SCR(COMP('Share your story') + '<div class="x-post" style="gap:3cqw"><div style="font-size:3.4cqw;font-weight:600;text-align:center;line-height:1.3">Hey Alex, how would you describe your mood today?</div><div class="x-mood">' + FACE(1, 'Worst') + FACE(2, 'Bad') + FACE(2, 'Sad') + FACE(3, 'Neutral') + FACE(4, 'Good') + FACE(5, 'Happy') + '</div><div class="x-slider"></div></div>' + HEAD('User Stories', 'See All') + POST('Jane Doe', 'Finding Light in Dialysis', ['Support', 'Depression'], 1) + HEAD('Support Groups', 'See All'), 3, ['Mental Health', 'Medical Logs'], 0) },
+          logs: function () { return SCR('<div class="x-tiles"><span><i></i>Add Medical Records</span><span><i></i>Emergency Contact</span><span><i></i>Medical Resources</span></div>' + HEAD('Your Daily Reminders', 'Schedule +') + '<div class="x-sched"><div class="ev"><b>Dr. Emily Carter<br><span style="font-weight:400">Appointment at 11 am today</span></b></div></div>' + HEAD('Recent Logs', 'Add') + '<div class="x-log"><div><span>Date</span><span>April 26, 2025</span></div><div><span>Blood Pressure</span><span>128/82 mmHg</span></div><div><span>Weight</span><span>71.5 kg</span></div><div><span>Medication Taken</span><span>Yes</span></div><div><span>Symptoms</span><span>Feeling Normal</span></div></div>', 3, ['Mental Health', 'Medical Logs'], 1) },
+          news: function () { return SCR(HEAD('Latest News') + '<div class="x-rec"><div><div class="x-img r" style="height:34cqw"></div><div style="font-size:2.6cqw;font-weight:600;margin-top:1cqw">New approved medicines for kidney treatment.</div></div><div><div class="x-img b" style="height:34cqw"></div><div style="font-size:2.6cqw;font-weight:600;margin-top:1cqw">New approved medicines for kidney treatment.</div></div></div>' + HEAD('Popular News') + '<div class="x-chips"><span class="on">All</span><span>Breaking News</span><span>Pharmacology</span><span>Research</span></div><div class="x-row"><div class="x-img y" style="width:22cqw;height:18cqw;flex:none"></div><div><small>Pharmacology</small><b>Major health policy changes affecting kidney patients.</b></div></div><div class="x-row"><div class="x-img g" style="width:22cqw;height:18cqw;flex:none"></div><div><small>Research</small><b>Major health policy changes affecting kidney patients.</b></div></div>', 4) },
+          newsDet: function () { return PH('News Details', '<div style="font-size:4.4cqw;font-weight:700;line-height:1.2">New approved medicines for kidney treatment.</div><div style="font-size:2.4cqw;color:#888">Jonathan Baker · Apr 14, 2025</div>' + IMG(50, '', 'r') + '<div class="x-post" style="padding:0;background:none"><div class="tx"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>') },
+          chat: function () { return PH('Messages', ['Wellness Circle|This article really helped me cope.', 'Health Heroes|Welcome to all the new members!', 'Stronger Everyday|How have you guys been?', 'Mind &amp; Body Boost|You are welcome!', 'Active Life Circle|Have you been taking your medication?', 'Kidney Care 101|Please send me your documents.'].map(function (x, i) { x = x.split('|'); return '<div class="x-row"><i class="x-av"></i><div><b>' + x[0] + '</b><small>' + x[1] + '</small></div>' + (i < 3 ? '<i class="dot"></i>' : '') + '</div>' }).join('')) },
+          notif: function () { return PH('Notification', '<div class="x-ni"><i></i><div>You’ve almost reached your daily fluid limit — stay mindful!</div></div><div class="x-ni"><i></i><div>Have you taken your prescribed medication yet?<div class="bt"><b>Yes</b><u>Not Yet</u></div></div></div><div class="x-ni"><i></i><div>You have a nephrologist appointment tomorrow at 10:00 AM.<div class="bt"><b>Accept</b><u>Decline</u></div></div></div><div class="x-ni rd"><i></i><div>You missed today’s medication dose.<div class="bt"><b>Yes</b><u>Not Yet</u></div></div></div><div class="x-ni"><i></i><div>You’ve consistently tracked your health for 7 days — keep it up!</div></div>') },
+          shareRecipe: function () { return PH('Share Recipe', '<div class="p-l">Recipe Name</div><div class="p-f" style="background:#fff">Mixed Fruit and Vegetable Salad</div><div style="border:1px dashed #aaa;border-radius:2cqw;height:34cqw;display:grid;place-items:center;font-size:3cqw;color:#666;text-align:center;flex:none">Click to Upload<br><small>Maximum file size 15MB</small></div><div class="p-l">Description</div><div class="p-f" style="background:#fff;height:26cqw">Delicious and healthy fruit and vegetable salad…</div><div class="p-btn">Continue</div>') },
+          shareIng: function () { return PH('Ingredients', ['Avocado', 'Tomatoes', 'Carrots', 'Cucumber', 'Lettuce'].map(function (x) { return '<div style="display:grid;grid-template-columns:1fr 1fr;gap:2cqw;flex:none"><div class="p-f" style="background:#fff">' + x + '</div><div class="p-f" style="background:#fff">10g</div></div>' }).join('') + '<div style="text-align:center;color:#3D5919;font-weight:700;font-size:3cqw">+ Add More</div><div class="p-btn">Continue</div>') },
+          shareSteps: function () { return PH('Instructions', [1, 2, 3, 4].map(function (i) { return '<div class="x-post"><div style="font-size:2.6cqw;font-weight:700">Step ' + i + '</div><div class="tx"><i></i><i></i></div></div>' }).join('') + '<div style="text-align:center;color:#3D5919;font-weight:700;font-size:3cqw">+ Add Steps</div><div class="p-btn">Submit for review</div>') },
+          shareSent: function () { return PH('', '<div class="p-ok">✓</div><div style="text-align:center;font-size:3.4cqw;line-height:1.35">Thank you! Your recipe has been submitted for review. You’ll be notified once it’s approved.</div><div class="p-btn">Continue</div>') }
+        };
+        document.querySelectorAll('.mock').forEach(function (m) {
+          var f = M[m.dataset.mock]; if (f) m.innerHTML = f();
+          var sh = m.closest('.shot'); if (!sh) return;
+          if (m.dataset.src) {
+            var s = document.createElement('span'); s.className = 'sch'; s.textContent = 'Schematic'; sh.appendChild(s);
+            var im = new Image(); im.alt = m.dataset.mock + ' screen'; im.loading = 'lazy';
+            im.onload = function () { sh.classList.add('real') }; im.onerror = function () { im.remove() };
+            im.src = m.dataset.src; sh.insertBefore(im, s);
+          }
+        });
+
+        /* ---------- tab viewer ---------- */
+        (function () {
+          var root = document.getElementById('viewApp'); if (!root) return;
+          var tabs = root.querySelectorAll('[role=tab]'), sets = root.querySelectorAll('.pset'), infos = root.querySelectorAll('.vi');
+          function show(i) { tabs.forEach(function (t, k) { t.setAttribute('aria-selected', k === i) }); sets.forEach(function (s, k) { s.classList.toggle('on', k === i) }); infos.forEach(function (s, k) { s.classList.toggle('on', k === i) }) }
+          tabs.forEach(function (t, i) {
+            t.addEventListener('click', function () { show(i) });
+            t.addEventListener('keydown', function (e) { var n = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (n) { var j = (i + n + tabs.length) % tabs.length; show(j); tabs[j].focus() } })
+          });
+          infos.forEach(function (inf, si) {
+            var lis = inf.querySelectorAll('li'), shots = sets[si].querySelectorAll('.shot');
+            lis.forEach(function (li, k) {
+              var sh = shots[k]; if (!sh) return;
+              li.addEventListener('mouseenter', function () { sh.classList.add('hl') }); li.addEventListener('mouseleave', function () { sh.classList.remove('hl') });
+            });
+          });
+        })();
+
+        /* ---------- rails ---------- */
+        document.querySelectorAll('[data-rail]').forEach(function (w) {
+          var rail = w.querySelector('.rail');
+          var step = function () { var c = rail.querySelector('.pcard'); return c.getBoundingClientRect().width + parseFloat(getComputedStyle(rail).columnGap || 24) };
+          w.querySelectorAll('[data-dir]').forEach(function (b) { b.addEventListener('click', function () { rail.scrollBy({ left: step() * 2 * (+b.dataset.dir), behavior: 'smooth' }) }) });
+          var down = false, sx = 0, sl = 0;
+          rail.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = rail.scrollLeft; rail.classList.add('drag') });
+          addEventListener('pointermove', function (e) { if (down) rail.scrollLeft = sl - (e.clientX - sx) });
+          addEventListener('pointerup', function () { if (down) { down = false; rail.classList.remove('drag') } });
+        });
+
+        /* ---------- mood check-in demo (proposed concept) ---------- */
+        var dp = document.getElementById('dphone'), steps = document.querySelectorAll('#steps li');
+        var MOODS = [['Worst', 1], ['Bad', 2], ['Okay', 3], ['Good', 4], ['Great', 5]];
+        var st = { step: 0, m: -1 };
+        function sugg(m) {
+          if (m <= 1) return { msg: 'That sounds heavy. You don’t have to carry it alone.', items: [['Talk to a professional', 'Therapists and mood experts you can contact'], ['Join a support group', 'People who understand, at your pace'], ['Read a story', 'From someone who has been there']], note: 'If you feel unsafe or in danger, please contact your local emergency number or a crisis line right away.' };
+          if (m === 2) return { msg: 'Thanks for checking in. A quiet moment can help.', items: [['Try a 5-minute meditation', 'Gentle audio from the Lifestyle tab'], ['Share your story', 'When you are ready'], ['Message a circle', 'Wellness Circle is online']] };
+          return { msg: 'Glad today feels lighter. Keep it going.', items: [['Share what helped', 'Someone may need it today'], ['Log today', 'Blood pressure, weight, medication'], ['Go for a light walk', 'Add it to your routine']] };
+        }
+        function render() {
+          var h, s = st.step;
+          if (s === 0) {
+            h = '<div class="p">' + ST() + '<div class="p-hd nb">Mental Health</div><div class="p-b"><div style="text-align:center;font-size:4cqw;font-weight:600;line-height:1.3;margin-top:3cqw">Hey Alex, how would you describe your mood today?</div><div class="mood" role="group" aria-label="Mood">' + MOODS.map(function (x, i) { return '<button type="button" data-m="' + i + '" aria-pressed="' + (st.m === i) + '"><i class="face f' + x[1] + '"></i>' + x[0] + '</button>' }).join('') + '</div><button class="dbtn" data-go="1"' + (st.m < 0 ? ' disabled' : '') + '>CONTINUE →</button><div class="hint">' + (st.m < 0 ? 'Choose a mood to continue' : 'Ready') + '</div></div></div>';
+          } else {
+            var r = sugg(st.m);
+            h = '<div class="p">' + ST() + '<div class="p-hd nb">Oliver</div><div class="p-b"><div style="font-size:3.8cqw;font-weight:600;line-height:1.3">' + r.msg + '</div>' + r.items.map(function (x) { return '<div class="sug"><i></i><div><b>' + x[0] + '</b><small>' + x[1] + '</small></div></div>' }).join('') + (r.note ? '<div class="note-s">' + r.note + '</div>' : '') + '<button class="dbtn" data-go="0" data-reset="1">CHECK IN AGAIN</button></div></div>';
+          }
+          dp.innerHTML = h; steps.forEach(function (li, i) { li.classList.toggle('on', i === s) });
+        }
+        dp.addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b || b.disabled) return;
+          if (b.dataset.m != null) st.m = +b.dataset.m;
+          else if (b.dataset.go != null) { if (b.dataset.reset) st = { step: 0, m: -1 }; else st.step = +b.dataset.go }
+          render();
+        });
+        render();
+
+        /* CTA marquee: loops seamlessly, speeds up with scroll velocity */
+        var mq = document.querySelector('.cta-mq');
+        if (mq && !reduce) {
+          var tr = mq.querySelector('.track'), set = tr.firstElementChild, x = 0, vel = 0, vy = scrollY, sp = +mq.dataset.speed || 100, vis = true, last = performance.now();
+          tr.style.animation = 'none';
+          while (tr.scrollWidth < innerWidth * 2 + set.offsetWidth) {
+            var c = set.cloneNode(true);
+            c.setAttribute('aria-hidden', 'true');
+            tr.appendChild(c);
+          }
+          new IntersectionObserver(function (e) { vis = e[0].isIntersecting; }).observe(mq);
+          requestAnimationFrame(function loop(t) {
+            var dt = Math.min((t - last) / 1000, .05);
+            last = t;
+            vel += (Math.abs(scrollY - vy) - vel) * .1;
+            vy = scrollY;
+            if (vis) {
+              x -= (sp + vel * 12) * dt;
+              var w = set.offsetWidth;
+              if (x <= -w) x += w;
+              tr.style.transform = 'translate3d(' + x + 'px,0,0)';
+            }
+            requestAnimationFrame(loop);
+          });
+        }
+      })();
+  </script>
+</body>
+
+</html>
